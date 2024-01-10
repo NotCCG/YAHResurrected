@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.block.ModBlocks;
 
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
@@ -35,6 +36,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EVILDIAMONDSHOVEL.get());
                         output.accept(ModItems.EVILDIAMONDHOE.get());
                         output.accept(ModItems.EVILDIAMONDSWORD.get());
+
+                        output.accept(ModBlocks.ICE_RUBY_ORE.get());
+                        output.accept(ModBlocks.INVISIBLE_ORE.get());
                     })
                     .build());
 
