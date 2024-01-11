@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "evildiamond",
+  "ingredient": {
+    "item": "youareherobrineresurrected:evil_diamond_matter"
+  },
+  "result": "youareherobrineresurrected:evil_diamond"
+}

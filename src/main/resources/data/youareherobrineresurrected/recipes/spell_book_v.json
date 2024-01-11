@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " Z ",
+    "X#Y",
+    "   "
+  ],
+  "key": {
+    "#": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "X": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "Y": {
+      "item": "youareherobrineresurrected:steve_soul"
+    },
+    "Z": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "youareherobrineresurrected:spell_book_v"
+  }
+}
