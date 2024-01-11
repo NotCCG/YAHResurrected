@@ -18,7 +18,6 @@ import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import org.slf4j.Logger;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(YouAreHerobrineResurrected.MOD_ID)
 public class YouAreHerobrineResurrected {
     public static final String MOD_ID = "youareherobrineresurrected";
@@ -67,3 +66,6 @@ public class YouAreHerobrineResurrected {
         }
     }
 }
+
+//You aren't a good person, you know that, right?
+//Good people don't end up here
