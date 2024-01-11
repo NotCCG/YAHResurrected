@@ -15,9 +15,15 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
+
 public class SpellBookTheeItem extends Item {
     public SpellBookTheeItem(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    public boolean isFoil(ItemStack pStack) {
+        return true;
     }
 
     @Override

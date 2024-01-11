@@ -6,7 +6,7 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.notccg.yahresurrected.item.custom.SpellBookTheeItem;
+import net.notccg.yahresurrected.item.custom.*;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -34,19 +34,19 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKI = ITEMS.register("spell_book_i",
-            () -> new Item(new Item.Properties()));
+            () -> new SpellBookOneItem(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKII = ITEMS.register("spell_book_ii",
-            () -> new Item(new Item.Properties()));
+            () -> new SpellBookTwoItem(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKIII = ITEMS.register("spell_book_iii",
             () -> new SpellBookTheeItem(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKIV = ITEMS.register("spell_book_iv",
-            () -> new Item(new Item.Properties()));
+            () -> new SpellBookFourItem(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKV = ITEMS.register("spell_book_v",
-            () -> new Item(new Item.Properties()));
+            () -> new SpellBookFiveItem(new Item.Properties()));
 
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));
