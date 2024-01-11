@@ -6,6 +6,7 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.notccg.yahresurrected.item.custom.SpellBookTheeItem;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -39,7 +40,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKIII = ITEMS.register("spell_book_iii",
-            () -> new Item(new Item.Properties()));
+            () -> new SpellBookTheeItem(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKIV = ITEMS.register("spell_book_iv",
             () -> new Item(new Item.Properties()));

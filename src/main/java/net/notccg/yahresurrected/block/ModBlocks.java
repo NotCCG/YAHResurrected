@@ -1,9 +1,12 @@
 package net.notccg.yahresurrected.block;
 
+import com.mojang.blaze3d.shaders.Uniform;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,10 +22,11 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, YouAreHerobrineResurrected.MOD_ID);
 
     public static final RegistryObject<Block> ICE_RUBY_ORE = registerBlock("ice_ruby_ore",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.EMERALD_ORE)));
-
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(3f).requiresCorrectToolForDrops(), UniformInt.of(6, 8)));
     public static final RegistryObject<Block> INVISIBLE_ORE = registerBlock("invisible_ore",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_ORE)));
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
+                    .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
