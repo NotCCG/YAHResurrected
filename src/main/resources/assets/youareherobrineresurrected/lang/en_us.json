@@ -20,9 +20,16 @@
   "item.youareherobrineresurrected.bedrock_pickaxe": "Bedrock Pickaxe",
 
   "block.youareherobrineresurrected.ice_ruby_ore": "Ice Ruby Ore",
+  "block.youareherobrineresurrected.deepslate_ice_ruby_ore": "Deepslate Ice Ruby Ore",
   "block.youareherobrineresurrected.invisible_ore": "Invisible Ore",
+  "block.youareherobrineresurrected.deepslate_invisible_ore": "Deepslate Invisible Ore",
 
   "tooltip.youareherobrineresurrected.bedrock_pickaxe.tooltip": "Why have you crafted this? You can hear voices, they all scream 'GOD IS DEAD, AND YOU HAVE KILLED HIM.'",
+  "tooltip.youareherobrineresurrected.spell_book_one.tooltip": "Grants you invisibility to all entities for two minutes.",
+  "tooltip.youareherobrineresurrected.spell_book_two.tooltip": "When in inventory, you no-longer burn in the sun.",
+  "tooltip.youareherobrineresurrected.spell_book_three.tooltip": "Lights fires when used on blocks.",
+  "tooltip.youareherobrineresurrected.spell_book_four.tooltip": "When used, you will teleport to a random location within 64 blocks.",
+  "tooltip.youareherobrineresurrected.spell_book_five.tooltip": "Toggles the ability to fly when used.",
 
   "creativetab.yahr_tab": "YAHR"
 }

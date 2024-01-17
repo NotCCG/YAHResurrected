@@ -52,7 +52,7 @@ public class SpellBookTheeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.three.toolip"));
+        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.spell_book_three.toolip"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

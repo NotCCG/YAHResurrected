@@ -39,7 +39,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.BEDROCKPIXAXE.get());
 
                         output.accept(ModBlocks.ICE_RUBY_ORE.get());
+                        output.accept(ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get());
                         output.accept(ModBlocks.INVISIBLE_ORE.get());
+                        output.accept(ModBlocks.DEEPSLATE_INVISIBLE_ORE.get());
                     })
                     .build());
 

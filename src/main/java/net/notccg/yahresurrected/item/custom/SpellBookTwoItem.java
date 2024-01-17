@@ -21,7 +21,7 @@ public class SpellBookTwoItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.spellbooktwo.toolip"));
+        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.spell_book_two.toolip"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

@@ -1,7 +1,9 @@
 {
   "values": [
     "youareherobrineresurrected:ice_ruby_ore",
+    "youareherobrineresurrected:deepslate_ice_ruby_ore",
     "youareherobrineresurrected:invisible_ore",
+    "youareherobrineresurrected:deepslate_invisible_ore",
     "minecraft:bedrock"
   ]
 }
