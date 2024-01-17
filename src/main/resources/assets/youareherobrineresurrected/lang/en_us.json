@@ -17,9 +17,12 @@
   "item.youareherobrineresurrected.evil_diamond_hoe": "Evil Diamond Hoe",
   "item.youareherobrineresurrected.evil_diamond_sword": "Evil Diamond Sword",
   "item.youareherobrineresurrected.evil_diamond_shovel": "Evil Diamond Shovel",
+  "item.youareherobrineresurrected.bedrock_pickaxe": "Bedrock Pickaxe",
 
   "block.youareherobrineresurrected.ice_ruby_ore": "Ice Ruby Ore",
   "block.youareherobrineresurrected.invisible_ore": "Invisible Ore",
+
+  "tooltip.youareherobrineresurrected.bedrock_pickaxe.tooltip": "Why have you crafted this? You can hear voices, they all scream 'GOD IS DEAD, AND YOU HAVE KILLED HIM.'",
 
   "creativetab.yahr_tab": "YAHR"
 }

@@ -1,9 +1,10 @@
 package net.notccg.yahresurrected.item;
 
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.notccg.yahresurrected.item.custom.*;
@@ -52,19 +53,21 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> EVILDIAMONDPICKAXE = ITEMS.register("evil_diamond_pickaxe",
-            () -> new Item(new Item.Properties()));
-
+            () -> new PickaxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> EVILDIAMONDAXE = ITEMS.register("evil_diamond_axe",
-            () -> new Item(new Item.Properties()));
+            () -> new AxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
 
     public static final RegistryObject<Item> EVILDIAMONDHOE = ITEMS.register("evil_diamond_hoe",
-            () -> new Item(new Item.Properties()));
+            () -> new HoeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
 
     public static final RegistryObject<Item> EVILDIAMONDSHOVEL = ITEMS.register("evil_diamond_shovel",
-            () -> new Item(new Item.Properties()));
+            () -> new ShovelItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
 
     public static final RegistryObject<Item> EVILDIAMONDSWORD = ITEMS.register("evil_diamond_sword",
-            () -> new Item(new Item.Properties()));
+            () -> new SwordItem(ModToolTiers.EVIL_DIAMOND, 25, 4, new Item.Properties()));
+
+    public static final RegistryObject<Item> BEDROCKPIXAXE = ITEMS.register("bedrock_pickaxe",
+            () -> new BedrockPickaxeItem(ModToolTiers.BEDROCK, 20, 0, new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
