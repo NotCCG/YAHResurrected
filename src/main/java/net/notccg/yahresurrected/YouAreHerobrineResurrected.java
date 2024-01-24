@@ -7,6 +7,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.loot.ModLootModifiers;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
 public class YouAreHerobrineResurrected {
@@ -19,6 +20,8 @@ public class YouAreHerobrineResurrected {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModLootModifiers.register(modEventBus);
 
     }
 

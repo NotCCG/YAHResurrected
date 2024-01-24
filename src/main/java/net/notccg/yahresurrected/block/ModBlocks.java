@@ -25,14 +25,14 @@ public class ModBlocks {
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(3f).requiresCorrectToolForDrops(), UniformInt.of(6, 8)));
 
-    public static final RegistryObject<Block> DEEPSLATE_ICE_RUBY_ORE = registerBlock("ice_ruby_ore",
+    public static final RegistryObject<Block> DEEPSLATE_ICE_RUBY_ORE = registerBlock("deepslate_ice_ruby_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)
                     .strength(3f).requiresCorrectToolForDrops(), UniformInt.of(6, 8)));
     public static final RegistryObject<Block> INVISIBLE_ORE = registerBlock("invisible_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)
                     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
 
-    public static final RegistryObject<Block> DEEPSLATE_INVISIBLE_ORE = registerBlock("invisible_ore",
+    public static final RegistryObject<Block> DEEPSLATE_INVISIBLE_ORE = registerBlock("deepslate_invisible_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)
                     .strength(2f).requiresCorrectToolForDrops(), UniformInt.of(3, 6)));
 
