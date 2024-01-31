@@ -8,6 +8,7 @@ import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
+import net.notccg.yahresurrected.util.ModStructures;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
 public class YouAreHerobrineResurrected {
@@ -22,7 +23,7 @@ public class YouAreHerobrineResurrected {
         ModBlocks.register(modEventBus);
 
         ModLootModifiers.register(modEventBus);
-
+        ModStructures.STRUCTURE_TYPE_DEFERRED_REGISTER.register(modEventBus);
     }
 
 
