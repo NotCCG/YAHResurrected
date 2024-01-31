@@ -19,4 +19,9 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
         add("villager_heart_from_villager", new AddItemModifier(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("entities/villager")).build() }, ModItems.VILLAGERHEART.get()));
     }
+    //Well you found me, congratulations.
+    //Was it worth it?
+    //Because despite you violent behavior,
+    //The only thing you've managed to break.
+    //Is my heart.
 }
