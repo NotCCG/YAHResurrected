@@ -26,9 +26,7 @@ public class YouAreHerobrineResurrected {
         ModStructures.STRUCTURE_TYPE_DEFERRED_REGISTER.register(modEventBus);
     }
 
-
     private void commonSetup(final FMLCommonSetupEvent event) {
-
     }
 }
 

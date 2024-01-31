@@ -9,5 +9,4 @@ public class SteveEntity extends Monster {
         super(pEntityType, pLevel);
     }
 
-
 }
