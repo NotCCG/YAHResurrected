@@ -1,5 +1,7 @@
 package net.notccg.yahresurrected.item.custom;
 
+//Invisibility
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

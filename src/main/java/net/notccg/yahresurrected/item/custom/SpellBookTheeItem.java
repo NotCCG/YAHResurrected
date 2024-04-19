@@ -1,5 +1,7 @@
 package net.notccg.yahresurrected.item.custom;
 
+//Fire Spell
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;

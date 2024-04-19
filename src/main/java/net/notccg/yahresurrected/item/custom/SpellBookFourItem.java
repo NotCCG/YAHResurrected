@@ -1,5 +1,7 @@
 package net.notccg.yahresurrected.item.custom;
 
+//Teleportation
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
