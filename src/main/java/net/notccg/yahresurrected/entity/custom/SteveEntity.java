@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 
 public class SteveEntity extends Monster {
 
-    protected SteveEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
+    public SteveEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
