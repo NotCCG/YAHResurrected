@@ -52,6 +52,9 @@ public class ModItems {
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> STEVE_SPAWN_EGG = ITEMS.register("steve_spawn_egg",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> EVILDIAMONDPICKAXE = ITEMS.register("evil_diamond_pickaxe",
             () -> new PickaxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> EVILDIAMONDAXE = ITEMS.register("evil_diamond_axe",

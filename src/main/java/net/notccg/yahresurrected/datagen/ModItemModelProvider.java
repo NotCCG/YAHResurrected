@@ -30,6 +30,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SPELLBOOKIII);
         simpleItem(ModItems.SPELLBOOKIV);
         simpleItem(ModItems.SPELLBOOKV);
+        simpleItem(ModItems.STEVE_SPAWN_EGG);
 
         handheldItem(ModItems.BEDROCKPIXAXE);
         handheldItem(ModItems.EVILDIAMONDAXE);
