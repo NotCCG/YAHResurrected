@@ -18,6 +18,7 @@ public class ModAnimationsDefinitions {
                     new Keyframe(4.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))
             .build();
+
     public static final AnimationDefinition STEVE_WALKING = AnimationDefinition.Builder.withLength(1.0F).looping()
             .addAnimation("ArmL", new AnimationChannel(AnimationChannel.Targets.ROTATION,
                     new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
@@ -48,4 +49,5 @@ public class ModAnimationsDefinitions {
                     new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))
             .build();
+
 }

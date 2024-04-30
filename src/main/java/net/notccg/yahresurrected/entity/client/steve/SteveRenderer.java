@@ -11,7 +11,7 @@ import net.notccg.yahresurrected.entity.custom.SteveEntity;
 
 public class SteveRenderer extends MobRenderer<SteveEntity, SteveModel<SteveEntity>> {
     public SteveRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new SteveModel<>(pContext.bakeLayer(ModModelLayers.STEVE_LAYER)), 0.25f);
+        super(pContext, new SteveModel<>(pContext.bakeLayer(ModModelLayers.STEVE_LAYER)), 0.75f);
     }
 
     @Override
