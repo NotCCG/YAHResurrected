@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.client.ModModelLayers;
-import net.notccg.yahresurrected.entity.client.steve.SteveModel;
 import net.notccg.yahresurrected.entity.custom.SteveEntity;
 
 public class SteveRenderer extends MobRenderer<SteveEntity, SteveModel<SteveEntity>> {
