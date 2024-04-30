@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.entity.client;// Made with Blockbench 4.9.3
+package net.notccg.yahresurrected.entity.client.steve;// Made with Blockbench 4.9.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
@@ -9,7 +9,10 @@ import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.notccg.yahresurrected.entity.animations.ModAnimationsDefinitions;
+import net.notccg.yahresurrected.entity.custom.SteveEntity;
 
 public class SteveModel<T extends Entity> extends HierarchicalModel<T> {
 	private final ModelPart Steve;
@@ -47,6 +50,19 @@ public class SteveModel<T extends Entity> extends HierarchicalModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
+
+		this.animateWalk(ModAnimationsDefinitions.STEVE_WALKING, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animate(((SteveEntity) entity).idleAnimationState, ModAnimationsDefinitions.STEVE_IDLE, ageInTicks, 1f);
+	}
+
+	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
+		pNetHeadYaw = Mth.clamp(pNetHeadYaw, -30.0F, 30.0F);
+		pHeadPitch = Mth.clamp(pHeadPitch, -25.0F, 45.0F);
+
+		this.Head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
+		this.Head.xRot = pHeadPitch * ((float)Math.PI / 180F);
 	}
 
 	@Override

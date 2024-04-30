@@ -1,12 +1,13 @@
 package net.notccg.yahresurrected.item;
 
 import net.minecraft.world.item.*;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.item.custom.*;
 
 public class ModItems {
@@ -52,9 +53,6 @@ public class ModItems {
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> STEVE_SPAWN_EGG = ITEMS.register("steve_spawn_egg",
-            () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> EVILDIAMONDPICKAXE = ITEMS.register("evil_diamond_pickaxe",
             () -> new PickaxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> EVILDIAMONDAXE = ITEMS.register("evil_diamond_axe",
@@ -71,6 +69,10 @@ public class ModItems {
 
     public static final RegistryObject<Item> BEDROCKPIXAXE = ITEMS.register("bedrock_pickaxe",
             () -> new BedrockPickaxeItem(ModToolTiers.BEDROCK, 20, 0, new Item.Properties()));
+
+    public static final RegistryObject<Item> STEVE_SPAWN_EGG = ITEMS.register("steve_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.STEVE, 0x5C69FF, 0xDDBF7D,
+                    new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

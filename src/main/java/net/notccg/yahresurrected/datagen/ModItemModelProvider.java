@@ -30,7 +30,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SPELLBOOKIII);
         simpleItem(ModItems.SPELLBOOKIV);
         simpleItem(ModItems.SPELLBOOKV);
-        simpleItem(ModItems.STEVE_SPAWN_EGG);
 
         handheldItem(ModItems.BEDROCKPIXAXE);
         handheldItem(ModItems.EVILDIAMONDAXE);
@@ -38,6 +37,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         handheldItem(ModItems.EVILDIAMONDSHOVEL);
         handheldItem(ModItems.EVILDIAMONDHOE);
         handheldItem(ModItems.EVILDIAMONDSWORD);
+
+        withExistingParent(ModItems.STEVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {

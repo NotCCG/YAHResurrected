@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected;
 
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.entity.ModEntities;
+import net.notccg.yahresurrected.entity.client.steve.SteveRenderer;
 import net.notccg.yahresurrected.event.ModEvents;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
@@ -55,6 +57,7 @@ public class YouAreHerobrineResurrected {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(ModEntities.STEVE.get(), SteveRenderer::new);
         }
     }
 }

@@ -37,8 +37,7 @@ public class SteveEntity extends Animal {
         if (this.idleAnimationTimeout <= 0) {
             this.idleAnimationTimeout = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
-        }
-        else {
+        } else {
             --this.idleAnimationTimeout;
         }
     }
@@ -47,23 +46,27 @@ public class SteveEntity extends Animal {
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
         if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick = 6F, 1f);
+            f = Math.min(pPartialTick * 6F, 1f);
         }
         else {
             f = 0f;
         }
+        this.walkAnimation.update(f, 0.2f);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 2));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+
+
     }
 
     public static AttributeSupplier.Builder createAttribute() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 20D);
+                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.MOVEMENT_SPEED,1);
     }
 
     @Nullable
