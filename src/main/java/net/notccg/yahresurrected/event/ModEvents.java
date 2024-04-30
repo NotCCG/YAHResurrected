@@ -17,7 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.entity.custom.SteveEntity;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookTwoItem;
@@ -26,7 +25,7 @@ import net.notccg.yahresurrected.item.custom.SpellBookTwoItem;
 public class ModEvents {
     @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID)
     public static class ForgeEvents {
-        private static final int MAX_HEIGHT_ABOVE_PLAYER = 32;
+        private static final int MAX_HEIGHT_ABOVE_PLAYER = 64;
 
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -61,8 +60,6 @@ public class ModEvents {
             }
         }
     }
-
-
 
     private static boolean hasSpecificItem(Player player) {
         for (ItemStack stack : player.getInventory().items) {
