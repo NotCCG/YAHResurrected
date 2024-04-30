@@ -53,7 +53,7 @@ public class SteveModel<T extends Entity> extends HierarchicalModel<T> {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
-		this.animateWalk(ModAnimationsDefinitions.STEVE_WALKING, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animateWalk(ModAnimationsDefinitions.STEVE_WALKING, limbSwing, limbSwingAmount, 4f, 2.5f);
 		this.animate(((SteveEntity) entity).idleAnimationState, ModAnimationsDefinitions.STEVE_IDLE, ageInTicks, 1f);
 	}
 

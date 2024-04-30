@@ -14,7 +14,7 @@ public class ModEntities {
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, YouAreHerobrineResurrected.MOD_ID);
     public static final RegistryObject<EntityType<SteveEntity>> STEVE =
             ENTITY_TYPES.register("steve", () -> EntityType.Builder.of(SteveEntity::new, MobCategory.CREATURE)
-                    .sized(1f, 1.8f).build("steve"));
+                    .sized(0.8f, 1.8f).build("steve"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

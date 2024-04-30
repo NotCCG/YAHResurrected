@@ -11,8 +11,14 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+
+import static net.minecraft.world.entity.EntityType.PIGLIN;
 
 public class SteveEntity extends Animal {
 
@@ -57,8 +63,10 @@ public class SteveEntity extends Animal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1.1));
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1D, Ingredient.of(Items.DIAMOND), true));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 2));
 
 
     }
