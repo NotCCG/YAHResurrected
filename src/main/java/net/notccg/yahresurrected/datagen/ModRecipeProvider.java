@@ -2,6 +2,7 @@ package net.notccg.yahresurrected.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -35,7 +36,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPELLBOOKI.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKI.get())
                 .pattern("   ")
                 .pattern("SBD")
                 .pattern("   ")
@@ -45,7 +46,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPELLBOOKII.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKII.get())
                 .pattern(" I ")
                 .pattern("SBD")
                 .pattern("   ")
@@ -56,7 +57,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPELLBOOKIII.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKIII.get())
                 .pattern(" P ")
                 .pattern("SBD")
                 .pattern("   ")
@@ -67,7 +68,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPELLBOOKIV.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKIV.get())
                 .pattern(" E ")
                 .pattern("SBD")
                 .pattern("   ")
@@ -78,7 +79,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPELLBOOKV.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKV.get())
                 .pattern(" F ")
                 .pattern("SBD")
                 .pattern("   ")
@@ -88,6 +89,33 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('F', Items.FEATHER)
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKVI.get())
+                .pattern("TMT")
+                .pattern("SBD")
+                .pattern("GGG")
+                .define('T', Items.TNT)
+                .define('M', Items.MUSIC_DISC_11)
+                .define('S', ModItems.STEVESOUL.get())
+                .define('B', ModItems.SKINBOOK.get())
+                .define('D', ModItems.INVISIBLEDUST.get())
+                .define('G', Items.GUNPOWDER)
+                .unlockedBy(getHasName(Items.MUSIC_DISC_11), has(Items.MUSIC_DISC_13))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKVII.get())
+                .pattern("EIE")
+                .pattern("SBD")
+                .pattern("CCC")
+                .define('E', Items.END_CRYSTAL)
+                .define('I', Items.ENDER_EYE)
+                .define('S', ModItems.STEVESOUL.get())
+                .define('B', ModItems.SKINBOOK.get())
+                .define('D', ModItems.INVISIBLEDUST.get())
+                .define('C', Items.CHORUS_FRUIT)
+                .unlockedBy(getHasName(Items.CHORUS_FRUIT), has(Items.CHORUS_FRUIT))
+                .save(pWriter);
+
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FLESHSTICK.get())
                 .pattern(" V ")

@@ -36,19 +36,25 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKI = ITEMS.register("spell_book_i",
-            () -> new SpellBookOneItem(new Item.Properties()));
+            () -> new SpellBookOneItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKII = ITEMS.register("spell_book_ii",
-            () -> new SpellBookTwoItem(new Item.Properties()));
+            () -> new SpellBookTwoItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKIII = ITEMS.register("spell_book_iii",
-            () -> new SpellBookTheeItem(new Item.Properties()));
+            () -> new SpellBookTheeItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKIV = ITEMS.register("spell_book_iv",
             () -> new SpellBookFourItem(new Item.Properties()));
 
     public static final RegistryObject<Item> SPELLBOOKV = ITEMS.register("spell_book_v",
-            () -> new SpellBookFiveItem(new Item.Properties()));
+            () -> new SpellBookFiveItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+
+    public static final RegistryObject<Item> SPELLBOOKVI = ITEMS.register("spell_book_vi",
+            () -> new SpellBookSixItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+
+    public static final RegistryObject<Item> SPELLBOOKVII = ITEMS.register("spell_book_vii",
+            () -> new SpellBookSevenItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));

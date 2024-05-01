@@ -32,6 +32,8 @@
   "tooltip.youareherobrineresurrected.spell_book_three.tooltip": "Lights fires when used on blocks.",
   "tooltip.youareherobrineresurrected.spell_book_four.tooltip": "When used, you will teleport to a random location within 64 blocks.",
   "tooltip.youareherobrineresurrected.spell_book_five.tooltip": "Toggles the ability to fly when used.",
+  "tooltip.youareherobrineresurrected.spell_book_six.tooltip": "When in inventory, Creepers will now ignore you.",
+  "tooltip.youareherobrineresurrected.spell_book_seven.tooltip": "When in inventory, Endermen will now ignore you.",
 
   "creativetab.yahr_tab": "YAHR"
 }
