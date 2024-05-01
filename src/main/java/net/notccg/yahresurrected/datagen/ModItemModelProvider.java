@@ -39,6 +39,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         handheldItem(ModItems.EVILDIAMONDSWORD);
 
         withExistingParent(ModItems.STEVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.HUNTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {

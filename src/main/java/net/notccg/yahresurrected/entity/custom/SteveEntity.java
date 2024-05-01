@@ -1,6 +1,5 @@
 package net.notccg.yahresurrected.entity.custom;
 
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -24,8 +23,8 @@ public class SteveEntity extends Animal {
     }
 
     public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
 
+    private int idleAnimationTimeout = 0;
 
     @Override
     public void tick() {

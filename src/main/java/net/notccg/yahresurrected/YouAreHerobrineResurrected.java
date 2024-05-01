@@ -11,6 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.entity.ModEntities;
+import net.notccg.yahresurrected.entity.client.hunter.HunterRenderer;
 import net.notccg.yahresurrected.entity.client.steve.SteveRenderer;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
@@ -48,6 +49,7 @@ public class YouAreHerobrineResurrected {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.STEVE.get(), SteveRenderer::new);
+            EntityRenderers.register(ModEntities.HUNTER.get(), HunterRenderer::new);
         }
     }
 }

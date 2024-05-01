@@ -74,6 +74,10 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.STEVE, 0x5C69FF, 0xDDBF7D,
                     new Item.Properties()));
 
+    public static final RegistryObject<Item> HUNTER_SPAWN_EGG = ITEMS.register("hunter_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.HUNTER, 0x454545, 0xD3A46F,
+                    new Item.Properties()));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
