@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "E": {
+      "item": "youareherobrineresurrected:evil_diamond"
+    },
+    "F": {
+      "item": "youareherobrineresurrected:flesh_stick"
+    }
+  },
+  "pattern": [
+    "EEE",
+    " F ",
+    " F "
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:evil_diamond_pickaxe"
+  },
+  "show_notification": true
+}

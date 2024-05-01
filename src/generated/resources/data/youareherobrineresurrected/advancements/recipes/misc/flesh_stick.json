@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "youareherobrineresurrected:flesh_stick"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_villager_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:villager_heart"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_villager_heart",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "youareherobrineresurrected:flesh_stick"
+    ]
+  },
+  "sends_telemetry_event": false
+}

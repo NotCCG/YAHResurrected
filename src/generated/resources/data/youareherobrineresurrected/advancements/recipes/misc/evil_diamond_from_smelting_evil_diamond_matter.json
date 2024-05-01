@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_evil_diamond_matter": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_matter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "youareherobrineresurrected:evil_diamond_from_smelting_evil_diamond_matter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_evil_diamond_matter",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "youareherobrineresurrected:evil_diamond_from_smelting_evil_diamond_matter"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "D": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "S": {
+      "item": "youareherobrineresurrected:steve_soul"
+    }
+  },
+  "pattern": [
+    "   ",
+    "SBD",
+    "   "
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:spell_book_i"
+  },
+  "show_notification": true
+}

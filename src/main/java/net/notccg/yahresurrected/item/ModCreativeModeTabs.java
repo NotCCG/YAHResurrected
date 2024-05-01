@@ -31,6 +31,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SPELLBOOKIII.get());
                         output.accept(ModItems.SPELLBOOKIV.get());
                         output.accept(ModItems.SPELLBOOKV.get());
+                        output.accept(ModItems.SPELLBOOKVI.get());
+                        output.accept(ModItems.SPELLBOOKVII.get());
                         output.accept(ModItems.EVILDIAMONDPICKAXE.get());
                         output.accept(ModItems.EVILDIAMONDAXE.get());
                         output.accept(ModItems.EVILDIAMONDSHOVEL.get());

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:bedrock"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "BBB",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:bedrock_pickaxe"
+  },
+  "show_notification": true
+}

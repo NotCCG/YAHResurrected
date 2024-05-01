@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "C": {
+      "item": "minecraft:chorus_fruit"
+    },
+    "D": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "E": {
+      "item": "minecraft:end_crystal"
+    },
+    "I": {
+      "item": "minecraft:ender_eye"
+    },
+    "S": {
+      "item": "youareherobrineresurrected:steve_soul"
+    }
+  },
+  "pattern": [
+    "EIE",
+    "SBD",
+    "CCC"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:spell_book_vii"
+  },
+  "show_notification": true
+}

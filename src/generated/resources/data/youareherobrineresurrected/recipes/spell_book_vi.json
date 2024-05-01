@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "D": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "M": {
+      "item": "minecraft:music_disc_11"
+    },
+    "S": {
+      "item": "youareherobrineresurrected:steve_soul"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "pattern": [
+    "TMT",
+    "SBD",
+    "GGG"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:spell_book_vi"
+  },
+  "show_notification": true
+}

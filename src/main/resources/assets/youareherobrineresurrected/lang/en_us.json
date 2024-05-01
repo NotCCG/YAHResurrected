@@ -27,13 +27,13 @@
   "block.youareherobrineresurrected.deepslate_invisible_ore": "Deepslate Invisible Ore",
 
   "tooltip.youareherobrineresurrected.bedrock_pickaxe.tooltip": "Why have you crafted this? You can hear voices, they all scream 'GOD IS DEAD, AND YOU HAVE KILLED HIM.'",
-  "tooltip.youareherobrineresurrected.spell_book_one.tooltip": "Grants you invisibility to all entities for two minutes.",
-  "tooltip.youareherobrineresurrected.spell_book_two.tooltip": "When in inventory, you no-longer burn in the sun.",
-  "tooltip.youareherobrineresurrected.spell_book_three.tooltip": "Lights fires when used on blocks.",
-  "tooltip.youareherobrineresurrected.spell_book_four.tooltip": "When used, you will teleport to a random location within 64 blocks.",
-  "tooltip.youareherobrineresurrected.spell_book_five.tooltip": "Toggles the ability to fly when used.",
-  "tooltip.youareherobrineresurrected.spell_book_six.tooltip": "When in inventory, Creepers will now ignore you.",
-  "tooltip.youareherobrineresurrected.spell_book_seven.tooltip": "When in inventory, Endermen will now ignore you.",
+  "tooltip.youareherobrineresurrected.spell_book_i.tooltip": "When in inventory, Steves and Hunters, cannot see you.",
+  "tooltip.youareherobrineresurrected.spell_book_ii.tooltip": "When in inventory, you no-longer burn in the sun.",
+  "tooltip.youareherobrineresurrected.spell_book_iii.tooltip": "Lights fires when used on blocks.",
+  "tooltip.youareherobrineresurrected.spell_book_iv.tooltip": "Right click to teleport in the direction you are facing.",
+  "tooltip.youareherobrineresurrected.spell_book_v.tooltip": "Toggles the ability to fly when used.",
+  "tooltip.youareherobrineresurrected.spell_book_vi.tooltip": "When in inventory, Creepers will now ignore you.",
+  "tooltip.youareherobrineresurrected.spell_book_vii.tooltip": "When in inventory, Endermen will now ignore you.",
 
   "creativetab.yahr_tab": "YAHR"
 }

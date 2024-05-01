@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    " PL",
+    "LPL",
+    "LP "
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:skin_book"
+  },
+  "show_notification": true
+}

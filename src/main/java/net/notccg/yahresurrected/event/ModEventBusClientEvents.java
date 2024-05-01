@@ -14,6 +14,7 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.STEVE_LAYER, SteveModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.HUNTER_LAYER_ONE, HunterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.HUNTER_LAYER, HunterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.HUNTER_HOOD, HunterModel::createBodyLayer);
     }
 }

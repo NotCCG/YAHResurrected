@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.0,
+  "group": "evil_diamond",
+  "ingredient": {
+    "item": "youareherobrineresurrected:evil_diamond_matter"
+  },
+  "result": "youareherobrineresurrected:evil_diamond"
+}

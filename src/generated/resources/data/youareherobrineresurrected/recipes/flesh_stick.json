@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "V": {
+      "item": "youareherobrineresurrected:villager_heart"
+    }
+  },
+  "pattern": [
+    " V ",
+    " V ",
+    " V "
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:flesh_stick"
+  },
+  "show_notification": true
+}

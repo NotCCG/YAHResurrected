@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -59,12 +60,11 @@ public class SteveEntity extends Animal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.1));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1));
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1D, Ingredient.of(Items.DIAMOND), true));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 2));
-
-
+        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6F));
+        this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Player.class, 4F, 1, 1.4));
+        this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Creeper.class, 10F, 1, 1.2));
     }
 
     public static AttributeSupplier.Builder createAttribute() {
@@ -72,6 +72,8 @@ public class SteveEntity extends Animal {
                 .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.MOVEMENT_SPEED,1);
     }
+
+
 
     @Nullable
     @Override

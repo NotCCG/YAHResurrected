@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "V": {
+      "item": "youareherobrineresurrected:villager_heart"
+    }
+  },
+  "pattern": [
+    "VVV",
+    "VDV",
+    "VVV"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:evil_diamond_matter"
+  },
+  "show_notification": true
+}

@@ -14,10 +14,12 @@ import net.notccg.yahresurrected.entity.custom.HunterEntity;
 
 public class HunterModel<T extends Entity> extends HierarchicalModel<T> {
     private final ModelPart Hunter;
+    private final ModelPart Hood;
     private final ModelPart Head;
 
     public HunterModel(ModelPart root) {
         this.Hunter = root.getChild("Hunter");
+        this.Hood = root.getChild("Hood");
         this.Head = Hunter.getChild("Torso").getChild("Head");
     }
 
@@ -42,6 +44,8 @@ public class HunterModel<T extends Entity> extends HierarchicalModel<T> {
         PartDefinition ArmL = Arms.addOrReplaceChild("ArmL", CubeListBuilder.create().texOffs(40, 16).mirror().addBox(0.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(4.0F, 2.0F, 0.0F));
 
         PartDefinition Head = Torso.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -6.0F, 0.0F));
+
+        PartDefinition Hood = partdefinition.addOrReplaceChild("Hood", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -32.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 32);
     }

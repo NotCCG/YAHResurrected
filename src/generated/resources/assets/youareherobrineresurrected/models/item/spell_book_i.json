@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "youareherobrineresurrected:item/spell_book_i"
+  }
+}
