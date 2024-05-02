@@ -12,9 +12,8 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
 public class SteveEntity extends Animal {
@@ -26,6 +25,8 @@ public class SteveEntity extends Animal {
     public final AnimationState idleAnimationState = new AnimationState();
 
     private int idleAnimationTimeout = 0;
+
+
 
     @Override
     public void tick() {
@@ -64,7 +65,7 @@ public class SteveEntity extends Animal {
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6F));
         this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Player.class, 4F, 1, 1.4));
-        this.goalSelector.addGoal(4, new AvoidEntityGoal(this, Creeper.class, 10F, 1, 1.2));
+        this.goalSelector.addGoal(5, new AvoidEntityGoal(this, Creeper.class, 10F, 1, 1.2));
     }
 
     public static AttributeSupplier.Builder createAttribute() {
@@ -72,7 +73,6 @@ public class SteveEntity extends Animal {
                 .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.MOVEMENT_SPEED,1);
     }
-
 
 
     @Nullable
@@ -92,6 +92,20 @@ public class SteveEntity extends Animal {
     protected SoundEvent getDeathSound() {
         return SoundEvents.PLAYER_DEATH;
     }
+
+    @Override
+    public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
+        return this.canSpawnHere(pSpawnReason) &&
+                super.checkSpawnRules(pLevel, pSpawnReason);
+    }
+
+    private boolean canSpawnHere(MobSpawnType pSpawnReason) {
+        return pSpawnReason == MobSpawnType.SPAWNER ||
+                pSpawnReason == MobSpawnType.CHUNK_GENERATION ||
+                pSpawnReason == MobSpawnType.SPAWN_EGG ||
+                pSpawnReason == MobSpawnType.STRUCTURE;
+    }
+
 }
 
 

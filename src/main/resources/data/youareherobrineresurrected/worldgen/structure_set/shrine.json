@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "youareherobrineresurrected:shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 920165913,
+
+    "spacing": 70,
+
+    "separation": 69,
+
+    "type": "minecraft:random_spread"
+  }
+}

@@ -189,12 +189,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.BEDROCK)
-                .pattern("HHH")
-                .pattern("HSH")
-                .pattern("HHH")
-                .define('H', ModItems.VILLAGERHEART.get())
+                .pattern("EEE")
+                .pattern("ESE")
+                .pattern("EEE")
+                .define('E', ModItems.VILLAGERHEART.get())
                 .define('S', Items.STONE)
-                .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
+                .unlockedBy(getHasName(Items.BEDROCK), has(Items.BEDROCK))
                 .save(pWriter);
     }
 

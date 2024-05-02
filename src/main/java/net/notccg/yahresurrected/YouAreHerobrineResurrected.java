@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -37,7 +38,6 @@ public class YouAreHerobrineResurrected {
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::commonSetup);
     }
-
 
     private void commonSetup(final FMLCommonSetupEvent event) {
     }
