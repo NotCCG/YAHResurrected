@@ -192,7 +192,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("EEE")
                 .pattern("ESE")
                 .pattern("EEE")
-                .define('E', ModItems.VILLAGERHEART.get())
+                .define('E', ModItems.EVILDIAMOND.get())
                 .define('S', Items.STONE)
                 .unlockedBy(getHasName(Items.BEDROCK), has(Items.BEDROCK))
                 .save(pWriter);

@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "E": {
+    "H": {
       "item": "youareherobrineresurrected:villager_heart"
     },
     "S": {
@@ -10,9 +10,9 @@
     }
   },
   "pattern": [
-    "EEE",
-    "ESE",
-    "EEE"
+    "HHH",
+    "HSH",
+    "HHH"
   ],
   "result": {
     "item": "minecraft:bedrock"

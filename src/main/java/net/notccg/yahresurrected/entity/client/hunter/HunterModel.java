@@ -14,39 +14,36 @@ import net.notccg.yahresurrected.entity.custom.HunterEntity;
 
 public class HunterModel<T extends Entity> extends HierarchicalModel<T> {
     private final ModelPart Hunter;
-    private final ModelPart Hood;
-    private final ModelPart Head;
+    private final ModelPart head;
+    private final ModelPart body;
+    private final ModelPart rightArm;
+    private final ModelPart leftArm;
+    private final ModelPart rightLeg;
+    private final ModelPart leftLeg;
 
     public HunterModel(ModelPart root) {
         this.Hunter = root.getChild("Hunter");
-        this.Hood = root.getChild("Hood");
-        this.Head = Hunter.getChild("Torso").getChild("Head");
+        this.head = Hunter.getChild("Torso").getChild("Head");
+        this.body = Hunter.getChild("Torso");
+        this.rightArm = Hunter.getChild("Arms").getChild("ArmR");
+        this.leftArm = Hunter.getChild("Arms").getChild("ArmL");
+        this.rightLeg = Hunter.getChild("Legs").getChild("LegR");
+        this.leftLeg = Hunter.getChild("Legs").getChild("LegL");
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-
         PartDefinition Hunter = partdefinition.addOrReplaceChild("Hunter", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
-
         PartDefinition Torso = Hunter.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, -6.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -18.0F, 0.0F));
-
         PartDefinition Legs = Torso.addOrReplaceChild("Legs", CubeListBuilder.create(), PartPose.offset(0.0F, 6.0F, 0.0F));
-
         PartDefinition LegL = Legs.addOrReplaceChild("LegL", CubeListBuilder.create().texOffs(0, 16).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(2.0F, 0.0F, 0.0F));
-
         PartDefinition LegR = Legs.addOrReplaceChild("LegR", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 0.0F, 0.0F));
-
         PartDefinition Arms = Torso.addOrReplaceChild("Arms", CubeListBuilder.create(), PartPose.offset(0.0F, -6.0F, 0.0F));
-
         PartDefinition ArmR = Arms.addOrReplaceChild("ArmR", CubeListBuilder.create().texOffs(40, 16).addBox(-4.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 2.0F, 0.0F));
-
         PartDefinition ArmL = Arms.addOrReplaceChild("ArmL", CubeListBuilder.create().texOffs(40, 16).mirror().addBox(0.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(4.0F, 2.0F, 0.0F));
-
         PartDefinition Head = Torso.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -6.0F, 0.0F));
-
         PartDefinition Hood = partdefinition.addOrReplaceChild("Hood", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -32.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
-
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
@@ -63,8 +60,8 @@ public class HunterModel<T extends Entity> extends HierarchicalModel<T> {
         pNetHeadYaw = Mth.clamp(pNetHeadYaw, -30.0F, 30.0F);
         pHeadPitch = Mth.clamp(pHeadPitch, -25.0F, 45.0F);
 
-        this.Head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
-        this.Head.xRot = pHeadPitch * ((float)Math.PI / 180F);
+        this.head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
+        this.head.xRot = pHeadPitch * ((float)Math.PI / 180F);
     }
 
     @Override
