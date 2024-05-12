@@ -105,7 +105,6 @@ public class SteveEntity extends Animal {
                 pSpawnReason == MobSpawnType.SPAWN_EGG ||
                 pSpawnReason == MobSpawnType.STRUCTURE;
     }
-
 }
 
 

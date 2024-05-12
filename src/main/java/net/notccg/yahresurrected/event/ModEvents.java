@@ -49,8 +49,8 @@ public class ModEvents {
             Player player = event.player;
             Level world = player.level();
             if (event.side == LogicalSide.SERVER) {
-                if (!player.isOnFire()) {
-                    if (world.isDay() && !hasSpellBookII(player)) {
+                if (world.isDay()) {
+                    if (!player.isOnFire() && !hasSpellBookII(player)) {
                         int playerX = (int) player.getX();
                         int playerY = (int) player.getY();
                         int playerZ = (int) player.getZ();
@@ -71,18 +71,20 @@ public class ModEvents {
         public static void onLivingChangeTargetEvent(LivingChangeTargetEvent event) {
             LivingEntity entity = event.getEntity();
             LivingEntity targetEntity = event.getNewTarget();
-            if (targetEntity instanceof Player player) {
-                if (entity instanceof Monster) {
-                    if (entity instanceof Creeper && !hasSpellBookVI(player)) {
-                        return;
+            if (entity instanceof Monster) {
+                if (targetEntity instanceof Player player) {
+                    if (!(entity.getLastHurtByMob() instanceof Player)) {
+                        if (entity instanceof Creeper && !hasSpellBookVI(player)) {
+                            return;
+                        }
+                        if (entity instanceof EnderMan && !hasSpellBookVII(player)) {
+                            return;
+                        }
+                        if (entity instanceof HunterEntity && !hasSpellBookI(player)) {
+                            return;
+                        }
+                        event.setCanceled(true);
                     }
-                    if (entity instanceof EnderMan && !hasSpellBookVII(player)) {
-                        return;
-                    }
-                    if (entity instanceof HunterEntity && !hasSpellBookI(player)) {
-                        return;
-                    }
-                    event.setCanceled(true);
                 }
             }
         }

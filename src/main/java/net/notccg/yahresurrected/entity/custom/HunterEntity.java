@@ -20,13 +20,10 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 
 public class HunterEntity extends Monster implements RangedAttackMob {
     private final RangedBowAttackGoal<HunterEntity> bowGoal = new RangedBowAttackGoal(this, 1.0, 20, 15.0F);
@@ -44,31 +41,26 @@ public class HunterEntity extends Monster implements RangedAttackMob {
 
     public HunterEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.reassessWeaponGoal();
     }
 
-    public final AnimationState idleAnimationState = new AnimationState();
-
-    private int idleAnimationTimeout = 0;
 
     @Override
-    public void tick() {
-        super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationStates();
-        }
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, true));
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
     }
 
-    @Nullable
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @javax.annotation.Nullable SpawnGroupData pSpawnData, @javax.annotation.Nullable CompoundTag pDataTag) {
-        pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        RandomSource randomsource = pLevel.getRandom();
-        this.populateDefaultEquipmentSlots(randomsource, pDifficulty);
-        this.populateDefaultEquipmentEnchantments(randomsource, pDifficulty);
-        this.reassessWeaponGoal();
-        this.setCanPickUpLoot(randomsource.nextFloat() < 0.55F * pDifficulty.getSpecialMultiplier());
-        return pSpawnData;
+
+
+    public static AttributeSupplier.Builder createAttribute() {
+        return Monster.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2);
     }
+
 
     @Override
     protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
@@ -76,42 +68,22 @@ public class HunterEntity extends Monster implements RangedAttackMob {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
     }
 
-    private void setupAnimationStates() {
-        if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeout;
-        }
-    }
-
+    @Nullable
     @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        }
-        else {
-            f = 0f;
-        }
-        this.walkAnimation.update(f, 0.2f);
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, true));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @javax.annotation.Nullable SpawnGroupData pSpawnData, @javax.annotation.Nullable CompoundTag pDataTag) {
+        pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        RandomSource randomsource = pLevel.getRandom();
+        this.populateDefaultEquipmentSlots(randomsource, pDifficulty);
+        this.reassessWeaponGoal();
+        this.setCanPickUpLoot(randomsource.nextFloat() < 0.55F * pDifficulty.getSpecialMultiplier());
+        return pSpawnData;
     }
 
     public void reassessWeaponGoal() {
         if (this.level() != null && !this.level().isClientSide) {
             this.goalSelector.removeGoal(this.meleeGoal);
             this.goalSelector.removeGoal(this.bowGoal);
-            ItemStack itemstack = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, (item) -> {
-                return item instanceof BowItem;
-            }));
+            ItemStack itemstack = this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, (item) -> item instanceof BowItem));
             if (itemstack.is(Items.BOW)) {
                 int i = 20;
                 if (this.level().getDifficulty() != Difficulty.HARD) {
@@ -125,37 +97,6 @@ public class HunterEntity extends Monster implements RangedAttackMob {
             }
         }
 
-    }
-
-    @Override
-    public void setItemSlot(EquipmentSlot pSlot, ItemStack pStack) {
-        super.setItemSlot(pSlot, pStack);
-        if (!this.level().isClientSide) {
-            this.reassessWeaponGoal();
-        }
-
-    }
-
-    public static AttributeSupplier.Builder createAttribute() {
-        return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 20D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2);
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
-        return SoundEvents.PLAYER_HURT;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.PLAYER_DEATH;
-    }
-
-    protected AbstractArrow getArrow(ItemStack pArrowStack, float pVelocity) {
-        return ProjectileUtil.getMobArrow(this, pArrowStack, pVelocity);
     }
 
     @Override
@@ -175,5 +116,43 @@ public class HunterEntity extends Monster implements RangedAttackMob {
         abstractarrow.shoot(d0, d1 + d3 * 0.20000000298023224, d2, 1.6F, (float)(14 - this.level().getDifficulty().getId() * 4));
         this.playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level().addFreshEntity(abstractarrow);
+    }
+
+    protected AbstractArrow getArrow(ItemStack pArrowStack, float pVelocity) {
+        return ProjectileUtil.getMobArrow(this, pArrowStack, pVelocity);
+    }
+
+    public boolean canFireProjectileWeapon(ProjectileWeaponItem pProjectileWeapon) {
+        return pProjectileWeapon == Items.BOW;
+    }
+
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.reassessWeaponGoal();
+    }
+
+    @Override
+    public void setItemSlot(EquipmentSlot pSlot, ItemStack pStack) {
+        super.setItemSlot(pSlot, pStack);
+        if (!this.level().isClientSide) {
+            this.reassessWeaponGoal();
+        }
+
+    }
+
+    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
+        return 1.74F;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return SoundEvents.PLAYER_HURT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.PLAYER_DEATH;
     }
 }

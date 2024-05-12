@@ -16,8 +16,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.notccg.yahresurrected.entity.animations.ModAnimationsDefinitions;
-import net.notccg.yahresurrected.entity.custom.HunterEntity;
 
 
 public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<T> {
@@ -46,7 +44,6 @@ public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<
 
         super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
     }
-
 
     @Override
     public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {

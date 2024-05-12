@@ -1,28 +1,28 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "minecraft:bedrock"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_villager_heart": {
+    "has_bedrock": {
       "conditions": {
         "items": [
           {
             "items": [
-              "youareherobrineresurrected:villager_heart"
+              "minecraft:bedrock"
             ]
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:bedrock"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_villager_heart",
+      "has_bedrock",
       "has_the_recipe"
     ]
   ],
