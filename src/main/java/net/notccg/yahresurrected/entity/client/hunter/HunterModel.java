@@ -2,75 +2,80 @@ package net.notccg.yahresurrected.entity.client.hunter;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.notccg.yahresurrected.entity.animations.ModAnimationsDefinitions;
 import net.notccg.yahresurrected.entity.custom.HunterEntity;
 
 
-public class HunterModel<T extends Entity> extends HierarchicalModel<T> {
-    private final ModelPart Hunter;
-    private final ModelPart head;
-    private final ModelPart body;
-    private final ModelPart rightArm;
-    private final ModelPart leftArm;
-    private final ModelPart rightLeg;
-    private final ModelPart leftLeg;
+public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<T> {
 
     public HunterModel(ModelPart root) {
-        this.Hunter = root.getChild("Hunter");
-        this.head = Hunter.getChild("Torso").getChild("Head");
-        this.body = Hunter.getChild("Torso");
-        this.rightArm = Hunter.getChild("Arms").getChild("ArmR");
-        this.leftArm = Hunter.getChild("Arms").getChild("ArmL");
-        this.rightLeg = Hunter.getChild("Legs").getChild("LegR");
-        this.leftLeg = Hunter.getChild("Legs").getChild("LegL");
+        super(root);
     }
 
     public static LayerDefinition createBodyLayer() {
-        MeshDefinition meshdefinition = new MeshDefinition();
-        PartDefinition partdefinition = meshdefinition.getRoot();
-        PartDefinition Hunter = partdefinition.addOrReplaceChild("Hunter", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
-        PartDefinition Torso = Hunter.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, -6.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -18.0F, 0.0F));
-        PartDefinition Legs = Torso.addOrReplaceChild("Legs", CubeListBuilder.create(), PartPose.offset(0.0F, 6.0F, 0.0F));
-        PartDefinition LegL = Legs.addOrReplaceChild("LegL", CubeListBuilder.create().texOffs(0, 16).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(2.0F, 0.0F, 0.0F));
-        PartDefinition LegR = Legs.addOrReplaceChild("LegR", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-2.0F, 0.0F, 0.0F));
-        PartDefinition Arms = Torso.addOrReplaceChild("Arms", CubeListBuilder.create(), PartPose.offset(0.0F, -6.0F, 0.0F));
-        PartDefinition ArmR = Arms.addOrReplaceChild("ArmR", CubeListBuilder.create().texOffs(40, 16).addBox(-4.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-4.0F, 2.0F, 0.0F));
-        PartDefinition ArmL = Arms.addOrReplaceChild("ArmL", CubeListBuilder.create().texOffs(40, 16).mirror().addBox(0.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(4.0F, 2.0F, 0.0F));
-        PartDefinition Head = Torso.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -6.0F, 0.0F));
-        PartDefinition Hood = partdefinition.addOrReplaceChild("Hood", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -32.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+        MeshDefinition meshdefinition = HumanoidModel.createMesh(CubeDeformation.NONE, 0);
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.root().getAllParts().forEach(ModelPart::resetPose);
-        this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
+    public void prepareMobModel(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+        this.rightArmPose = ArmPose.EMPTY;
+        this.leftArmPose = ArmPose.EMPTY;
+        ItemStack $$4 = pEntity.getItemInHand(InteractionHand.MAIN_HAND);
+        if ($$4.is(Items.BOW) && pEntity.isAggressive()) {
+            if (pEntity.getMainArm() == HumanoidArm.RIGHT) {
+                this.rightArmPose = ArmPose.BOW_AND_ARROW;
+            } else {
+                this.leftArmPose = ArmPose.BOW_AND_ARROW;
+            }
+        }
 
-        this.animateWalk(ModAnimationsDefinitions.HUNTER_WALK, limbSwing, limbSwingAmount, 4f, 2.5f);
-        this.animate(((HunterEntity) entity).idleAnimationState, ModAnimationsDefinitions.HUNTER_IDLE, ageInTicks, 1f);
+        super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
     }
 
-    private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
-        pNetHeadYaw = Mth.clamp(pNetHeadYaw, -30.0F, 30.0F);
-        pHeadPitch = Mth.clamp(pHeadPitch, -25.0F, 45.0F);
 
-        this.head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
-        this.head.xRot = pHeadPitch * ((float)Math.PI / 180F);
+    @Override
+    public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+        super.setupAnim(pEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
+        ItemStack $$6 = pEntity.getMainHandItem();
+        if (pEntity.isAggressive() && ($$6.isEmpty() || !$$6.is(Items.BOW))) {
+            float $$7 = Mth.sin(this.attackTime * 3.1415927F);
+            float $$8 = Mth.sin((1.0F - (1.0F - this.attackTime) * (1.0F - this.attackTime)) * 3.1415927F);
+            this.rightArm.zRot = 0.0F;
+            this.leftArm.zRot = 0.0F;
+            this.rightArm.yRot = -(0.1F - $$7 * 0.6F);
+            this.leftArm.yRot = 0.1F - $$7 * 0.6F;
+            this.rightArm.xRot = -1.5707964F;
+            this.leftArm.xRot = -1.5707964F;
+            ModelPart var10000 = this.rightArm;
+            var10000.xRot -= $$7 * 1.2F - $$8 * 0.4F;
+            var10000 = this.leftArm;
+            var10000.xRot -= $$7 * 1.2F - $$8 * 0.4F;
+            AnimationUtils.bobArms(this.rightArm, this.leftArm, pAgeInTicks);
+        }
+
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        Hunter.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-    }
-
-    @Override
-    public ModelPart root() {
-        return Hunter;
+    public void translateToHand(HumanoidArm pSide, PoseStack pPoseStack) {
+        float $$2 = pSide == HumanoidArm.RIGHT ? 1.0F : -1.0F;
+        ModelPart $$3 = this.getArm(pSide);
+        $$3.x += $$2;
+        $$3.translateAndRotate(pPoseStack);
+        $$3.x -= $$2;
     }
 }
