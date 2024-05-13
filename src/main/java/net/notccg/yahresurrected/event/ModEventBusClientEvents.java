@@ -1,5 +1,7 @@
 package net.notccg.yahresurrected.event;
 
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,7 +16,8 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.STEVE_LAYER, SteveModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.HUNTER_LAYER, HunterModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.HUNTER_HOOD, HunterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.HUNTER_MAIN, HunterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.HUNTER_INNER, HunterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.HUNTER_OUTER, HunterModel::createBodyLayer);
     }
 }

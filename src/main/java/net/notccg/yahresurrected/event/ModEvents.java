@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.entity.custom.HunterEntity;
+import net.notccg.yahresurrected.entity.custom.AbstractHunterEntity;
 import net.notccg.yahresurrected.entity.custom.SteveEntity;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
@@ -80,7 +80,7 @@ public class ModEvents {
                         if (entity instanceof EnderMan && !hasSpellBookVII(player)) {
                             return;
                         }
-                        if (entity instanceof HunterEntity && !hasSpellBookI(player)) {
+                        if (entity instanceof AbstractHunterEntity && !hasSpellBookI(player)) {
                             return;
                         }
                         event.setCanceled(true);

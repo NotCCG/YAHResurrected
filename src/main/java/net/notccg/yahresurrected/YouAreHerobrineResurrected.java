@@ -1,7 +1,7 @@
 package net.notccg.yahresurrected;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;

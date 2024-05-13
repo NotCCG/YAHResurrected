@@ -1,16 +1,12 @@
 package net.notccg.yahresurrected.entity.client.hunter;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.AnimationUtils;
-import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -19,7 +15,6 @@ import net.minecraft.world.item.Items;
 
 
 public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<T> {
-
     public HunterModel(ModelPart root) {
         super(root);
     }
@@ -65,14 +60,5 @@ public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<
             AnimationUtils.bobArms(this.rightArm, this.leftArm, pAgeInTicks);
         }
 
-    }
-
-    @Override
-    public void translateToHand(HumanoidArm pSide, PoseStack pPoseStack) {
-        float $$2 = pSide == HumanoidArm.RIGHT ? 1.0F : -1.0F;
-        ModelPart $$3 = this.getArm(pSide);
-        $$3.x += $$2;
-        $$3.translateAndRotate(pPoseStack);
-        $$3.x -= $$2;
     }
 }

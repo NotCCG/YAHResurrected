@@ -5,7 +5,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.ModEntities;
-import net.notccg.yahresurrected.entity.custom.HunterEntity;
+import net.notccg.yahresurrected.entity.custom.AbstractHunterEntity;
 import net.notccg.yahresurrected.entity.custom.SteveEntity;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -13,6 +13,6 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.STEVE.get(), SteveEntity.createAttribute().build());
-        event.put(ModEntities.HUNTER.get(), HunterEntity.createAttribute().build());
+        event.put(ModEntities.HUNTER.get(), AbstractHunterEntity.createAttribute().build());
     }
 }

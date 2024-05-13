@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.entity.custom.AbstractHunterEntity;
 import net.notccg.yahresurrected.entity.custom.HunterEntity;
 import net.notccg.yahresurrected.entity.custom.SteveEntity;
 
