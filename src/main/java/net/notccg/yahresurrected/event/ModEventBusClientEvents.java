@@ -15,7 +15,9 @@ import net.notccg.yahresurrected.entity.client.steve.SteveModel;
 public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ModModelLayers.STEVE_LAYER, SteveModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.STEVE_MAIN, SteveModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.STEVE_INNER, SteveModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.STEVE_OUTER, SteveModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_MAIN, HunterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_INNER, HunterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_OUTER, HunterModel::createBodyLayer);

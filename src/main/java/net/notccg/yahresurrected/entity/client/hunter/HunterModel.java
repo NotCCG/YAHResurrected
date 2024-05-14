@@ -1,6 +1,5 @@
 package net.notccg.yahresurrected.entity.client.hunter;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
