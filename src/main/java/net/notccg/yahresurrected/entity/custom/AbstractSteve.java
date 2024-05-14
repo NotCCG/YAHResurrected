@@ -78,7 +78,6 @@ public class AbstractSteve extends Animal {
                 .add(Attributes.MOVEMENT_SPEED,1);
     }
 
-
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
@@ -91,11 +90,13 @@ public class AbstractSteve extends Animal {
         return SoundEvents.PLAYER_DEATH;
     }
 
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
         return null;
     }
+
 }
 
 

@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -94,13 +95,17 @@ public class ModEvents {
         public static void onLivingDeath(LivingDeathEvent event) {
             LivingEntity entity = event.getEntity();
             if (entity instanceof AbstractSteve) {
-                Level world = entity.level();
-                BlockPos pos = entity.blockPosition();
-                ItemStack itemStack = new ItemStack(ModItems.STEVESOUL.get());
-                ItemDropper.dropItem(world, pos, itemStack);
+                if (event.getSource().getEntity() instanceof Player player) {
+                    Level world = entity.level();
+                    BlockPos pos = entity.blockPosition();
+                    ItemStack itemStack = new ItemStack(ModItems.STEVESOUL.get());
+                    ItemDropper.dropItem(world, pos, itemStack);
+                    player.sendSystemMessage(Component.literal("PlayerName_Placeholder was killed by Herobrine"));
+                }
             }
         }
     }
+
 
     private static boolean hasSpellBookI(Player player) {
         for (ItemStack stack : player.getInventory().items) {
