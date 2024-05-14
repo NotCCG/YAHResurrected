@@ -7,18 +7,17 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.entity.custom.AbstractHunterEntity;
-import net.notccg.yahresurrected.entity.custom.HunterEntity;
-import net.notccg.yahresurrected.entity.custom.SteveEntity;
+import net.notccg.yahresurrected.entity.custom.Hunter;
+import net.notccg.yahresurrected.entity.custom.Steve;
 
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, YouAreHerobrineResurrected.MOD_ID);
-    public static final RegistryObject<EntityType<SteveEntity>> STEVE =
-            ENTITY_TYPES.register("steve", () -> EntityType.Builder.of(SteveEntity::new, MobCategory.CREATURE)
+    public static final RegistryObject<EntityType<Steve>> STEVE =
+            ENTITY_TYPES.register("steve", () -> EntityType.Builder.of(Steve::new, MobCategory.CREATURE)
                     .sized(0.8f, 1.8f).build("steve"));
-    public static final RegistryObject<EntityType<HunterEntity>> HUNTER =
-            ENTITY_TYPES.register("hunter", () -> EntityType.Builder.of(HunterEntity::new, MobCategory.MONSTER)
+    public static final RegistryObject<EntityType<Hunter>> HUNTER =
+            ENTITY_TYPES.register("hunter", () -> EntityType.Builder.of(Hunter::new, MobCategory.MONSTER)
                     .sized(0.8f, 1.8f).build("hunter"));
 
     public static void register(IEventBus eventBus) {

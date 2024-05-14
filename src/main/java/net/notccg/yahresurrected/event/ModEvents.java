@@ -20,8 +20,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.entity.custom.AbstractHunterEntity;
-import net.notccg.yahresurrected.entity.custom.SteveEntity;
+import net.notccg.yahresurrected.entity.custom.AbstractHunter;
+import net.notccg.yahresurrected.entity.custom.AbstractSteve;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.item.custom.SpellBookSevenItem;
@@ -80,7 +80,7 @@ public class ModEvents {
                         if (entity instanceof EnderMan && !hasSpellBookVII(player)) {
                             return;
                         }
-                        if (entity instanceof AbstractHunterEntity && !hasSpellBookI(player)) {
+                        if (entity instanceof AbstractHunter && !hasSpellBookI(player)) {
                             return;
                         }
                         event.setCanceled(true);
@@ -93,7 +93,7 @@ public class ModEvents {
         @SubscribeEvent
         public static void onLivingDeath(LivingDeathEvent event) {
             LivingEntity entity = event.getEntity();
-            if (entity instanceof SteveEntity) {
+            if (entity instanceof AbstractSteve) {
                 Level world = entity.level();
                 BlockPos pos = entity.blockPosition();
                 ItemStack itemStack = new ItemStack(ModItems.STEVESOUL.get());

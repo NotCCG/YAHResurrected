@@ -8,8 +8,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-public class HunterEntity extends AbstractHunterEntity{
-    public HunterEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
+public class Hunter extends AbstractHunter {
+    public Hunter(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 

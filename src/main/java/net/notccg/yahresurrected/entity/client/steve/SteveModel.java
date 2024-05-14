@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.notccg.yahresurrected.entity.animations.ModAnimationsDefinitions;
-import net.notccg.yahresurrected.entity.custom.SteveEntity;
+import net.notccg.yahresurrected.entity.custom.AbstractSteve;
 
 public class SteveModel<T extends Entity> extends HierarchicalModel<T> {
 	private final ModelPart Steve;
@@ -51,7 +51,7 @@ public class SteveModel<T extends Entity> extends HierarchicalModel<T> {
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
 		this.animateWalk(ModAnimationsDefinitions.STEVE_WALKING, limbSwing, limbSwingAmount, 4f, 2.5f);
-		this.animate(((SteveEntity) entity).idleAnimationState, ModAnimationsDefinitions.STEVE_IDLE, ageInTicks, 1f);
+		this.animate(((AbstractSteve) entity).idleAnimationState, ModAnimationsDefinitions.STEVE_IDLE, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

@@ -1,12 +1,10 @@
 package net.notccg.yahresurrected.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,21 +23,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractHunterEntity extends Monster implements RangedAttackMob {
-    private final RangedBowAttackGoal<AbstractHunterEntity> bowGoal = new RangedBowAttackGoal(this, 1.0, 20, 15.0F);
+public class AbstractHunter extends Monster implements RangedAttackMob {
+    private final RangedBowAttackGoal<AbstractHunter> bowGoal = new RangedBowAttackGoal(this, 1.0, 20, 15.0F);
     private final MeleeAttackGoal meleeGoal = new MeleeAttackGoal(this, 1.2, false) {
         public void stop() {
             super.stop();
-            AbstractHunterEntity.this.setAggressive(false);
+            AbstractHunter.this.setAggressive(false);
         }
 
         public void start() {
             super.start();
-            AbstractHunterEntity.this.setAggressive(true);
+            AbstractHunter.this.setAggressive(true);
         }
     };
 
-    public AbstractHunterEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
+    public AbstractHunter(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.reassessWeaponGoal();
     }
