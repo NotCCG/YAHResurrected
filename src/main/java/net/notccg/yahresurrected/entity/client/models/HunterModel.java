@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.entity.client.hunter;
+package net.notccg.yahresurrected.entity.client.models;
 
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;

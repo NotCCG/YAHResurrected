@@ -1,14 +1,9 @@
-package net.notccg.yahresurrected.entity.client.steve;
+package net.notccg.yahresurrected.entity.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
-import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.client.ModModelLayers;
-import net.notccg.yahresurrected.entity.custom.AbstractSteve;
+import net.notccg.yahresurrected.entity.client.models.SteveModel;
 import net.notccg.yahresurrected.entity.custom.Steve;
 
 public class SteveRenderer extends AbstractSteveRenderer<Steve, SteveModel<Steve>> {

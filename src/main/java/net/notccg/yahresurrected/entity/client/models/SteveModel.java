@@ -1,8 +1,7 @@
-package net.notccg.yahresurrected.entity.client.steve;
+package net.notccg.yahresurrected.entity.client.models;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;

@@ -1,11 +1,12 @@
-package net.notccg.yahresurrected.entity.client.steve;
+package net.notccg.yahresurrected.entity.client.models;
 
 import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
-public class AbstractSteveModel<T extends Mob> extends HumanoidModel<T> {
+public class AbstractSteveModel<T extends LivingEntity> extends HumanoidModel<T> {
     public AbstractSteveModel(ModelPart pRoot) {
         super(pRoot);
     }

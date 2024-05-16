@@ -1,7 +1,6 @@
 package net.notccg.yahresurrected;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,8 +11,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.entity.ModEntities;
-import net.notccg.yahresurrected.entity.client.hunter.HunterRenderer;
-import net.notccg.yahresurrected.entity.client.steve.SteveRenderer;
+import net.notccg.yahresurrected.entity.client.renderer.HunterRenderer;
+import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;

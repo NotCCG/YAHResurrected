@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.entity.client.hunter;
+package net.notccg.yahresurrected.entity.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.client.ModModelLayers;
+import net.notccg.yahresurrected.entity.client.models.HunterModel;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 
 public class HunterRenderer extends MobRenderer<AbstractHunter, HunterModel<AbstractHunter>> {
