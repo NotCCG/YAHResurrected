@@ -10,9 +10,9 @@
     }
   },
   "pattern": [
-    " PL",
+    " LP",
     "LPL",
-    "LP "
+    "PL "
   ],
   "result": {
     "item": "youareherobrineresurrected:skin_book"

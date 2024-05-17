@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 import net.notccg.yahresurrected.entity.custom.AbstractSteve;
+import net.notccg.yahresurrected.entity.custom.logic.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.item.custom.SpellBookSevenItem;
@@ -101,11 +102,14 @@ public class ModEvents {
                     BlockPos pos = entity.blockPosition();
                     ItemStack itemStack = new ItemStack(ModItems.STEVESOUL.get());
                     ItemDropper.dropItem(world, pos, itemStack);
-                    player.sendSystemMessage(Component.literal("PlayerName_Placeholder was killed by Herobrine"));
+                    player.sendSystemMessage(Component.literal(new SteveLogic().getSteveName() + " was slain by Herobrine"));
                 }
             }
         }
+
+
     }
+
 
     private static boolean hasSpellBookI(Player player) {
         for (ItemStack stack : player.getInventory().items) {

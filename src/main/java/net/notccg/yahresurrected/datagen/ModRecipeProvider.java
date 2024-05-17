@@ -28,9 +28,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         oreSmelting(pWriter, EVIL_DIAMONDS, RecipeCategory.MISC, ModItems.EVILDIAMOND.get(), 1f, 100, "evil_diamond");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SKINBOOK.get())
-                .pattern(" PL")
+                .pattern(" LP")
                 .pattern("LPL")
-                .pattern("LP ")
+                .pattern("PL ")
                 .define('P', Items.PAPER)
                 .define('L', Items.LEATHER)
                 .unlockedBy(getHasName(Items.LEATHER), has(Items.LEATHER))

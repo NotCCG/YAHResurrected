@@ -12,6 +12,11 @@ import net.minecraft.world.level.Level;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyBlocksSensor;
+import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
+import net.tslat.smartbrainlib.api.core.sensor.custom.UnreachableTargetSensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 
 import java.util.List;
 
@@ -64,8 +69,15 @@ public class AbstractSteve extends Mob implements SmartBrainOwner {
 
     @Override
     public List<? extends ExtendedSensor> getSensors() {
-        return List.of();
+        return List.of(
+                new NearbyPlayersSensor(),
+                new HurtBySensor(),
+                new NearbyBlocksSensor<>(),
+                new NearbyItemsSensor(),
+                new UnreachableTargetSensor<AbstractSteve>()
+        );
     }
+
 }
 
 

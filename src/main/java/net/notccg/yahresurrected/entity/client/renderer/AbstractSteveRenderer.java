@@ -9,7 +9,7 @@ import net.notccg.yahresurrected.entity.custom.Steve;
 
 public class AbstractSteveRenderer<T extends Steve, M extends SteveModel<T>> extends HumanoidMobRenderer<T, M> {
 
-    private static final ResourceLocation STEVE_LOCATION = new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve_entity.png");
+    private static final ResourceLocation STEVE_LOCATION = new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve_entity_1.png");
 
     public AbstractSteveRenderer(EntityRendererProvider.Context pContext, M pModel, M pInnerModel, M pOuterModel) {
         super(pContext, pModel, 0.5F);
