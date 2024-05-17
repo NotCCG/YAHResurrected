@@ -13,7 +13,7 @@ public class AbstractSteveRenderer<T extends Steve, M extends SteveModel<T>> ext
 
     public AbstractSteveRenderer(EntityRendererProvider.Context pContext, M pModel, M pInnerModel, M pOuterModel) {
         super(pContext, pModel, 0.5F);
-        this.addLayer(new HumanoidArmorLayer(this, pInnerModel, pOuterModel, pContext.getModelManager()));
+        this.addLayer(new HumanoidArmorLayer<>(this, pInnerModel, pOuterModel, pContext.getModelManager()));
     }
 
     @Override

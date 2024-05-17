@@ -20,7 +20,7 @@ public class HunterRenderer extends MobRenderer<AbstractHunter, HunterModel<Abst
 }
 
     public HunterRenderer(EntityRendererProvider.Context pContext, ModelLayerLocation hunterMain, ModelLayerLocation hunterInner, ModelLayerLocation hunterOuter) {
-        super(pContext, new HunterModel<>(pContext.bakeLayer(hunterMain)), 0.75f);
+        super(pContext, new HunterModel<>(pContext.bakeLayer(hunterMain)), 0.5f);
         this.addLayer(new HumanoidArmorLayer<>(this, new HunterModel<>(pContext.bakeLayer(hunterInner)), new HunterModel<>(pContext.bakeLayer(hunterOuter)), pContext.getModelManager()));
         this.addLayer(new ItemInHandLayer<>(this, pContext.getItemInHandRenderer()));
     }

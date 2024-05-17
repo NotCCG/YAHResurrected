@@ -1,8 +1,6 @@
 package net.notccg.yahresurrected.entity.custom;
 
 
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
@@ -17,30 +15,41 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;
 
-public class AbstractSteve extends LivingEntity implements SmartBrainOwner {
+public class AbstractSteve extends Mob implements SmartBrainOwner {
 
     protected AbstractSteve(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
+        super((EntityType<? extends Mob>) pEntityType, pLevel);
+    }
+
+    public static AttributeSupplier.Builder createAttribute() {
+        return Monster.createMonsterAttributes()
+                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.MOVEMENT_SPEED,1);
+    }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        return super.hurt(pSource, pAmount);
     }
 
     @Override
     public Iterable<ItemStack> getArmorSlots() {
-        return null;
+        return super.getArmorSlots();
     }
 
     @Override
     public ItemStack getItemBySlot(EquipmentSlot equipmentSlot) {
-        return null;
+        return super.getItemBySlot(equipmentSlot);
     }
 
     @Override
     public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {
-
+        super.setItemSlot(equipmentSlot, itemStack);
     }
 
     @Override
     public HumanoidArm getMainArm() {
-        return null;
+        return HumanoidArm.RIGHT;
     }
 
     @Override
@@ -49,7 +58,7 @@ public class AbstractSteve extends LivingEntity implements SmartBrainOwner {
     }
 
     @Override
-    protected void serverAiStep() {
+    protected void customServerAiStep() {
         tickBrain(this);
     }
 

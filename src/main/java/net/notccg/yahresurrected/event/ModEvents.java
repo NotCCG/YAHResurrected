@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.event;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.*;
@@ -58,7 +59,7 @@ public class ModEvents {
                         for (int y = playerY + 1; y < Math.min(playerY + MAX_HEIGHT_ABOVE_PLAYER, world.getMaxBuildHeight()); y++) {
                             BlockPos blockPos = new BlockPos(playerX, y, playerZ);
                             Block blockAbove = world.getBlockState(blockPos).getBlock();
-                            if (!blockAbove.equals(Blocks.AIR) && !blockAbove.equals(Blocks.WATER) && !blockAbove.equals(Blocks.LAVA)) {
+                            if (!blockAbove.equals(Blocks.AIR) && !blockAbove.equals(Blocks.WATER) && !blockAbove.equals(Blocks.LAVA) && !blockAbove.equals(BlockTags.FLOWERS) && !blockAbove.equals(BlockTags.REPLACEABLE_BY_TREES)) {
                                 return;
                             }
                         }
@@ -105,7 +106,6 @@ public class ModEvents {
             }
         }
     }
-
 
     private static boolean hasSpellBookI(Player player) {
         for (ItemStack stack : player.getInventory().items) {
