@@ -38,6 +38,7 @@ public class SteveLogic {
         }
     }
 
+
     public static void holdInHand(Steve pSteve, ItemStack pStack) {
         if(isHoldingItemInHand(pSteve)) {
             pSteve.spawnAtLocation(pSteve.getItemInHand(InteractionHand.MAIN_HAND));

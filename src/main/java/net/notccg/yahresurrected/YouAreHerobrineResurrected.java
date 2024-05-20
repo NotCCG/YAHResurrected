@@ -17,6 +17,7 @@ import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
+import net.notccg.yahresurrected.util.ModSensors.ModSensorTypes;
 import net.notccg.yahresurrected.util.ModStructures;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
@@ -31,6 +32,7 @@ public class YouAreHerobrineResurrected {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
+        ModSensorTypes.register(modEventBus);
 
         ModLootModifiers.register(modEventBus);
         ModStructures.STRUCTURE_TYPE_DEFERRED_REGISTER.register(modEventBus);
