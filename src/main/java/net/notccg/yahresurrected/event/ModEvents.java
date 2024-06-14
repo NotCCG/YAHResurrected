@@ -24,7 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 import net.notccg.yahresurrected.entity.custom.AbstractSteve;
-import net.notccg.yahresurrected.entity.custom.logic.SteveLogic;
+import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.item.custom.SpellBookSevenItem;

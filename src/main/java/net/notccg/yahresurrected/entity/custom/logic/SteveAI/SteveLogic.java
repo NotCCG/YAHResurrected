@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.entity.custom.logic;
+package net.notccg.yahresurrected.entity.custom.logic.SteveAI;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;

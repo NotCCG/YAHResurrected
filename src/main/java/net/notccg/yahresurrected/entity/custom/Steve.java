@@ -1,24 +1,18 @@
 package net.notccg.yahresurrected.entity.custom;
 
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RedstoneTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.notccg.yahresurrected.entity.custom.logic.SteveLogic;
+import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
 import org.jetbrains.annotations.Nullable;
 
 public class Steve extends AbstractSteve {

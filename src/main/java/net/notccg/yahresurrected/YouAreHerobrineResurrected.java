@@ -1,7 +1,6 @@
 package net.notccg.yahresurrected;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,7 +16,7 @@ import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
-import net.notccg.yahresurrected.util.ModSensors.ModSensorTypes;
+import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModStructures;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
@@ -32,7 +31,7 @@ public class YouAreHerobrineResurrected {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModEntities.register(modEventBus);
-        ModSensorTypes.register(modEventBus);
+        ModMemoryTypes.MEMORY_MODULE_TYPES.register(modEventBus);
 
         ModLootModifiers.register(modEventBus);
         ModStructures.STRUCTURE_TYPE_DEFERRED_REGISTER.register(modEventBus);
