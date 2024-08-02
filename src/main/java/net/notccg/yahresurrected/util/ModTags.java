@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.util;
 
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -19,7 +20,6 @@ public class ModTags {
             return BlockTags.create(new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name));
         }
     }
-
 
 
     public static class Items {
