@@ -4,7 +4,6 @@ import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 
 public class AbstractSteveModel<T extends LivingEntity> extends HumanoidModel<T> {
     public AbstractSteveModel(ModelPart pRoot) {

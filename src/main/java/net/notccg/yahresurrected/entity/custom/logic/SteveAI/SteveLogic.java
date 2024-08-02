@@ -1,11 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.SteveAI;
 
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.util.ModTags;
 import java.util.Random;
 
