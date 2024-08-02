@@ -38,10 +38,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EVILDIAMONDSHOVEL.get());
                         output.accept(ModItems.EVILDIAMONDHOE.get());
                         output.accept(ModItems.EVILDIAMONDSWORD.get());
-                        output.accept(ModItems.BEDROCKPIXAXE.get());
                         output.accept(ModItems.STEVE_SPAWN_EGG.get());
                         output.accept(ModItems.HUNTER_SPAWN_EGG.get());
-
                         output.accept(ModBlocks.ICE_RUBY_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get());
                         output.accept(ModBlocks.INVISIBLE_ORE.get());

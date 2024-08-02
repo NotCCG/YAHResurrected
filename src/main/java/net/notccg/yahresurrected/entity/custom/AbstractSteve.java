@@ -12,9 +12,12 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.Blocks;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetRedStoneTorchTarget;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
+import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyBlocksSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
@@ -25,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AbstractSteve extends Mob implements SmartBrainOwner {
+public class AbstractSteve extends Mob {
 
     protected AbstractSteve(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super((EntityType<? extends Mob>) pEntityType, pLevel);
@@ -68,31 +71,6 @@ public class AbstractSteve extends Mob implements SmartBrainOwner {
         return HumanoidArm.RIGHT;
     }
 
-    @Override
-    protected Brain.Provider<?> brainProvider() {
-        return new SmartBrainProvider<>(this);
-    }
-
-    @Override
-    protected void customServerAiStep() {
-        tickBrain(this);
-    }
-
-    @Override
-    public BrainActivityGroup getIdleTasks() {
-        return SmartBrainOwner.super.getIdleTasks();
-    }
-
-    @Override
-    public List<? extends ExtendedSensor> getSensors() {
-        return List.of(
-                new NearbyPlayersSensor(),
-                new HurtBySensor(),
-                new NearbyBlocksSensor<>(),
-                new NearbyItemsSensor(),
-                new UnreachableTargetSensor<AbstractSteve>()
-        );
-    }
 
 }
 

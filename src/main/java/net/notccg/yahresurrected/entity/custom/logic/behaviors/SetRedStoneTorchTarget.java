@@ -5,7 +5,6 @@ import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
@@ -22,6 +21,7 @@ import java.util.stream.Collectors;
 public class SetRedStoneTorchTarget<E extends Mob> extends ExtendedBehaviour<E> {
     private static final MemoryModuleType<List<Pair<BlockPos, BlockState>>> NEARBY_BLOCKS = SBLMemoryTypes.NEARBY_BLOCKS.get();
     private static final MemoryModuleType<BlockPos> TARGET_BLOCK = ModMemoryTypes.TARGET_BLOCK.get();
+    private static final MemoryModuleType<BlockPos> VISITED_BLOCK = ModMemoryTypes.VISITED_BLOCK.get();
 
     private final Block targetBlockType;
     public SetRedStoneTorchTarget(Block targetBlockType) {
@@ -29,8 +29,9 @@ public class SetRedStoneTorchTarget<E extends Mob> extends ExtendedBehaviour<E> 
     }
 
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS = ObjectArrayList.of(
-            Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
-            Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.VALUE_ABSENT));
+            Pair.of(NEARBY_BLOCKS, MemoryStatus.VALUE_PRESENT),
+            Pair.of(TARGET_BLOCK, MemoryStatus.VALUE_ABSENT),
+            Pair.of(VISITED_BLOCK, MemoryStatus.VALUE_ABSENT));
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
@@ -63,6 +64,7 @@ public class SetRedStoneTorchTarget<E extends Mob> extends ExtendedBehaviour<E> 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
         entity.getBrain().eraseMemory(TARGET_BLOCK);
+        entity.getBrain().eraseMemory(VISITED_BLOCK);
     }
 
     @Override
@@ -82,12 +84,20 @@ public class SetRedStoneTorchTarget<E extends Mob> extends ExtendedBehaviour<E> 
     }
 
     private boolean hasVisitedBlock(E entity, BlockPos blockPos) {
-        // Implement logic to check if the entity has visited the block before
+        BlockPos targetedblock = entity.getBrain().getMemory(TARGET_BLOCK).get();
+        BlockPos recentlyVisited = entity.getBrain().getMemory(VISITED_BLOCK).get();
+        if (targetedblock == recentlyVisited) {
+            return true;
+        }
         return false;
     }
 
     private void markBlockAsVisited(E entity, BlockPos blockPos) {
-        // Implement logic to mark the block as visited
+        BlockPos entityPos = entity.blockPosition();
+        BlockPos targetedBlock = entity.getBrain().getMemory(TARGET_BLOCK).get();
+        if (entityPos == targetedBlock) {
+            entity.getBrain().setMemory(VISITED_BLOCK, blockPos);
+        }
     }
 
     private void navigateToBlock(Mob entity, BlockPos blockPos) {

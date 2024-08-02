@@ -8,14 +8,29 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetRedStoneTorchTarget;
+import net.tslat.smartbrainlib.api.SmartBrainOwner;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
+import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
+import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyBlocksSensor;
+import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
+import net.tslat.smartbrainlib.api.core.sensor.custom.UnreachableTargetSensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import org.jetbrains.annotations.Nullable;
 
-public class Steve extends AbstractSteve {
+import java.util.List;
+
+public class Steve extends AbstractSteve implements SmartBrainOwner {
 
     public HumanoidModel.ArmPose getArmPose() {
         if(SteveLogic.isLovedItem(this.getMainHandItem())) {
@@ -24,34 +39,11 @@ public class Steve extends AbstractSteve {
         return HumanoidModel.ArmPose.EMPTY;
     }
 
-    private final SimpleContainer inventory = new SimpleContainer(128);
 
     public Steve(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-
-    public void findBlockTarget(BlockState pBlockstate, MemoryModuleType pBlockTargetMemory) {
-
-    }
-
-    public void holdInMainHand(ItemStack pStack) {
-        this.setItemSlotAndDropWhenKilled(EquipmentSlot.MAINHAND, pStack);
-    }
-
-    public ItemStack addToInventory(ItemStack pItemStack) {
-        return this.inventory.addItem(pItemStack);
-    }
-
-    public boolean canAddToInventory(ItemStack pItemStack) {
-        return this.inventory.canAddItem(pItemStack);
-    }
-
-    public boolean canReplaceCurrentItem(ItemStack pCanidate) {
-        EquipmentSlot equipmentSlot = LivingEntity.getEquipmentSlotForItem(pCanidate);
-        ItemStack itemStack = this.getItemBySlot(equipmentSlot);
-        return this.canReplaceCurrentItem(pCanidate, itemStack);
-    }
 
     @Nullable
     @Override
@@ -63,5 +55,36 @@ public class Steve extends AbstractSteve {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.PLAYER_DEATH;
+    }
+
+    @Override
+    protected Brain.Provider<?> brainProvider() {
+        return new SmartBrainProvider<>(this);
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        tickBrain(this);
+    }
+
+    @Override
+    public BrainActivityGroup getIdleTasks() {
+        return SmartBrainOwner.super.getIdleTasks();
+    }
+
+    @Override
+    public BrainActivityGroup getCoreTasks() {
+        return SmartBrainOwner.super.getCoreTasks();
+    }
+
+    @Override
+    public List<? extends ExtendedSensor> getSensors() {
+        return List.of(
+                new NearbyPlayersSensor(),
+                new HurtBySensor(),
+                new NearbyBlocksSensor<>(),
+                new NearbyItemsSensor(),
+                new UnreachableTargetSensor<AbstractSteve>()
+        );
     }
 }
