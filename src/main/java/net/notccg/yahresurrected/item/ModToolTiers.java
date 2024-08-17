@@ -19,7 +19,7 @@ public class ModToolTiers {
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "evil_diamond"), List.of(Tiers.NETHERITE), List.of());
 
     public static final  Tier BEDROCK = TierSortingRegistry.registerTier(
-            new ForgeTier(6, 30, 80, 1, 1,
+            new ForgeTier(6, 99999, 80, 1, 1,
             ModTags.Blocks.NEEDS_BEDROCK_TOOL, () -> Ingredient.of(Blocks.BEDROCK)),
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "bedrock"), List.of(ModToolTiers.EVIL_DIAMOND), List.of());
 

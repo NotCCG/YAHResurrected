@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
@@ -64,6 +65,7 @@ public class SetRedStoneTorchTarget<E extends Mob> extends ExtendedBehaviour<E> 
     protected void stop(ServerLevel level, E entity, long gameTime) {
         entity.getBrain().eraseMemory(TARGET_BLOCK);
         entity.getBrain().eraseMemory(VISITED_BLOCK);
+        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
     }
 
     @Override

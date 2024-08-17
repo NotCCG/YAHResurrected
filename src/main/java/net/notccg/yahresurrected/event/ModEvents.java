@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
@@ -74,8 +73,8 @@ public class ModEvents {
         public static void onLivingChangeTargetEvent(LivingChangeTargetEvent event) {
             LivingEntity entity = event.getEntity();
             LivingEntity targetEntity = event.getNewTarget();
-            if (entity instanceof Monster) {
-                if (targetEntity instanceof Player player) {
+            if (targetEntity instanceof Player player) {
+                if (entity instanceof Monster) {
                     if (!(entity.getLastHurtByMob() instanceof Player)) {
                         if (entity instanceof Creeper && !hasSpellBookVI(player)) {
                             return;
@@ -106,8 +105,6 @@ public class ModEvents {
                 }
             }
         }
-
-
     }
 
 
@@ -148,7 +145,6 @@ public class ModEvents {
     }
 
     public class ItemDropper {
-
         public static void dropItem(Level world, BlockPos pos, ItemStack itemStack) {
             ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
 
