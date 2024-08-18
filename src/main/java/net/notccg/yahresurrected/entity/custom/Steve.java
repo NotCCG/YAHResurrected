@@ -8,17 +8,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetRedStoneTorchTarget;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToBlock;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyBlocksSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
@@ -71,8 +68,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner {
     public BrainActivityGroup getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour(
-                        new SetRedStoneTorchTarget(Blocks.REDSTONE_TORCH),
-                        new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))
+                        new LookAtTarget(),
+                        new SetRandomWalkTarget()
                 )
         );
     }
@@ -80,8 +77,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner {
     @Override
     public BrainActivityGroup getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new LookAtTarget<>(),
-                new WalkOrRunToWalkTarget<>()
+                new WalkOrRunToWalkTarget()
         );
     }
 

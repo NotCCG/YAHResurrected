@@ -77,6 +77,7 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
         return pSpawnData;
     }
 
+
     public void reassessWeaponGoal() {
         if (this.level() != null && !this.level().isClientSide) {
             this.goalSelector.removeGoal(this.meleeGoal);

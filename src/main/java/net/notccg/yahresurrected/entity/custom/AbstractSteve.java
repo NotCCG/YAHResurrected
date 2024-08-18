@@ -13,22 +13,23 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractSteve extends Mob {
+public class AbstractSteve extends PathfinderMob {
 
     protected AbstractSteve(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
-        super((EntityType<? extends Mob>) pEntityType, pLevel);
+        super((EntityType<? extends PathfinderMob>) pEntityType, pLevel);
     }
 
     public static AttributeSupplier.Builder createAttribute() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
-                .add(Attributes.MOVEMENT_SPEED,1);
+                .add(Attributes.MOVEMENT_SPEED,0.2);
     }
 
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        return pSpawnData;
     }
 
     @Override
