@@ -1,13 +1,17 @@
 package net.notccg.yahresurrected.entity.custom;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -83,12 +87,12 @@ public class Steve extends AbstractSteve implements SmartBrainOwner {
 
     @Override
     public List<? extends ExtendedSensor> getSensors() {
-        return List.of(
-                new NearbyPlayersSensor(),
+        return ObjectArrayList.of(
                 new HurtBySensor(),
-                new NearbyBlocksSensor<>(),
-                new NearbyItemsSensor(),
-                new UnreachableTargetSensor<AbstractSteve>()
+                new UnreachableTargetSensor<>(),
+                new NearbyBlocksSensor<>()
+                        .setRadius(7)
+                        .setPredicate((state, entity) -> state.is(Blocks.REDSTONE_BLOCK) || state.is(BlockTags.SIGNS))
         );
     }
 }
