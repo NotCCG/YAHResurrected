@@ -15,6 +15,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class AbstractSteve extends PathfinderMob {
 
+    //Basic Steve Entity Setup
+
     protected AbstractSteve(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super((EntityType<? extends PathfinderMob>) pEntityType, pLevel);
     }

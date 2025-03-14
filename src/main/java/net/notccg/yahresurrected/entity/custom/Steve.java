@@ -32,6 +32,8 @@ import java.util.List;
 
 public class Steve extends AbstractSteve implements SmartBrainOwner {
 
+    //Steve SmartBrain Logic
+
     public HumanoidModel.ArmPose getArmPose() {
         if(SteveLogic.isLovedItem(this.getMainHandItem())) {
             return HumanoidModel.ArmPose.ITEM;

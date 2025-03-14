@@ -24,6 +24,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
 public class AbstractHunter extends Monster implements RangedAttackMob {
+
+    //Default Hunter Mob Goal Configuration
+
     private final RangedBowAttackGoal<AbstractHunter> bowGoal = new RangedBowAttackGoal(this, 1.0, 20, 15.0F);
     private final MeleeAttackGoal meleeGoal = new MeleeAttackGoal(this, 1.2, false) {
         public void stop() {

@@ -24,7 +24,7 @@ public class SteveLogic {
         return pItemsTack.is(ModTags.Items.STEVE_LOVED);
     }
 
-
+//To be implemented
     public static class FearState {
 
         private int fearLevel;
