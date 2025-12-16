@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractSteve extends PathfinderMob {
+public class AbstractSteve extends Mob {
 
     //Basic Steve Entity Setup
 

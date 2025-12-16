@@ -8,10 +8,21 @@ import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 
 import java.util.Optional;
+import java.util.Set;
 
 public class ModMemoryTypes {
-    public static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.Keys.MEMORY_MODULE_TYPES, YouAreHerobrineResurrected.MOD_ID);
+    public static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES =
+            DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, YouAreHerobrineResurrected.MOD_ID);
 
-    public static final RegistryObject<MemoryModuleType<BlockPos>> NEAREST_BLOCK_OF_INTEREST = MEMORY_MODULE_TYPES.register("target_block", () -> new MemoryModuleType<>(Optional.of(BlockPos.CODEC)));
+    public static final RegistryObject<MemoryModuleType<BlockPos>> INTERESTED_BLOCK_TARGET =
+            MEMORY_MODULE_TYPES.register(
+                    "interested_block_target",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 
+    public static final RegistryObject<MemoryModuleType<Set<BlockPos>>> VISITED_BLOCKS =
+            MEMORY_MODULE_TYPES.register(
+                    "visited_blocks",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }
