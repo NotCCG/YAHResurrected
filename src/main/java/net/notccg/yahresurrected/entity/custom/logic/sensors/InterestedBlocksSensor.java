@@ -20,7 +20,7 @@ import java.util.Set;
 public class InterestedBlocksSensor<E extends Mob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.VISITED_BLOCKS.get(), ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
     private static final int RADIUS = 16;
-    private static final int SCAN_INTERVAL_TICKS = 20; // once per second
+    private static final int SCAN_INTERVAL_TICKS = 20;
 
     private long nextScanTick = 0;
 
