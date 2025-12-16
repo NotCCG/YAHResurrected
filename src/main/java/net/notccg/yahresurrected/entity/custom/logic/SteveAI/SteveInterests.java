@@ -1,7 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.SteveAI;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;

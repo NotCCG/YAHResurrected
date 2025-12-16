@@ -25,4 +25,10 @@ public class ModMemoryTypes {
                     "visited_blocks",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<?>> SPOTTED_PLAYER =
+            MEMORY_MODULE_TYPES.register(
+                    "spotted_player",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }
