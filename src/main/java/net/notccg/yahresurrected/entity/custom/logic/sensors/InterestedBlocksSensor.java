@@ -4,7 +4,7 @@ package net.notccg.yahresurrected.entity.custom.logic.sensors;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.level.block.Block;
@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class InterestedBlocksSensor<E extends Mob> extends ExtendedSensor<E> {
+public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.VISITED_BLOCKS.get(), ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
     private static final int RADIUS = 16;
     private static final int SCAN_INTERVAL_TICKS = 20;
@@ -46,7 +46,7 @@ public class InterestedBlocksSensor<E extends Mob> extends ExtendedSensor<E> {
 
         var brain = entity.getBrain();
 
-        // If we already have a target, don’t pick a new one
+        // If steve already has a target, don’t pick a new one
         if (brain.hasMemoryValue(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get()))
             return;
 
@@ -72,7 +72,7 @@ public class InterestedBlocksSensor<E extends Mob> extends ExtendedSensor<E> {
             return;
         }
 
-        // Ensure the visited memory is at least present once we start thinking about blocks
+        // Ensure the visited memory is at least present once steve starts thinking about blocks
         if (!brain.hasMemoryValue(ModMemoryTypes.VISITED_BLOCKS.get()))
             brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), visited);
     }

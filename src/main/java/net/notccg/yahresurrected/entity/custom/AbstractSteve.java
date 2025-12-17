@@ -17,11 +17,11 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractSteve extends Mob {
-
-    protected AbstractSteve(EntityType<? extends Mob> pEntityType, Level pLevel) {
+public class AbstractSteve extends PathfinderMob {
+    protected AbstractSteve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+
 
     //Basic Steve Entity Setup
 

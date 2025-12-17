@@ -2,7 +2,7 @@ package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
@@ -13,9 +13,9 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;
 
-public class SpotPlayerSensor<E extends Mob> extends ExtendedSensor<E> {
+public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final double RANGE = 16.0;
-    private static final int SCAN_INTERVAL_TICKS = 30; // twice per second
+    private static final int SCAN_INTERVAL_TICKS = 30; // twice per one and a half seconds
 
     private long nextScanTick = 0;
 

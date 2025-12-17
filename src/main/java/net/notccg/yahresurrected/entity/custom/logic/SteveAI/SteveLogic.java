@@ -25,29 +25,79 @@ public class SteveLogic {
     }
 
 //To be implemented
-    public static class FearState {
+public static class FearState {
+    private double fearLevel;
 
-        private int fearLevel;
+    public double getFearLevel() {
+        return fearLevel;
+    }
 
-        public int getFearLevel() {
-            return fearLevel;
+    public double increaseFear(double amount) {
+        fearLevel = clamp(fearLevel + amount);
+        return fearLevel;
+    }
+
+    public double decreaseFear(double amount) {
+        fearLevel = clamp(fearLevel - amount);
+        return fearLevel;
+    }
+
+    private double clamp(double v) {
+        return Math.max(0.0, Math.min(2.0, v));
+    }
+
+    public boolean isCalm() {
+        return fearLevel == 0.0;
+    }
+
+    public boolean isSpooked() {
+        return fearLevel > 0.0 && fearLevel < 1.0;
+    }
+
+    public boolean isUneasy() {
+        return fearLevel >= 1.0 && fearLevel < 1.5;
+    }
+
+    public boolean isScared() {
+        return fearLevel >= 1.5 && fearLevel < 2.0;
+    }
+
+    public boolean isTerrified() {
+        return fearLevel >= 2.0;
+    }
+}
+
+    public static class CuriosityLevel {
+        private double curiosityLevel;
+
+        public double getCuriosityLevel() {
+            return curiosityLevel;
         }
 
-        public void increaseFear() {
+        public double increaseCuriosity(double amount) {
+            curiosityLevel = clamp(curiosityLevel + amount);
+            return curiosityLevel;
         }
 
-        public void decreaseFear() {
+        public double decreaseCuriosity(double amount) {
+            curiosityLevel = clamp(curiosityLevel - amount);
+            return curiosityLevel;
         }
 
-        public boolean isCalm() {
-            return fearLevel == 0;
-        }
-        public boolean isUneasy() {
-            return  (getFearLevel() <= 1.0 && getFearLevel() > 0 );
-        }
-        public boolean isSpooked() {
-            return (getFearLevel() <= 2.0 && getFearLevel() > 1.0);
+        private double clamp(double v) {
+            return Math.max(0.0, Math.min(2.0, v));
         }
 
+        public boolean isIntrigued() {
+            return curiosityLevel > 0.0 && curiosityLevel < 1.0;
+        }
+
+        public boolean isCurious() {
+            return curiosityLevel >= 1.0 && curiosityLevel < 2.0;
+        }
+
+        public boolean isVeryCurious() {
+            return curiosityLevel >= 2.0;
+        }
     }
 }
