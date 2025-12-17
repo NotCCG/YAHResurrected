@@ -33,13 +33,13 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<?>> FEAR_LEVEL =
+    public static final RegistryObject<MemoryModuleType<Double>> FEAR_LEVEL =
             MEMORY_MODULE_TYPES.register(
                     "fear_level",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<?>> CURIOSITY_LEVEL =
+    public static final RegistryObject<MemoryModuleType<Double>> CURIOSITY_LEVEL =
             MEMORY_MODULE_TYPES.register(
                     "curiosity_level",
                     () -> new MemoryModuleType<>(Optional.empty())

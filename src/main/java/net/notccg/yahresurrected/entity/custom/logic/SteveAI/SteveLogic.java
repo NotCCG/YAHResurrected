@@ -1,6 +1,8 @@
 package net.notccg.yahresurrected.entity.custom.logic.SteveAI;
 
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.item.ItemStack;
+import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
 import java.util.Random;
 
@@ -24,7 +26,38 @@ public class SteveLogic {
         return pItemsTack.is(ModTags.Items.STEVE_LOVED);
     }
 
-//To be implemented
+    public static double clampEmotion(double v) {
+        return Math.max(0.0, Math.min(2.0, v));
+    }
+
+    public static double getFear(Brain<?> brain) {
+        return brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
+    }
+
+    public static void addFear(Brain<?> brain, double amount) {
+        double next = clampEmotion(getFear(brain) + amount);
+        brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
+    }
+
+    public static void reduceFear(Brain<?> brain, double amount) {
+        double next = clampEmotion(getFear(brain) - amount);
+        brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
+    }
+
+    public static double getCuriosity(Brain<?> brain) {
+        return brain.getMemory(ModMemoryTypes.CURIOSITY_LEVEL.get()).orElse(0.0);
+    }
+
+    public static void addCuriosity(Brain<?> brain, double amount) {
+        double next = clampEmotion(getCuriosity(brain) + amount);
+        brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
+    }
+
+    public static void reduceCuriosity(Brain<?> brain, double amount) {
+        double next = clampEmotion(getCuriosity(brain) - amount);
+        brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
+    }
+
 public static class FearState {
     private double fearLevel;
 

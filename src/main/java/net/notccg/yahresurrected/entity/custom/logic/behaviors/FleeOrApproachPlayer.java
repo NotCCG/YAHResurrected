@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
@@ -23,25 +24,39 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private final int fleeHorizontal;
     private final int fleeVertical;
 
-    private final double fleeRadius;
-    private final double fleeRadiusSqr;
+    private final double baseFleeRadius;
+    private final double fearRadiusScale;
+
+    private final double fearOnSpot;
+    private final int fearSpotIntervalTicks;
 
     private long nextRepathTick = 0;
+    private long nextSpotFearTick = 0;
 
-    public FleeOrApproachPlayer(Item cloakingItem, double speed, int fleeHorizontal, int fleeVertical, double fleeRadius) {
+    public FleeOrApproachPlayer(Item cloakingItem,
+                                double speed,
+                                int fleeHorizontal,
+                                int fleeVertical,
+                                double baseFleeRadius,
+                                double fearRadiusScale,
+                                double fearOnSpot,
+                                int fearSpotIntervalTicks) {
         this.cloakingItem = cloakingItem;
         this.speed = speed;
         this.fleeHorizontal = fleeHorizontal;
         this.fleeVertical = fleeVertical;
-
-        this.fleeRadius = fleeRadius;
-        this.fleeRadiusSqr = fleeRadius * fleeRadius;
+        this.baseFleeRadius = baseFleeRadius;
+        this.fearRadiusScale = fearRadiusScale;
+        this.fearOnSpot = fearOnSpot;
+        this.fearSpotIntervalTicks = fearSpotIntervalTicks;
     }
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
-                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT)
+                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
+                Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED)
         );
     }
 
@@ -64,10 +79,17 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             return;
         }
 
-        if (entity.distanceToSqr(player) > fleeRadiusSqr) {
-            entity.getNavigation().stop();
-            return;
+        // Small fear increase from spotting (throttled)
+        if (gameTime >= nextSpotFearTick) {
+            SteveLogic.addFear(brain, fearOnSpot);
+            nextSpotFearTick = gameTime + fearSpotIntervalTicks;
         }
+
+        double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
+        fear = SteveLogic.clampEmotion(fear);
+
+        double fear01 = fear / 2.0;
+        double fleeRadius = baseFleeRadius + (fear01 * fearRadiusScale);
 
         if (gameTime < nextRepathTick)
             return;
