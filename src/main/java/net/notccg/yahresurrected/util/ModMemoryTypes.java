@@ -44,4 +44,8 @@ public class ModMemoryTypes {
                     "curiosity_level",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<Long>> HESITATION =
+            MEMORY_MODULE_TYPES.register("hesitation",
+                    () -> new MemoryModuleType<>(Optional.empty()));
 }

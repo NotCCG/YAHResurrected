@@ -13,7 +13,8 @@ public class SteveLogic {
     String[] STEVE_NAMES = {
             "Player",
             "Steve",
-            "DanTDM"
+            "DanTDM",
+            "NotCCG"
     };
 
     public String getSteveName() {

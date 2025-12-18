@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.FleeOrApproachPlayer;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.LookAtSpottedPlayer;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.WalkToInterestedBlock;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
 import net.notccg.yahresurrected.item.ModItems;
@@ -38,7 +39,16 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new LookAtTarget<>(),
+                new LookAtSpottedPlayer<>(ModItems.SPELLBOOKII.get(), 30.0f, 30.0f),
                 new MoveToWalkTarget<>(),
+                new FleeOrApproachPlayer<>(
+                        ModItems.SPELLBOOKII.get(), 1.3,
+                        16,
+                        7,
+                        8.0,
+                        10.0,
+                        0.05,
+                        30),
                 new WalkToInterestedBlock<>(1.0f, 2.0)
         );
     }

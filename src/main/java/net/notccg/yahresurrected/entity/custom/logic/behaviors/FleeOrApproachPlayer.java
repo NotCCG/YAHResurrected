@@ -56,7 +56,8 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         return ObjectArrayList.of(
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
-                Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED)
+                Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.HESITATION.get(), MemoryStatus.VALUE_PRESENT)
         );
     }
 
@@ -90,6 +91,19 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
         double fear01 = fear / 2.0;
         double fleeRadius = baseFleeRadius + (fear01 * fearRadiusScale);
+        double fleeRadiusSqr = fleeRadius * fleeRadius;
+
+        // Steve will only flee when the player is within radius
+        if (entity.distanceToSqr(player) > fleeRadiusSqr) {
+            entity.getNavigation().stop();
+            return;
+        }
+
+        // Steve will "hesitate" before fleeing
+        if (brain.hasMemoryValue(ModMemoryTypes.HESITATION.get())) {
+            entity.getNavigation().stop();
+            return;
+        }
 
         if (gameTime < nextRepathTick)
             return;
@@ -106,5 +120,10 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         if (awayPos != null) {
             entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
         }
+    }
+
+    @Override
+    protected void stop(ServerLevel level, E entity, long gameTime) {
+        entity.getNavigation().stop();
     }
 }

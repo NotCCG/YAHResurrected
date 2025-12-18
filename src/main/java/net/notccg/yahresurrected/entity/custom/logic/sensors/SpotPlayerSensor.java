@@ -33,13 +33,18 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
 
     @Override
     protected void doTick(ServerLevel level, E entity) {
+        Brain<?> brain = entity.getBrain();
         long gameTime = level.getGameTime();
+
+        if (!brain.hasMemoryValue(ModMemoryTypes.HESITATION.get())) {
+            long hesitsteTicks = 5 + entity.getRandom().nextInt(6);
+            brain.setMemory(ModMemoryTypes.HESITATION.get(), gameTime + hesitsteTicks);
+        }
+
         if (gameTime < nextScanTick)
             return;
 
         nextScanTick = gameTime + SCAN_INTERVAL_TICKS;
-
-        Brain<?> brain = entity.getBrain();
 
         Player nearest = level.getNearestPlayer(entity, RANGE);
         if (nearest == null
