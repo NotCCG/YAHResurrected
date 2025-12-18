@@ -13,6 +13,7 @@ public class SteveInterests {
     public static List<Block> INTERESTED_BLOCKS = ObjectArrayList.of(
             Blocks.ACACIA_SIGN,
             Blocks.BAMBOO_SIGN,
+            Blocks.BEDROCK,
             Blocks.BIRCH_SIGN,
             Blocks.CHERRY_SIGN,
             Blocks.CRIMSON_SIGN,

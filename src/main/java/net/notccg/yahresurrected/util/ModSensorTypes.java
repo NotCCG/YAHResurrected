@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
+import net.notccg.yahresurrected.entity.custom.logic.sensors.PlayerSoundsSensor;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.SpotPlayerSensor;
 
 import java.util.function.Supplier;
@@ -25,4 +26,7 @@ public class ModSensorTypes {
 
     public static final RegistryObject<SensorType<SpotPlayerSensor<?>>> SPOT_PLAYER_SENSOR =
             SENSOR_TYPES.register("spotplayersensor", sensorType(SpotPlayerSensor::new));
+
+    public static final RegistryObject<SensorType<PlayerSoundsSensor<?>>> PLAYER_SOUND_SENSOR =
+            SENSOR_TYPES.register("playersoundssensor", sensorType(PlayerSoundsSensor::new));
 }

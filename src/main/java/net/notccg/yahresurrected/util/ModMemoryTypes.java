@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -47,5 +48,21 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<Long>> HESITATION =
             MEMORY_MODULE_TYPES.register("hesitation",
-                    () -> new MemoryModuleType<>(Optional.empty()));
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Player>> HEARD_PLAYER =
+            MEMORY_MODULE_TYPES.register("heard_player",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Vec3>> HEARD_PLAYER_POS =
+            MEMORY_MODULE_TYPES.register("heard_player_pos",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Long>> LAST_HEARD_TIME =
+            MEMORY_MODULE_TYPES.register("last_heard_time",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }
