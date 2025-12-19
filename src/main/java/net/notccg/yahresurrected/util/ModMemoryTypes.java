@@ -65,4 +65,14 @@ public class ModMemoryTypes {
             MEMORY_MODULE_TYPES.register("last_heard_time",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<BlockPos>> INVESTIGATE_TARGET =
+            MEMORY_MODULE_TYPES.register("investigate_target",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Long>> INVESTIGATE_UNTIL =
+            MEMORY_MODULE_TYPES.register("investigate_unitl",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }
