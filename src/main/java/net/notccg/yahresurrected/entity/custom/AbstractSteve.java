@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -15,12 +16,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
+import net.tslat.smartbrainlib.api.SmartBrainOwner;
+import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractSteve extends PathfinderMob {
+public abstract class AbstractSteve extends PathfinderMob {
     protected AbstractSteve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+
 
 
     //Basic Steve Entity Setup

@@ -1,8 +1,11 @@
 package net.notccg.yahresurrected;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,6 +21,7 @@ import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
+import net.notccg.yahresurrected.util.ModSpawnRules;
 import net.notccg.yahresurrected.util.ModStructures;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
@@ -43,6 +47,13 @@ public class YouAreHerobrineResurrected {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntities.HUNTER.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    ModSpawnRules::canSpawnMostlyInDay
+            );
+        });
     }
 
 

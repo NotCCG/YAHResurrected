@@ -145,4 +145,5 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
         return 1.74F;
     }
+
 }

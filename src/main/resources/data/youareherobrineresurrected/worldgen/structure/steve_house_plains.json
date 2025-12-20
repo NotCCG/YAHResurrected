@@ -4,19 +4,15 @@
   "start_pool": "youareherobrineresurrected:steve_house_plains/start_pool",
 
   "size": 2,
-
   "max_distance_from_center": 80,
 
   "biomes": "#youareherobrineresurrected:has_structure/steve_house_plains",
-
   "step": "surface_structures",
 
-  "start_height": {
-    "absolute": -1
-  },
-
+  "start_height": { "absolute": 1 },
   "project_start_to_heightmap": "WORLD_SURFACE_WG",
 
+  "terrain_adaptation": "beard_thin",
   "use_expansion_hack": false,
 
   "spawn_overrides": {
@@ -25,7 +21,7 @@
       "spawns": [
         {
           "type": "youareherobrineresurrected:steve",
-          "weight": 1,
+          "weight": 20,
           "minCount": 1,
           "maxCount": 1
         }
