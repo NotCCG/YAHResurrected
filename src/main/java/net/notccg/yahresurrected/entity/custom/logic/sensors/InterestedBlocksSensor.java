@@ -20,6 +20,7 @@ import java.util.Set;
 public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.VISITED_BLOCKS.get(), ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
     private static final int RADIUS = 16;
+    private static final int Y_RADIUS = 4;
     private static final int SCAN_INTERVAL_TICKS = 20;
 
     private long nextScanTick = 0;
@@ -46,34 +47,37 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
 
         var brain = entity.getBrain();
 
-        // If steve already has a target, don’t pick a new one
-        if (brain.hasMemoryValue(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get()))
+        // Force types (prevents Optional<Object> nonsense)
+        MemoryModuleType<Set<BlockPos>> visitedType = ModMemoryTypes.VISITED_BLOCKS.get();
+        MemoryModuleType<BlockPos> targetType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
+
+        // If already targeting a block, don't pick a new one
+        if (brain.hasMemoryValue(targetType))
             return;
 
-        Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get())
-                .orElseGet(HashSet::new);
+        Set<BlockPos> visited = brain.getMemory(visitedType).orElseGet(HashSet::new);
 
         BlockPos origin = entity.blockPosition();
 
         for (BlockPos pos : BlockPos.betweenClosed(
-                origin.offset(-RADIUS, -4, -RADIUS),
-                origin.offset(RADIUS, 4, RADIUS))) {
+                origin.offset(-RADIUS, -Y_RADIUS, -RADIUS),
+                origin.offset(RADIUS,  Y_RADIUS,  RADIUS))) {
 
             BlockPos immutablePos = pos.immutable();
+
             if (visited.contains(immutablePos))
                 continue;
 
-            Block block = level.getBlockState(pos).getBlock();
+            Block block = level.getBlockState(immutablePos).getBlock();
             if (!SteveInterests.INTERESTED_BLOCKS.contains(block))
                 continue;
 
-            brain.setMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), immutablePos);
-            brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), visited);
+            brain.setMemory(targetType, immutablePos);
+            brain.setMemory(visitedType, new HashSet<>(visited));
+
             return;
         }
-
-        // Ensure the visited memory is at least present once steve starts thinking about blocks
-        if (!brain.hasMemoryValue(ModMemoryTypes.VISITED_BLOCKS.get()))
-            brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), visited);
+        if (!brain.hasMemoryValue(visitedType))
+            brain.setMemory(visitedType, new HashSet<>(visited));
     }
 }

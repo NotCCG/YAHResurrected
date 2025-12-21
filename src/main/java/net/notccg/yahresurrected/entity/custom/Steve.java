@@ -6,12 +6,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.level.Level;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.FleeOrApproachPlayer;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.HesitateBehavior;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.LookAtSpottedPlayer;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.WalkToInterestedBlock;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetInterestedBlockTarget;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
-import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.entity.custom.logic.sensors.PlayerSoundsSensor;
+import net.notccg.yahresurrected.entity.custom.logic.sensors.SpotPlayerSensor;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -64,7 +62,9 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public List<? extends ExtendedSensor<? extends Steve>> getSensors() {
         return ObjectArrayList.of(
-                new InterestedBlocksSensor<>()
+                new InterestedBlocksSensor<>(),
+                new PlayerSoundsSensor<>(),
+                new SpotPlayerSensor<>()
         );
     }
 
@@ -72,7 +72,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new LookAtTarget<>(),
-                new WalkOrRunToWalkTarget<>()
+                new MoveToWalkTarget<>(),
+                new SetInterestedBlockTarget<>(5.0f, 2, 10)
         );
     }
 

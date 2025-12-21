@@ -66,16 +66,6 @@ public static class FearState {
         return fearLevel;
     }
 
-    public double increaseFear(double amount) {
-        fearLevel = clamp(fearLevel + amount);
-        return fearLevel;
-    }
-
-    public double decreaseFear(double amount) {
-        fearLevel = clamp(fearLevel - amount);
-        return fearLevel;
-    }
-
     private double clamp(double v) {
         return Math.max(0.0, Math.min(2.0, v));
     }

@@ -32,6 +32,7 @@ public class SpellBookTheeItem extends Item {
     }
 
     @Override
+    // This is mostly Mark's code lol
     public InteractionResult useOn(UseOnContext pContext) {
         Player player = pContext.getPlayer();
         Level level = pContext.getLevel();
