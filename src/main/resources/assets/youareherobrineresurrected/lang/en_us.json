@@ -13,6 +13,8 @@
   "item.youareherobrineresurrected.spell_book_iii": "Spell Book III",
   "item.youareherobrineresurrected.spell_book_iv": "Spell Book IV",
   "item.youareherobrineresurrected.spell_book_v": "Spell Book V",
+  "item.youareherobrineresurrected.spell_book_vi": "Spell Book VI",
+  "item.youareherobrineresurrected.spell_book_vii": "Spell Book VII",
   "item.youareherobrineresurrected.invisible_dust": "Invisible Dust",
   "item.youareherobrineresurrected.evil_diamond_pickaxe": "Evil Diamond Pickaxe",
   "item.youareherobrineresurrected.evil_diamond_axe": "Evil Diamond Axe",
@@ -30,7 +32,7 @@
 
   "tooltip.youareherobrineresurrected.bedrock_pickaxe.tooltip": "Why have you crafted this? You can hear voices, they all scream 'GOD IS DEAD, AND YOU HAVE KILLED HIM.'",
   "tooltip.youareherobrineresurrected.spell_book_i.tooltip": "When in inventory, Steves and Hunters, cannot see you.",
-  "tooltip.youareherobrineresurrected.spell_book_ii.tooltip": "When in inventory, you no-longer burn in the sun.",
+  "tooltip.youareherobrineresurrected.spell_book_ii.tooltip": "When in inventory, you will no-longer burn in the sun.",
   "tooltip.youareherobrineresurrected.spell_book_iii.tooltip": "Lights fires when used on blocks.",
   "tooltip.youareherobrineresurrected.spell_book_iv.tooltip": "Right click to teleport in the direction you are facing.",
   "tooltip.youareherobrineresurrected.spell_book_v.tooltip": "Toggles the ability to fly when used.",

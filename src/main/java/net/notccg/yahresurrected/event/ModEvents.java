@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -25,10 +26,6 @@ import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 import net.notccg.yahresurrected.entity.custom.AbstractSteve;
 import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
-import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
-import net.notccg.yahresurrected.item.custom.SpellBookSevenItem;
-import net.notccg.yahresurrected.item.custom.SpellBookSixItem;
-import net.notccg.yahresurrected.item.custom.SpellBookTwoItem;
 
 
 public class ModEvents {
@@ -47,47 +44,31 @@ public class ModEvents {
 
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-
+            if (event.side != LogicalSide.SERVER) return;
             Player player = event.player;
-            Level world = player.level();
-            if (event.side == LogicalSide.SERVER) {
-                if (world.isDay()) {
-                    if (!player.isOnFire() && !hasSpellBookII(player)) {
-                        int playerX = (int) player.getX();
-                        int playerY = (int) player.getY();
-                        int playerZ = (int) player.getZ();
-                        for (int y = playerY + 1; y < Math.min(playerY + MAX_HEIGHT_ABOVE_PLAYER, world.getMaxBuildHeight()); y++) {
-                            BlockPos blockPos = new BlockPos(playerX, y, playerZ);
-                            Block blockAbove = world.getBlockState(blockPos).getBlock();
-                            if (!blockAbove.equals(Blocks.AIR) && !blockAbove.equals(Blocks.WATER) && !blockAbove.equals(Blocks.LAVA) && !blockAbove.equals(BlockTags.FLOWERS) && !blockAbove.equals(BlockTags.REPLACEABLE_BY_TREES)) {
-                                return;
-                            }
-                        }
-                        player.setSecondsOnFire(3);
-                    }
-                }
-            }
+            Level level = player.level();
+            if (!level.isDay()) return;
+            if (player.isOnFire() || hasSpellBookII(player)) return;
+            if (level.canSeeSky(player.blockPosition())) return;
+            player.setSecondsOnFire(3);
         }
 
         @SubscribeEvent
         public static void onLivingChangeTargetEvent(LivingChangeTargetEvent event) {
             LivingEntity entity = event.getEntity();
-            LivingEntity targetEntity = event.getNewTarget();
-            if (targetEntity instanceof Player player) {
-                if (entity instanceof Monster) {
-                    if (!(entity.getLastHurtByMob() instanceof Player)) {
-                        if (entity instanceof Creeper && !hasSpellBookVI(player)) {
-                            return;
-                        }
-                        if (entity instanceof EnderMan && !hasSpellBookVII(player)) {
-                            return;
-                        }
-                        if (entity instanceof AbstractHunter && !hasSpellBookI(player)) {
-                            return;
-                        }
-                        event.setCanceled(true);
-                    }
-                }
+            LivingEntity target = event.getNewTarget();
+
+            if (!(target instanceof Player player)) return;
+            if (!(entity instanceof Monster)) return;
+            if (entity.getLastHurtByMob() instanceof Player) return;
+
+            boolean allowedToTarget =
+                    (entity instanceof Creeper && hasSpellBookVI(player)) ||
+                            (entity instanceof EnderMan && hasSpellBookVII(player)) ||
+                            (entity instanceof AbstractHunter && hasSpellBookI(player));
+
+            if (!allowedToTarget) {
+                event.setCanceled(true);
             }
         }
 
@@ -107,41 +88,28 @@ public class ModEvents {
         }
     }
 
-
     private static boolean hasSpellBookI(Player player) {
-        for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof SpellBookOneItem) {
-                return true;
-            }
-        }
-        return false;
+        return player.getInventory().contains(
+                new ItemStack(ModItems.SPELLBOOKI.get())
+        );
     }
 
     private static boolean hasSpellBookII(Player player) {
-        for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof SpellBookTwoItem) {
-                return true;
-            }
-        }
-        return false;
+        return player.getInventory().contains(
+                new ItemStack(ModItems.SPELLBOOKII.get())
+        );
     }
 
     private static boolean hasSpellBookVI(Player player) {
-        for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof SpellBookSixItem) {
-                return true;
-            }
-        }
-        return false;
+        return player.getInventory().contains(
+                new ItemStack(ModItems.SPELLBOOKVI.get())
+        );
     }
 
     private static boolean hasSpellBookVII(Player player) {
-        for (ItemStack stack : player.getInventory().items) {
-            if (stack.getItem() instanceof SpellBookSevenItem) {
-                return true;
-            }
-        }
-        return false;
+        return player.getInventory().contains(
+                new ItemStack(ModItems.SPELLBOOKVII.get())
+        );
     }
 
     public class ItemDropper {
