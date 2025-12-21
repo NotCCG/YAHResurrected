@@ -8,7 +8,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.level.block.Block;
-import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveInterests;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveInterests;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
-    private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.VISITED_BLOCKS.get(), ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
+    private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), ModMemoryTypes.VISITED_BLOCKS.get());
     private static final int RADIUS = 16;
     private static final int Y_RADIUS = 4;
     private static final int SCAN_INTERVAL_TICKS = 20;
@@ -47,7 +47,6 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
 
         var brain = entity.getBrain();
 
-        // Force types (prevents Optional<Object> nonsense)
         MemoryModuleType<Set<BlockPos>> visitedType = ModMemoryTypes.VISITED_BLOCKS.get();
         MemoryModuleType<BlockPos> targetType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
 
@@ -55,9 +54,8 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
         if (brain.hasMemoryValue(targetType))
             return;
 
-        Set<BlockPos> visited = brain.getMemory(visitedType).orElseGet(HashSet::new);
-
         BlockPos origin = entity.blockPosition();
+        Set<BlockPos> visited = brain.getMemory(visitedType).orElseGet(HashSet::new);
 
         for (BlockPos pos : BlockPos.betweenClosed(
                 origin.offset(-RADIUS, -Y_RADIUS, -RADIUS),
@@ -77,6 +75,7 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
 
             return;
         }
+
         if (!brain.hasMemoryValue(visitedType))
             brain.setMemory(visitedType, new HashSet<>(visited));
     }

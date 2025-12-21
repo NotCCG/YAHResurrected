@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 

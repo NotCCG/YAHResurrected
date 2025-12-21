@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.entity.custom.logic.SteveAI;
+package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.item.ItemStack;

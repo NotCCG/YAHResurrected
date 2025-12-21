@@ -71,17 +71,17 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new LookAtTarget<>(),
                 new MoveToWalkTarget<>(),
-                new SetInterestedBlockTarget<>(5.0f, 2, 10)
+                new LookAtTarget<>()
         );
     }
 
     @Override
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new SetRandomLookTarget<>(),
-                new SetRandomWalkTarget<>()
+                new SetInterestedBlockTarget<>(1.0f, 2, 10),
+                new SetRandomWalkTarget<>(),
+                new SetRandomLookTarget<>()
         );
     }
 }

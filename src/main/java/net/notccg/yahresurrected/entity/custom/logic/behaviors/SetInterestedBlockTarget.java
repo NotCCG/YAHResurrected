@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.*;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
@@ -28,7 +29,8 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
             ObjectArrayList.of(
-                    Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_PRESENT)
+                    Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_PRESENT),
+                    Pair.of(ModMemoryTypes.VISITED_BLOCKS.get(), MemoryStatus.REGISTERED)
             );
 
     @Override
@@ -45,25 +47,23 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
-        nextSetTick = 0;
-    }
-
-    @Override
-    protected void tick(ServerLevel level, E entity, long gameTime) {
-        System.out.println("tick walk target");
         var brain = entity.getBrain();
         if (gameTime < nextSetTick) return;
 
         nextSetTick = gameTime + repathInterval;
 
         MemoryModuleType<BlockPos> interestedType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
-        BlockPos target = brain.getMemory(interestedType).orElse(null);
 
+
+        BlockPos target = brain.getMemory(interestedType).orElse(null);
+        BlockPos walkPos = getWalkablePos(level, target);
         if (target == null) return;
 
         if (entity.blockPosition().closerThan(target, arriveDistance)) {
             Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
+
             visited.add(target.immutable());
+
             brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
 
             brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
@@ -72,9 +72,9 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
             return;
         }
 
-        BlockPos walkPos = getWalkablePos(level, target);
-
         brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, arriveDistance));
-        System.out.println("WALK_TARGET after set = " + brain.getMemory(MemoryModuleType.WALK_TARGET).orElse(null));
+        brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkPos));
+        brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
     }
+
 }

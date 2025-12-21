@@ -14,7 +14,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.notccg.yahresurrected.entity.custom.logic.SteveAI.SteveLogic;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractSteve extends PathfinderMob {
