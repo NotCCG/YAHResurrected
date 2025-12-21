@@ -59,27 +59,12 @@ public class ModEvents {
             if (entity.getLastHurtByMob() instanceof Player) return;
 
             boolean allowedToTarget =
-                    (entity instanceof Creeper && hasSpellBookVI(player)) ||
-                            (entity instanceof EnderMan && hasSpellBookVII(player)) ||
-                            (entity instanceof AbstractHunter && hasSpellBookI(player));
+                    (entity instanceof Creeper && !hasSpellBookVI(player)) ||
+                            (entity instanceof EnderMan && !hasSpellBookVII(player)) ||
+                            (entity instanceof AbstractHunter && !hasSpellBookI(player));
 
             if (!allowedToTarget) {
                 event.setCanceled(true);
-            }
-        }
-
-
-        @SubscribeEvent
-        public static void onLivingDeath(LivingDeathEvent event) {
-            LivingEntity entity = event.getEntity();
-            if (entity instanceof AbstractSteve) {
-                if (event.getSource().getEntity() instanceof Player player) {
-                    Level world = entity.level();
-                    BlockPos pos = entity.blockPosition();
-                    ItemStack itemStack = new ItemStack(ModItems.STEVESOUL.get());
-                    ItemDropper.dropItem(world, pos, itemStack);
-                    player.sendSystemMessage(Component.literal(new SteveLogic().getSteveName() + " was slain by Herobrine"));
-                }
             }
         }
     }
@@ -106,13 +91,5 @@ public class ModEvents {
         return player.getInventory().contains(
                 new ItemStack(ModItems.SPELLBOOKVII.get())
         );
-    }
-
-    public class ItemDropper {
-        public static void dropItem(Level world, BlockPos pos, ItemStack itemStack) {
-            ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-
-            world.addFreshEntity(itemEntity);
-        }
     }
 }

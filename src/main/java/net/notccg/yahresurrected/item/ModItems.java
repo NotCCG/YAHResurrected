@@ -15,10 +15,10 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, YouAreHerobrineResurrected.MOD_ID);
 
     public static final RegistryObject<Item> VILLAGERHEART = ITEMS.register("villager_heart",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> STEVESOUL = ITEMS.register("steve_soul",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> SKINBOOK = ITEMS.register("skin_book",
             () -> new Item(new Item.Properties()));
@@ -30,22 +30,22 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> EVILDIAMOND = ITEMS.register("evil_diamond",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> EVILDIAMONDMATTER = ITEMS.register("evil_diamond_matter",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> SPELLBOOKI = ITEMS.register("spell_book_i",
             () -> new SpellBookOneItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKII = ITEMS.register("spell_book_ii",
-            () -> new SpellBookTwoItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+            () -> new SpellBookTwoItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKIII = ITEMS.register("spell_book_iii",
             () -> new SpellBookTheeItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKIV = ITEMS.register("spell_book_iv",
-            () -> new SpellBookFourItem(new Item.Properties()));
+            () -> new SpellBookFourItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     public static final RegistryObject<Item> SPELLBOOKV = ITEMS.register("spell_book_v",
             () -> new SpellBookFiveItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
@@ -60,21 +60,27 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> EVILDIAMONDPICKAXE = ITEMS.register("evil_diamond_pickaxe",
-            () -> new PickaxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
+            () -> new PickaxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0,
+                    new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<Item> EVILDIAMONDAXE = ITEMS.register("evil_diamond_axe",
-            () -> new AxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
+            () -> new AxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0,
+                    new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> EVILDIAMONDHOE = ITEMS.register("evil_diamond_hoe",
-            () -> new HoeItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
+            () -> new HoeItem(ModToolTiers.EVIL_DIAMOND, 0, 0,
+                    new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> EVILDIAMONDSHOVEL = ITEMS.register("evil_diamond_shovel",
-            () -> new ShovelItem(ModToolTiers.EVIL_DIAMOND, 0, 0, new Item.Properties()));
+            () -> new ShovelItem(ModToolTiers.EVIL_DIAMOND, 0, 0,
+                    new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> EVILDIAMONDSWORD = ITEMS.register("evil_diamond_sword",
-            () -> new SwordItem(ModToolTiers.EVIL_DIAMOND, 25, 4, new Item.Properties()));
+            () -> new SwordItem(ModToolTiers.EVIL_DIAMOND, 25, 4,
+                    new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> BEDROCKPIXAXE = ITEMS.register("bedrock_pickaxe",
-            () -> new BedrockPickaxeItem(ModToolTiers.BEDROCK, 20, 0, new Item.Properties()));
+            () -> new BedrockPickaxeItem(ModToolTiers.BEDROCK, 20, 0,
+                    new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> STEVE_SPAWN_EGG = ITEMS.register("steve_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.STEVE, 0x5C69FF, 0xDDBF7D,

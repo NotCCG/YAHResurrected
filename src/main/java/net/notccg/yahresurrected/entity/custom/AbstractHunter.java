@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -62,13 +63,6 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
                 .add(Attributes.MOVEMENT_SPEED, 0.2);
     }
 
-
-    @Override
-    protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
-        super.populateDefaultEquipmentSlots(pRandom, pDifficulty);
-        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
-    }
-
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @javax.annotation.Nullable SpawnGroupData pSpawnData, @javax.annotation.Nullable CompoundTag pDataTag) {
@@ -80,6 +74,11 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
         return pSpawnData;
     }
 
+    @Override
+    protected void populateDefaultEquipmentSlots(RandomSource pRandom, DifficultyInstance pDifficulty) {
+        super.populateDefaultEquipmentSlots(pRandom, pDifficulty);
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+    }
 
     public void reassessWeaponGoal() {
         if (this.level() != null && !this.level().isClientSide) {
@@ -146,4 +145,8 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
         return 1.74F;
     }
 
+    @Override
+    protected ResourceLocation getDefaultLootTable() {
+        return new ResourceLocation("youareherobrineresurrected", "entities/hunter_entity");
+    }
 }

@@ -1,7 +1,9 @@
 package net.notccg.yahresurrected.entity.custom;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
@@ -45,6 +47,16 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         this.setYHeadRot(bodyYaw + deltaYaw);
 
         this.setXRot(Mth.clamp(this.getXRot(), -maxHeadPitch, maxHeadPitch));
+    }
+
+    @Override
+    protected ResourceLocation getDefaultLootTable() {
+        return new ResourceLocation("youareherobrineresurrected", "entities/steve_entity");
+    }
+
+    @Override
+    public int getExperienceReward() {
+        return 60;
     }
 
     @Override
