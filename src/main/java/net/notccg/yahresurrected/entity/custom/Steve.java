@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.LookAtSpottedPlayer;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetInterestedBlockTarget;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.SteveWander;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.PlayerSoundsSensor;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.SpotPlayerSensor;
@@ -94,7 +95,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new SetInterestedBlockTarget<>(1.0f, 2, 10),
-                new SetRandomWalkTarget<>(),
+                new SteveWander<>(1.25f, 1, 10, 8, 8),
                 new SetRandomLookTarget<>()
         );
     }
