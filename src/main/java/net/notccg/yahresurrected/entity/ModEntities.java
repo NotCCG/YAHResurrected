@@ -17,6 +17,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Steve>> STEVE =
             ENTITY_TYPES.register("steve", () -> EntityType.Builder.of(Steve::new, MobCategory.CREATURE)
                     .sized(0.8f, 1.8f).build("steve"));
+
     public static final RegistryObject<EntityType<Hunter>> HUNTER =
             ENTITY_TYPES.register("hunter", () -> EntityType.Builder.of(Hunter::new, MobCategory.MONSTER)
                     .sized(0.8f, 1.8f).build("hunter"));
