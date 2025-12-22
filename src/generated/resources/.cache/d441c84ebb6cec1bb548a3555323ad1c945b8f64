@@ -1,4 +1,4 @@
-// 1.20.1	2024-05-12T01:09:21.215353	Item Models: youareherobrineresurrected
+// 1.20.1	2025-12-21T18:00:02.9955195	Item Models: youareherobrineresurrected
 772566912697ff85645ee23b22b144902666ff6a assets/youareherobrineresurrected/models/item/bedrock_pickaxe.json
 679f98d9d56f19cb8a4350defa3ac9d974245256 assets/youareherobrineresurrected/models/item/evil_diamond.json
 8df69a544a2b21e7be9d6c29991adc8f69a39d77 assets/youareherobrineresurrected/models/item/evil_diamond_axe.json
@@ -12,6 +12,7 @@ ab28b231d4bbf91c84e713de3876f8426a0a0f90 assets/youareherobrineresurrected/model
 1caa5b0134d5e69d8fe541c0d7436194c5ed6835 assets/youareherobrineresurrected/models/item/ice_ruby.json
 b350cd923def4f01278bd40c9a665035366e682b assets/youareherobrineresurrected/models/item/invisible_dust.json
 bae80778b752cb4e43e6facea728704484583634 assets/youareherobrineresurrected/models/item/skin_book.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/youareherobrineresurrected/models/item/slayer_spawn_egg.json
 329c0ff7fade144293fb2411060d0644cb5fb330 assets/youareherobrineresurrected/models/item/spell_book_i.json
 8a1ea0be0476279201bc0452bb9c47a52dd36e55 assets/youareherobrineresurrected/models/item/spell_book_ii.json
 ef221c2beaaede683fcbf8136231b217b6b4d9e7 assets/youareherobrineresurrected/models/item/spell_book_iii.json

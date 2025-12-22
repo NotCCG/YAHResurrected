@@ -63,6 +63,7 @@ public class YouAreHerobrineResurrected {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.STEVE.get(), SteveRenderer::new);
             EntityRenderers.register(ModEntities.HUNTER.get(), HunterRenderer::new);
+            EntityRenderers.register(ModEntities.SLAYER.get(), HunterRenderer::new);
         }
     }
 }

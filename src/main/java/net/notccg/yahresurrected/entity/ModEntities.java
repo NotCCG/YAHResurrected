@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.Hunter;
+import net.notccg.yahresurrected.entity.custom.Slayer;
 import net.notccg.yahresurrected.entity.custom.Steve;
 
 public class ModEntities {
@@ -19,6 +20,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Hunter>> HUNTER =
             ENTITY_TYPES.register("hunter", () -> EntityType.Builder.of(Hunter::new, MobCategory.MONSTER)
                     .sized(0.8f, 1.8f).build("hunter"));
+
+    public static final RegistryObject<EntityType<Slayer>> SLAYER =
+            ENTITY_TYPES.register("slayer", () -> EntityType.Builder.of(Slayer::new, MobCategory.MONSTER)
+                    .sized(0.8f, 1.8f).build("slayer"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

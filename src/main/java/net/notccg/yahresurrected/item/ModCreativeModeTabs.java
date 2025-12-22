@@ -44,6 +44,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get());
                         output.accept(ModBlocks.INVISIBLE_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_INVISIBLE_ORE.get());
+                        output.accept(ModItems.SLAYER_SPAWN_EGG.get());
                     })
                     .build());
 
