@@ -50,6 +50,7 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
             return;
         }
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
+        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
     }
 
     @Override

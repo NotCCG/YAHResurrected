@@ -75,4 +75,9 @@ public class ModMemoryTypes {
             MEMORY_MODULE_TYPES.register("investigate_unitl",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<BlockPos>> INTERESTED_ITEM_LOCATION =
+            MEMORY_MODULE_TYPES.register("interested_items_loc",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }
