@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.level.Level;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.LookAtSpottedPlayer;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetInterestedBlockTarget;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.PlayerSoundsSensor;
@@ -74,15 +75,16 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public List<? extends ExtendedSensor<? extends Steve>> getSensors() {
         return ObjectArrayList.of(
-                new InterestedBlocksSensor<>(),
                 new PlayerSoundsSensor<>(),
-                new SpotPlayerSensor<>()
+                new SpotPlayerSensor<>(),
+                new InterestedBlocksSensor<>()
         );
     }
 
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
+                new LookAtSpottedPlayer<>(5),
                 new MoveToWalkTarget<>(),
                 new LookAtTarget<>()
         );

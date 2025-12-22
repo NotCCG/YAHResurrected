@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
@@ -16,34 +17,44 @@ import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import java.util.List;
 
 public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
-    private final Item cloakingItem;
-    private final float maxYawChange;
-    private final float maxPitchChange;
+    private final int updateIntervalTicks;
+    private long nextUpdateTick = 0;
 
-    public LookAtSpottedPlayer(Item cloakingItem, float maxYawChange, float maxPitchChange) {
-        this.cloakingItem = cloakingItem;
-        this.maxYawChange = maxYawChange;
-        this.maxPitchChange = maxPitchChange;
+    public LookAtSpottedPlayer(int updateIntervalTicks) {
+        this.updateIntervalTicks = updateIntervalTicks;
     }
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
-                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT)
+                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
+                Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
+                Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED)
         );
     }
 
     @Override
-    protected void tick(ServerLevel level, E entity, long gameTime) {
-        Brain<?> brain = entity.getBrain();
-        Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
-        if (player == null)
+    protected void start(ServerLevel level, E entity, long gameTime) {
+        nextUpdateTick = 0;
+        if (gameTime < nextUpdateTick)
             return;
 
-        if (cloakingItem != null && player.getInventory().contains(new ItemStack(cloakingItem))) {
+        nextUpdateTick = gameTime + updateIntervalTicks;
+
+        var brain = entity.getBrain();
+
+        Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
+        if (player == null || !player.isAlive() || player.isSpectator()) {
+            brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
+            brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
             return;
         }
-
-        entity.getLookControl().setLookAt(player, maxYawChange, maxPitchChange);
+        brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
     }
+
+    @Override
+    protected void stop(ServerLevel level, E entity, long gameTime) {
+        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+    }
+
 }
