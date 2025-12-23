@@ -18,8 +18,13 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
                     Pair.of(MemoryModuleType.NEAREST_BED, MemoryStatus.REGISTERED),
                     Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
                     Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
+                    Pair.of(MemoryModuleType.INTERACTABLE_DOORS, MemoryStatus.REGISTERED),
+                    Pair.of(MemoryModuleType.DOORS_TO_CLOSE, MemoryStatus.REGISTERED),
+                    Pair.of(MemoryModuleType.LAST_WOKEN, MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED)
             );
+
+    private static final int COOLDOWN_AFTER_WAKING_UP = 100;
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
