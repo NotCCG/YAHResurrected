@@ -1,6 +1,5 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
