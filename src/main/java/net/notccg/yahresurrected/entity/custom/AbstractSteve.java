@@ -65,7 +65,7 @@ public abstract class AbstractSteve extends PathfinderMob {
     }
 
     public HumanoidModel.ArmPose getArmPose() {
-        if(SteveLogic.isLovedItem(this.getMainHandItem())) {
+        if(SteveLogic.isSteveLovedItem(this.getMainHandItem())) {
             return HumanoidModel.ArmPose.ITEM;
         }
         return HumanoidModel.ArmPose.EMPTY;

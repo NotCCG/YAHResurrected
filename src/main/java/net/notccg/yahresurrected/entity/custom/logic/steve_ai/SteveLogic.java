@@ -1,9 +1,15 @@
 package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
+
+import java.util.List;
 import java.util.Random;
 
 public class SteveLogic {
@@ -22,11 +28,7 @@ public class SteveLogic {
         return STEVE_NAMES[index];
     }
 
-
-    public static boolean isLovedItem(ItemStack pItemsTack) {
-        return pItemsTack.is(ModTags.Items.STEVE_LOVED);
-    }
-
+    // Emotional Logic
     public static double clampEmotion(double v) {
         return Math.max(0.0, Math.min(2.0, v));
     }
@@ -123,5 +125,40 @@ public static class FearState {
         public boolean isVeryCurious() {
             return curiosityLevel >= 2.0;
         }
+    }
+
+    // Interests Logic And Definitions
+    public static List<Block> INTERESTED_BLOCKS = ObjectArrayList.of(
+            Blocks.ACACIA_SIGN,
+            Blocks.ACACIA_WALL_SIGN,
+            Blocks.BAMBOO_SIGN,
+            Blocks.BAMBOO_WALL_SIGN,
+            Blocks.BEDROCK,
+            Blocks.BIRCH_SIGN,
+            Blocks.BIRCH_WALL_SIGN,
+            Blocks.CHERRY_SIGN,
+            Blocks.CHERRY_WALL_SIGN,
+            Blocks.CRIMSON_SIGN,
+            Blocks.CRIMSON_WALL_SIGN,
+            Blocks.DARK_OAK_SIGN,
+            Blocks.DARK_OAK_WALL_SIGN,
+            Blocks.DIAMOND_BLOCK,
+            Blocks.IRON_DOOR,
+            Blocks.JUNGLE_SIGN,
+            Blocks.JUNGLE_WALL_SIGN,
+            Blocks.MANGROVE_SIGN,
+            Blocks.MANGROVE_WALL_SIGN,
+            Blocks.NETHERITE_BLOCK,
+            Blocks.OAK_SIGN,
+            Blocks.OAK_WALL_SIGN,
+            Blocks.REDSTONE_WIRE,
+            Blocks.REDSTONE_TORCH,
+            Blocks.SPRUCE_SIGN,
+            Blocks.WARPED_SIGN,
+            Blocks.WARPED_WALL_SIGN
+    );
+
+    public static boolean isSteveLovedItem(ItemStack pItemsTack) {
+        return pItemsTack.is(ModTags.Items.STEVE_LOVED);
     }
 }

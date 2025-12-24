@@ -1,6 +1,5 @@
 package net.notccg.yahresurrected.datagen;
 
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -29,6 +28,8 @@ public class DataGenerators {
 
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(packOutput, lookupProvider, YouAreHerobrineResurrected.MOD_ID, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput,lookupProvider, blockTagGenerator.contentsGetter(), YouAreHerobrineResurrected.MOD_ID,
+                existingFileHelper));
 
         generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput));
 
