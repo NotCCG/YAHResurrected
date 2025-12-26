@@ -80,4 +80,9 @@ public class ModMemoryTypes {
             MEMORY_MODULE_TYPES.register("interested_items_loc",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<BlockPos>> NEAREST_UNOCCUPIED_BED =
+            MEMORY_MODULE_TYPES.register("nearest_unoccupied_bed",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }

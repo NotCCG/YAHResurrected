@@ -6,10 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedItemsSensor;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.PlayerSoundsSensor;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.SpotPlayerSensor;
+import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 
 import java.util.function.Supplier;
 
@@ -33,4 +30,7 @@ public class ModSensorTypes {
 
     public static final RegistryObject<SensorType<InterestedItemsSensor<?>>> INTERESTED_ITEMS_SENSOR =
             SENSOR_TYPES.register("interesteditemssensor", sensorType(InterestedItemsSensor::new));
+
+    public static final RegistryObject<SensorType<NearestUnoccupiedBedSensor<?>>> UNOCCUPIED_BED_SENSOR =
+            SENSOR_TYPES.register("unoccupiedbedsensor", sensorType(NearestUnoccupiedBedSensor::new));
 }

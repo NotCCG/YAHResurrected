@@ -1,10 +1,18 @@
 package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
@@ -160,5 +168,13 @@ public static class FearState {
 
     public static boolean isSteveLovedItem(ItemStack pItemsTack) {
         return pItemsTack.is(ModTags.Items.STEVE_LOVED);
+    }
+
+    public static boolean isUnoccupiedBed(Level level, BlockPos pos) {
+        BlockState pBlockstate = level.getBlockState(pos);
+
+        if (!(pBlockstate.getBlock() instanceof BedBlock)) return false;
+
+        return !pBlockstate.getValue(BedBlock.OCCUPIED);
     }
 }

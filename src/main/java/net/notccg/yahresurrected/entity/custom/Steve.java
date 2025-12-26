@@ -11,9 +11,7 @@ import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.LookAtSpottedPlayer;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetInterestedBlockTarget;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.SteveWander;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.InterestedBlocksSensor;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.PlayerSoundsSensor;
-import net.notccg.yahresurrected.entity.custom.logic.sensors.SpotPlayerSensor;
+import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -76,7 +74,9 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return ObjectArrayList.of(
                 new PlayerSoundsSensor<>(),
                 new SpotPlayerSensor<>(),
-                new InterestedBlocksSensor<>()
+                new InterestedBlocksSensor<>(),
+                new InterestedItemsSensor<>(),
+                new NearestUnoccupiedBedSensor<>()
         );
     }
 

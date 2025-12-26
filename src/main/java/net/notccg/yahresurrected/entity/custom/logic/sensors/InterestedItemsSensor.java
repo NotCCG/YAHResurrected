@@ -1,17 +1,19 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.notccg.yahresurrected.util.ModTags;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
@@ -41,11 +43,26 @@ public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSens
     @Override
     protected void doTick(ServerLevel level, E entity) {
         long gameTime = level.getGameTime();
-
         if (gameTime < nextScanTick) return;
 
         var brain = entity.getBrain();
 
-        List<ItemEntity> nearbyItems = level.getEntitiesOfClass(ItemEntity.class, entity.getBoundingBox().inflate(16, 8, 16));
+        MemoryModuleType<BlockPos> locType = ModMemoryTypes.INTERESTED_ITEM_LOCATION.get();
+
+        if (brain.hasMemoryValue(locType)) return;
+
+        AABB box = entity.getBoundingBox().inflate(XY_RANGE, Y_RANGE, XY_RANGE);
+
+        ItemEntity nearest = level.getEntitiesOfClass(ItemEntity.class, box, itemEntity ->
+                itemEntity.isAlive()
+                        && !itemEntity.getTags().isEmpty()
+                        && itemEntity.getItem().is(ModTags.Items.STEVE_LOVED)
+            ).stream().min(Comparator.comparingDouble(entity::distanceToSqr)).orElse(null);
+
+        if (nearest == null) {
+            brain.eraseMemory(locType);
+            return;
+        }
+        brain.setMemory(locType, nearest.blockPosition());
     }
 }
