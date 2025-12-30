@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -44,6 +45,7 @@ public class SteveLogic {
     // Fear Logic
     public static double getFear(Brain<?> brain) {
         return brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
+
     }
     public static void addFear(Brain<?> brain, double amount) {
         double next = clampEmotion(getFear(brain) + amount);
@@ -68,6 +70,7 @@ public class SteveLogic {
     public boolean isTerrified(Brain<?> brain) {
         return getFear(brain) >= 1.0;
     }
+
 
 
     // Curiosity Logic

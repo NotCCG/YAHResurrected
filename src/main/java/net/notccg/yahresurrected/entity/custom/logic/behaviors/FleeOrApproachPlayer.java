@@ -20,7 +20,7 @@ import java.util.List;
 
 public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private final Item cloakingItem;
-    private final double speed;
+    private final double baseSpeed;
     private final int fleeHorizontal;
     private final int fleeVertical;
 
@@ -33,8 +33,9 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private long nextRepathTick = 0;
     private long nextSpotFearTick = 0;
 
+
     public FleeOrApproachPlayer(Item cloakingItem,
-                                double speed,
+                                double baseSpeed,
                                 int fleeHorizontal,
                                 int fleeVertical,
                                 double baseFleeRadius,
@@ -42,7 +43,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                                 double fearOnSpot,
                                 int fearSpotIntervalTicks) {
         this.cloakingItem = cloakingItem;
-        this.speed = speed;
+        this.baseSpeed = baseSpeed;
         this.fleeHorizontal = fleeHorizontal;
         this.fleeVertical = fleeVertical;
         this.baseFleeRadius = baseFleeRadius;
@@ -117,10 +118,14 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 player.position()
         );
 
+
         if (awayPos != null) {
-            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
+            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, baseSpeed);
         }
     }
+
+
+
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
