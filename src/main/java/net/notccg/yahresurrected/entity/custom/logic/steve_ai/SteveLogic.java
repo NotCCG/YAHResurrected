@@ -41,98 +41,55 @@ public class SteveLogic {
         return Math.max(0.0, Math.min(2.0, v));
     }
 
+    // Fear Logic
     public static double getFear(Brain<?> brain) {
         return brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
     }
-
     public static void addFear(Brain<?> brain, double amount) {
         double next = clampEmotion(getFear(brain) + amount);
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
     }
-
     public static void reduceFear(Brain<?> brain, double amount) {
         double next = clampEmotion(getFear(brain) - amount);
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
     }
+    public boolean isCalm(Brain<?> brain) {
+        return getFear(brain) == 0.0;
+    }
+    public boolean isSpooked(Brain<?> brain) {
+        return getFear(brain) > 0.0 && getFear(brain) < 1.0;
+    }
+    public boolean isUneasy(Brain<?> brain) {
+        return getFear(brain) >= 1.0 && getFear(brain) < 1.5;
+    }
+    public boolean isScared(Brain<?> brain) {
+        return getFear(brain) >= 1.5 && getFear(brain) < 2.0;
+    }
+    public boolean isTerrified(Brain<?> brain) {
+        return getFear(brain) >= 1.0;
+    }
 
+
+    // Curiosity Logic
     public static double getCuriosity(Brain<?> brain) {
         return brain.getMemory(ModMemoryTypes.CURIOSITY_LEVEL.get()).orElse(0.0);
     }
-
     public static void addCuriosity(Brain<?> brain, double amount) {
         double next = clampEmotion(getCuriosity(brain) + amount);
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
     }
-
     public static void reduceCuriosity(Brain<?> brain, double amount) {
         double next = clampEmotion(getCuriosity(brain) - amount);
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
     }
-
-public static class FearState {
-    private double fearLevel;
-
-    public double getFearLevel() {
-        return fearLevel;
+    public boolean isIntrigued(Brain<?> brain) {
+        return getCuriosity(brain) > 0.0 && getCuriosity(brain) < 1.0;
     }
-
-    private double clamp(double v) {
-        return Math.max(0.0, Math.min(2.0, v));
+    public boolean isCurious(Brain<?> brain) {
+        return getCuriosity(brain) >= 1.0 && getCuriosity(brain) < 2.0;
     }
-
-    public boolean isCalm() {
-        return fearLevel == 0.0;
-    }
-
-    public boolean isSpooked() {
-        return fearLevel > 0.0 && fearLevel < 1.0;
-    }
-
-    public boolean isUneasy() {
-        return fearLevel >= 1.0 && fearLevel < 1.5;
-    }
-
-    public boolean isScared() {
-        return fearLevel >= 1.5 && fearLevel < 2.0;
-    }
-
-    public boolean isTerrified() {
-        return fearLevel >= 2.0;
-    }
-}
-
-    public static class CuriosityLevel {
-        private double curiosityLevel;
-
-        public double getCuriosityLevel() {
-            return curiosityLevel;
-        }
-
-        public double increaseCuriosity(double amount) {
-            curiosityLevel = clamp(curiosityLevel + amount);
-            return curiosityLevel;
-        }
-
-        public double decreaseCuriosity(double amount) {
-            curiosityLevel = clamp(curiosityLevel - amount);
-            return curiosityLevel;
-        }
-
-        private double clamp(double v) {
-            return Math.max(0.0, Math.min(2.0, v));
-        }
-
-        public boolean isIntrigued() {
-            return curiosityLevel > 0.0 && curiosityLevel < 1.0;
-        }
-
-        public boolean isCurious() {
-            return curiosityLevel >= 1.0 && curiosityLevel < 2.0;
-        }
-
-        public boolean isVeryCurious() {
-            return curiosityLevel >= 2.0;
-        }
+    public boolean isVeryCurious(Brain<?> brain) {
+        return getCuriosity(brain) >= 2.0;
     }
 
     // Interests Logic And Definitions
@@ -172,9 +129,7 @@ public static class FearState {
 
     public static boolean isUnoccupiedBed(Level level, BlockPos pos) {
         BlockState pBlockstate = level.getBlockState(pos);
-
         if (!(pBlockstate.getBlock() instanceof BedBlock)) return false;
-
         return !pBlockstate.getValue(BedBlock.OCCUPIED);
     }
 }

@@ -57,7 +57,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
-                Pair.of(ModMemoryTypes.HESITATION.get(), MemoryStatus.VALUE_PRESENT)
+                Pair.of(ModMemoryTypes.HESITATION_COOLDOWN.get(), MemoryStatus.VALUE_PRESENT)
         );
     }
 
@@ -100,7 +100,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         }
 
         // Steve will "hesitate" before fleeing
-        if (brain.hasMemoryValue(ModMemoryTypes.HESITATION.get())) {
+        if (brain.hasMemoryValue(ModMemoryTypes.HESITATION_COOLDOWN.get())) {
             entity.getNavigation().stop();
             return;
         }

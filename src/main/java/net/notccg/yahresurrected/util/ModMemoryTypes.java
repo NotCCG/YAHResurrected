@@ -46,8 +46,8 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Long>> HESITATION =
-            MEMORY_MODULE_TYPES.register("hesitation",
+    public static final RegistryObject<MemoryModuleType<Long>> HESITATION_COOLDOWN =
+            MEMORY_MODULE_TYPES.register("hesitation_cooldown",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
