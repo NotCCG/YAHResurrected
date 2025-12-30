@@ -33,7 +33,6 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private long nextRepathTick = 0;
     private long nextSpotFearTick = 0;
 
-
     public FleeOrApproachPlayer(Item cloakingItem,
                                 double baseSpeed,
                                 int fleeHorizontal,
@@ -65,13 +64,11 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
         this.nextRepathTick = 0;
-    }
-
-    // If the player has the cloaking item, steve does NOT flee
-    @Override
-    protected void tick(ServerLevel level, E entity, long gameTime) {
+        double speed = baseSpeed;
         Brain<?> brain = entity.getBrain();
         Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
+
+
         if (player == null)
             return;
 
@@ -118,11 +115,16 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 player.position()
         );
 
+        if (SteveLogic.isTerrified(brain)) {
+            speed = baseSpeed + 1.0;
+        }
 
         if (awayPos != null) {
-            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, baseSpeed);
+            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
         }
     }
+
+    // If the player has the cloaking item, steve does NOT flee
 
 
 

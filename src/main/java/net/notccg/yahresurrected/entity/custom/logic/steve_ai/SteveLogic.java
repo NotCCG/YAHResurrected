@@ -2,8 +2,6 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -11,10 +9,6 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.Property;
-import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
 
@@ -55,22 +49,21 @@ public class SteveLogic {
         double next = clampEmotion(getFear(brain) - amount);
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
     }
-    public boolean isCalm(Brain<?> brain) {
+    public static boolean isCalm(Brain<?> brain) {
         return getFear(brain) == 0.0;
     }
-    public boolean isSpooked(Brain<?> brain) {
+    public static boolean isSpooked(Brain<?> brain) {
         return getFear(brain) > 0.0 && getFear(brain) < 1.0;
     }
-    public boolean isUneasy(Brain<?> brain) {
+    public static boolean isUneasy(Brain<?> brain) {
         return getFear(brain) >= 1.0 && getFear(brain) < 1.5;
     }
-    public boolean isScared(Brain<?> brain) {
+    public static boolean isScared(Brain<?> brain) {
         return getFear(brain) >= 1.5 && getFear(brain) < 2.0;
     }
-    public boolean isTerrified(Brain<?> brain) {
-        return getFear(brain) >= 1.0;
+    public static boolean isTerrified(Brain<?> brain) {
+        return getFear(brain) >= 2.0;
     }
-
 
 
     // Curiosity Logic
@@ -85,13 +78,13 @@ public class SteveLogic {
         double next = clampEmotion(getCuriosity(brain) - amount);
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
     }
-    public boolean isIntrigued(Brain<?> brain) {
+    public static boolean isIntrigued(Brain<?> brain) {
         return getCuriosity(brain) > 0.0 && getCuriosity(brain) < 1.0;
     }
-    public boolean isCurious(Brain<?> brain) {
+    public static boolean isCurious(Brain<?> brain) {
         return getCuriosity(brain) >= 1.0 && getCuriosity(brain) < 2.0;
     }
-    public boolean isVeryCurious(Brain<?> brain) {
+    public static boolean isVeryCurious(Brain<?> brain) {
         return getCuriosity(brain) >= 2.0;
     }
 
