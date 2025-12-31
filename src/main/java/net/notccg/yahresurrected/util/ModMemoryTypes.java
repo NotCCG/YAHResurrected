@@ -72,7 +72,7 @@ public class ModMemoryTypes {
             );
 
     public static final RegistryObject<MemoryModuleType<Long>> INVESTIGATE_UNTIL =
-            MEMORY_MODULE_TYPES.register("investigate_unitl",
+            MEMORY_MODULE_TYPES.register("investigate_until",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 

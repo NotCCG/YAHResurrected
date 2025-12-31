@@ -57,7 +57,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
-                Pair.of(ModMemoryTypes.HESITATION_COOLDOWN.get(), MemoryStatus.VALUE_PRESENT)
+                Pair.of(ModMemoryTypes.HESITATION_COOLDOWN.get(), MemoryStatus.REGISTERED)
         );
     }
 
@@ -68,21 +68,16 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         Brain<?> brain = entity.getBrain();
         Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
 
-
         if (player == null)
             return;
 
+        // If the player has the cloaking item, steve does NOT flee
         if (player.getInventory().contains(new ItemStack(cloakingItem))) {
             entity.getNavigation().stop();
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
             return;
         }
 
-        // Small fear increase from spotting (throttled)
-        if (gameTime >= nextSpotFearTick) {
-            SteveLogic.addFear(brain, fearOnSpot);
-            nextSpotFearTick = gameTime + fearSpotIntervalTicks;
-        }
 
         double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
         fear = SteveLogic.clampEmotion(fear);
@@ -123,11 +118,6 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
         }
     }
-
-    // If the player has the cloaking item, steve does NOT flee
-
-
-
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
