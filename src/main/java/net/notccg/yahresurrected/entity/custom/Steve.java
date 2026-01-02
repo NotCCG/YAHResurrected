@@ -8,10 +8,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.SleepInBed;
 import net.minecraft.world.level.Level;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.FleeOrApproachPlayer;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.LookAtSpottedPlayer;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.SetInterestedBlockTarget;
-import net.notccg.yahresurrected.entity.custom.logic.behaviors.SteveWander;
+import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.notccg.yahresurrected.item.ModItems;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -85,8 +82,10 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new LookAtSpottedPlayer<>(5),
+                new MoveToWalkTarget<>(),
+                new LookAtTarget<>(),
 
+                new LookAtSpottedPlayer<>(5),
                 new FleeOrApproachPlayer<>(
                         ModItems.SPELLBOOKI.get(),
                         1.5,
@@ -98,8 +97,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         30
                 ),
 
-                new MoveToWalkTarget<>(),
-                new LookAtTarget<>()
+                new GoToSleepBehaviour<>(1)
         );
     }
 

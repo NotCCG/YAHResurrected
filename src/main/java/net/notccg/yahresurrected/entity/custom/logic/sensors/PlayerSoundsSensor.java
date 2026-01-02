@@ -18,8 +18,8 @@ public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
     @Override
     public List<MemoryModuleType<?>> memoriesUsed() {
         return ObjectArrayList.of(
-                ModMemoryTypes.HEARD_PLAYER.get(),
-                ModMemoryTypes.HEARD_PLAYER_POS.get(),
+                ModMemoryTypes.HEARD_SOUND.get(),
+                ModMemoryTypes.HEARD_SOUND_POS.get(),
                 ModMemoryTypes.LAST_HEARD_TIME.get()
         );
     }
@@ -44,14 +44,14 @@ public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
         Brain<?> brain = entity.getBrain();
         Player nearest = level.getNearestPlayer(entity, HEARING_RANGE);
         if (nearest == null || nearest.isSpectator()) {
-            brain.eraseMemory(ModMemoryTypes.HEARD_PLAYER.get());
-            brain.eraseMemory(ModMemoryTypes.HEARD_PLAYER_POS.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
             return;
         }
 
         if (entity.hasLineOfSight(nearest)) {
-            brain.eraseMemory(ModMemoryTypes.HEARD_PLAYER.get());
-            brain.eraseMemory(ModMemoryTypes.HEARD_PLAYER_POS.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
             return;
         }
 
@@ -66,8 +66,8 @@ public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
             return;
         }
 
-        brain.setMemory(ModMemoryTypes.HEARD_PLAYER.get(), nearest);
-        brain.setMemory(ModMemoryTypes.HEARD_PLAYER_POS.get(), nearest.position());
+        brain.setMemory(ModMemoryTypes.HEARD_SOUND.get(), nearest);
+        brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), nearest.position());
         brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
     }
 }

@@ -51,13 +51,13 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Player>> HEARD_PLAYER =
-            MEMORY_MODULE_TYPES.register("heard_player",
+    public static final RegistryObject<MemoryModuleType<Player>> HEARD_SOUND =
+            MEMORY_MODULE_TYPES.register("heard_sound",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Vec3>> HEARD_PLAYER_POS =
-            MEMORY_MODULE_TYPES.register("heard_player_pos",
+    public static final RegistryObject<MemoryModuleType<Vec3>> HEARD_SOUND_POS =
+            MEMORY_MODULE_TYPES.register("heard_sound_pos",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
