@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.notccg.yahresurrected.block.ModBlocks;
@@ -31,6 +32,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.DEEPSLATE_INVISIBLE_ORE.get(),
                         ModBlocks.ICE_RUBY_ORE.get(),
                         ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get());
+
+        this.tag(ModTags.Blocks.CONTAINER_BLOCK)
+                .add(Blocks.BARREL,
+                        Blocks.CHEST,
+                        Blocks.ENDER_CHEST,
+                        Blocks.SHULKER_BOX,
+                        Blocks.TRAPPED_CHEST);
 
         this.tag(ModTags.Blocks.NEEDS_BEDROCK_TOOL);
 

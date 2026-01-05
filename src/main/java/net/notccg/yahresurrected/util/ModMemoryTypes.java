@@ -8,6 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 
 import java.util.Optional;
 import java.util.Set;
@@ -83,6 +84,11 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<BlockPos>> NEAREST_UNOCCUPIED_BED =
             MEMORY_MODULE_TYPES.register("nearest_unoccupied_bed",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<HeardSoundType>> HEARD_SOUND_TYPE =
+            MEMORY_MODULE_TYPES.register("heard_sound_type",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 }

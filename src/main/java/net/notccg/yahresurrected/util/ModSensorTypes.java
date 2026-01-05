@@ -19,8 +19,7 @@ public class ModSensorTypes {
     }
 
     public static final RegistryObject<SensorType<InterestedBlocksSensor<?>>> INTERESTED_BLOCK_SENSOR =
-            SENSOR_TYPES.register("interestedblocksensor", sensorType(InterestedBlocksSensor::new)
-        );
+            SENSOR_TYPES.register("interestedblocksensor", sensorType(InterestedBlocksSensor::new));
 
     public static final RegistryObject<SensorType<SpotPlayerSensor<?>>> SPOT_PLAYER_SENSOR =
             SENSOR_TYPES.register("spotplayersensor", sensorType(SpotPlayerSensor::new));
