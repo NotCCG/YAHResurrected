@@ -47,6 +47,12 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<Double>> PARANOIA_LEVEL =
+            MEMORY_MODULE_TYPES.register(
+                    "paranoia_level",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
     public static final RegistryObject<MemoryModuleType<Long>> HESITATION_COOLDOWN =
             MEMORY_MODULE_TYPES.register("hesitation_cooldown",
                     () -> new MemoryModuleType<>(Optional.empty())

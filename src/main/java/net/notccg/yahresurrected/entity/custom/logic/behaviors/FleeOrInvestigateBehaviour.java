@@ -10,7 +10,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
 import java.util.List;
 
-public class InvestigateBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
@@ -18,6 +18,7 @@ public class InvestigateBehaviour<E extends PathfinderMob> extends ExtendedBehav
                 Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.PARANOIA_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED)
         );

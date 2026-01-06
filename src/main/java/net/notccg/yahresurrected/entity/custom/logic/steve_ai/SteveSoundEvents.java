@@ -88,7 +88,6 @@ public class SteveSoundEvents {
         notifyNearbySteves(level, player, Vec3.atCenterOf(chestPos), HeardSoundType.CONTAINER_CLOSE);
     }
 
-
     private static void notifyNearbySteves(ServerLevel level, ServerPlayer player, Vec3 pos, HeardSoundType type) {
         double r = HEARING_RANGE;
         AABB box = new AABB(pos, pos).inflate(r);

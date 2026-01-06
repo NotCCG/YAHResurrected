@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -19,9 +20,26 @@ public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
     public List<MemoryModuleType<?>> memoriesUsed() {
         return ObjectArrayList.of(
                 ModMemoryTypes.HEARD_SOUND.get(),
+                ModMemoryTypes.HEARD_SOUND_TYPE.get(),
                 ModMemoryTypes.HEARD_SOUND_POS.get(),
                 ModMemoryTypes.LAST_HEARD_TIME.get()
         );
+    }
+
+    private static void setHeardSoundIfNewer(Brain<?> brain,
+                                             long now,
+                                             Player source,
+                                             Vec3 pos,
+                                             HeardSoundType type) {
+        long last = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(Long.MIN_VALUE);
+
+        if (now <= last)
+            return;
+
+        brain.setMemory(ModMemoryTypes.HEARD_SOUND.get(), source);
+        brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), pos);
+        brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), type);
+        brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
     }
 
     @Override
@@ -45,13 +63,13 @@ public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
         Player nearest = level.getNearestPlayer(entity, HEARING_RANGE);
         if (nearest == null || nearest.isSpectator()) {
             brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
-            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
             return;
         }
 
         if (entity.hasLineOfSight(nearest)) {
             brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
-            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
             return;
         }
 
@@ -68,6 +86,7 @@ public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
 
         brain.setMemory(ModMemoryTypes.HEARD_SOUND.get(), nearest);
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), nearest.position());
+        brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), HeardSoundType.FOOTSTEPS);
         brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
     }
 }

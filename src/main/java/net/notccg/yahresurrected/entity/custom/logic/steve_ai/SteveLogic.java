@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
@@ -36,11 +37,22 @@ public class SteveLogic {
         return Math.max(0.0, Math.min(2.0, v));
     }
 
-    // Fear Logic
     public static double getFear(Brain<?> brain) {
         return brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
-
     }
+
+    public static double getCuriosity(Brain<?> brain) {
+        return brain.getMemory(ModMemoryTypes.CURIOSITY_LEVEL.get()).orElse(0.0);
+    }
+
+    public static double getParanoia(Brain<?> brain) {
+        double paranoiaMemory = brain.getMemory(ModMemoryTypes.PARANOIA_LEVEL.get()).orElse(0.0);
+        double fearMemory = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
+        double paranoiaMultiplier = fearMemory * 0.50;
+        return paranoiaMemory + paranoiaMultiplier;
+    }
+
+    // Fear Logic
     public static void addFear(Brain<?> brain, double amount) {
         double next = clampEmotion(getFear(brain) + amount);
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
@@ -67,9 +79,6 @@ public class SteveLogic {
 
 
     // Curiosity Logic
-    public static double getCuriosity(Brain<?> brain) {
-        return brain.getMemory(ModMemoryTypes.CURIOSITY_LEVEL.get()).orElse(0.0);
-    }
     public static void addCuriosity(Brain<?> brain, double amount) {
         double next = clampEmotion(getCuriosity(brain) + amount);
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
@@ -86,6 +95,33 @@ public class SteveLogic {
     }
     public static boolean isVeryCurious(Brain<?> brain) {
         return getCuriosity(brain) >= 2.0;
+    }
+
+    // Paranoia Logic
+    public static void  addParanoia(Brain<?> brain, double amount) {
+        double next = clampEmotion(getParanoia(brain) + amount);
+        brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), next);
+    }
+
+    public static void decreaseParanoia(Brain<?> brain, double amount) {
+        double next = clampEmotion(getParanoia(brain) - amount);
+        brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), next);
+    }
+
+    public static boolean isLogical(Brain<?> brain) {
+        return getParanoia(brain) == 0.0;
+    }
+
+    public static boolean isOnEdge(Brain<?> brain) {
+        return getParanoia(brain) >= 0.25 && getParanoia(brain) < 0.5;
+    }
+
+    public static boolean isParanoid(Brain<?> brain) {
+        return getParanoia(brain) >= 0.5 && getParanoia(brain) < 0.75;
+    }
+
+    public static boolean isVeryParanoid(Brain<?> brain) {
+        return getParanoia(brain) >= 0.75;
     }
 
     // Interests Logic And Definitions
