@@ -17,6 +17,7 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.HEARD_SOUND_TYPE.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.PARANOIA_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
