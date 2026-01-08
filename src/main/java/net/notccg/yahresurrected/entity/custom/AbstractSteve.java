@@ -22,10 +22,7 @@ public abstract class AbstractSteve extends PathfinderMob {
         super(pEntityType, pLevel);
     }
 
-
-
     //Basic Steve Entity Setup
-
     public static AttributeSupplier.Builder createAttribute() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
@@ -39,10 +36,6 @@ public abstract class AbstractSteve extends PathfinderMob {
         return pSpawnData;
     }
 
-    @Override
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        return super.hurt(pSource, pAmount);
-    }
 
     @Override
     public Iterable<ItemStack> getArmorSlots() {
@@ -83,7 +76,6 @@ public abstract class AbstractSteve extends PathfinderMob {
     protected SoundEvent getDeathSound() {
         return SoundEvents.PLAYER_DEATH;
     }
-
 }
 
 

@@ -2,7 +2,9 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
@@ -16,20 +18,7 @@ import java.util.List;
 import java.util.Random;
 
 public class SteveLogic {
-
     private static final Random RANDOM = new Random();
-
-    String[] STEVE_NAMES = {
-            "Player",
-            "Steve",
-            "DanTDM",
-            "NotCCG"
-    };
-
-    public String getSteveName() {
-        int index = RANDOM.nextInt(STEVE_NAMES.length);
-        return STEVE_NAMES[index];
-    }
 
     // Emotional Logic
     public static double clampEmotion(double v) {
@@ -133,7 +122,8 @@ public class SteveLogic {
         return isScared(brain) && isParanoid(brain);
     }
 
-    // Interests Logic And Definitions
+
+    // Interests Logic
     public static List<Block> INTERESTED_BLOCKS = ObjectArrayList.of(
             Blocks.ACACIA_SIGN,
             Blocks.ACACIA_WALL_SIGN,
@@ -166,6 +156,19 @@ public class SteveLogic {
 
     public static boolean isSteveLovedItem(ItemStack pItemsTack) {
         return pItemsTack.is(ModTags.Items.STEVE_LOVED);
+    }
+
+    // Other Logic And Definitions
+    String[] STEVE_NAMES = {
+            "Player",
+            "Steve",
+            "DanTDM",
+            "NotCCG"
+    };
+
+    public String getSteveName() {
+        int index = RANDOM.nextInt(STEVE_NAMES.length);
+        return STEVE_NAMES[index];
     }
 
     public static boolean isUnoccupiedBed(Level level, BlockPos pos) {

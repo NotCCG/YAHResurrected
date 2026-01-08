@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.client.ModModelLayers;
 import net.notccg.yahresurrected.entity.client.models.HunterModel;
+import net.notccg.yahresurrected.entity.client.models.SlayerModel;
 import net.notccg.yahresurrected.entity.client.models.SteveModel;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -19,5 +20,8 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.HUNTER_MAIN, HunterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_INNER, HunterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_OUTER, HunterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.SLAYER_MAIN, SlayerModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.SLAYER_INNER, SlayerModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.SLAYER_OUTER, SlayerModel::createBodyLayer);
     }
 }

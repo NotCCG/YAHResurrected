@@ -1,7 +1,9 @@
 package net.notccg.yahresurrected.event;
 
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
@@ -10,12 +12,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
+import net.notccg.yahresurrected.entity.custom.Steve;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 
 
@@ -60,6 +65,16 @@ public class ModEvents {
 
             if (!allowedToTarget) {
                 event.setCanceled(true);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onLivingDeath(LivingDeathEvent event) {
+            Entity entity = event.getEntity();
+            if (entity instanceof Steve) {
+                if (event.getSource().getEntity() instanceof Player player) {
+                    player.sendSystemMessage(Component.literal(new SteveLogic().getSteveName() + " was slain by Herobrine"));
+                }
             }
         }
     }

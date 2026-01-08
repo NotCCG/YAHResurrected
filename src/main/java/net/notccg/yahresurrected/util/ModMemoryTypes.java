@@ -53,6 +53,18 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<Player>> LAST_HURT_BY =
+            MEMORY_MODULE_TYPES.register(
+                    "last_hurt_by",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Long>> LAST_HURT =
+            MEMORY_MODULE_TYPES.register(
+                    "last_hurt",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
     public static final RegistryObject<MemoryModuleType<Long>> HESITATION_COOLDOWN =
             MEMORY_MODULE_TYPES.register("hesitation_cooldown",
                     () -> new MemoryModuleType<>(Optional.empty())
@@ -75,11 +87,6 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<BlockPos>> INVESTIGATE_TARGET =
             MEMORY_MODULE_TYPES.register("investigate_target",
-                    () -> new MemoryModuleType<>(Optional.empty())
-            );
-
-    public static final RegistryObject<MemoryModuleType<Long>> INVESTIGATE_UNTIL =
-            MEMORY_MODULE_TYPES.register("investigate_until",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 

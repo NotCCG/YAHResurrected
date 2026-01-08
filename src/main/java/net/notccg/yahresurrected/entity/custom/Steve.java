@@ -3,13 +3,17 @@ package net.notccg.yahresurrected.entity.custom;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -67,6 +71,20 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     protected void customServerAiStep() {
         tickBrain(this);
+    }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        boolean result = super.hurt(pSource, pAmount);
+
+        if (!level().isClientSide && pSource.getEntity() instanceof Player player) {
+            var brain = this.getBrain();
+            long now = level().getGameTime();
+
+            brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
+            brain.setMemory(ModMemoryTypes.LAST_HURT.get(), now);
+        }
+        return result;
     }
 
     // Primary Steve AI behaviour
