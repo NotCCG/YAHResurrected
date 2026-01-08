@@ -27,28 +27,20 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private final double baseFleeRadius;
     private final double fearRadiusScale;
 
-    private final double fearOnSpot;
-    private final int fearSpotIntervalTicks;
-
     private long nextRepathTick = 0;
-    private long nextSpotFearTick = 0;
 
     public FleeOrApproachPlayer(Item cloakingItem,
                                 double baseSpeed,
                                 int fleeHorizontal,
                                 int fleeVertical,
                                 double baseFleeRadius,
-                                double fearRadiusScale,
-                                double fearOnSpot,
-                                int fearSpotIntervalTicks) {
+                                double fearRadiusScale) {
         this.cloakingItem = cloakingItem;
         this.baseSpeed = baseSpeed;
         this.fleeHorizontal = fleeHorizontal;
         this.fleeVertical = fleeVertical;
         this.baseFleeRadius = baseFleeRadius;
         this.fearRadiusScale = fearRadiusScale;
-        this.fearOnSpot = fearOnSpot;
-        this.fearSpotIntervalTicks = fearSpotIntervalTicks;
     }
 
     @Override
@@ -82,40 +74,42 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
         fear = SteveLogic.clampEmotion(fear);
 
-        double fear01 = fear / 2.0;
-        double fleeRadius = baseFleeRadius + (fear01 * fearRadiusScale);
-        double fleeRadiusSqr = fleeRadius * fleeRadius;
+        if (fear != 0.0) {
+            double fear01 = fear / 2.0;
+            double fleeRadius = baseFleeRadius + (fear01 * fearRadiusScale);
+            double fleeRadiusSqr = fleeRadius * fleeRadius;
 
-        // Steve will only flee when the player is within radius
-        if (entity.distanceToSqr(player) > fleeRadiusSqr) {
-            entity.getNavigation().stop();
-            return;
-        }
+            // Steve will only flee when the player is within radius
+            if (entity.distanceToSqr(player) > fleeRadiusSqr) {
+                entity.getNavigation().stop();
+                return;
+            }
 
-        // Steve will "hesitate" before fleeing
-        if (brain.hasMemoryValue(ModMemoryTypes.HESITATION_COOLDOWN.get())) {
-            entity.getNavigation().stop();
-            return;
-        }
+            // Steve will "hesitate" before fleeing
+            if (brain.hasMemoryValue(ModMemoryTypes.HESITATION_COOLDOWN.get())) {
+                entity.getNavigation().stop();
+                return;
+            }
 
-        if (gameTime < nextRepathTick)
-            return;
+            if (gameTime < nextRepathTick)
+                return;
 
-        nextRepathTick = gameTime + 30; // Once every 1.5 seconds
+            nextRepathTick = gameTime + 30; // Once every 1.5 seconds
 
-        Vec3 awayPos = DefaultRandomPos.getPosAway(
-                entity,
-                fleeHorizontal,
-                fleeVertical,
-                player.position()
-        );
+            Vec3 awayPos = DefaultRandomPos.getPosAway(
+                    entity,
+                    fleeHorizontal,
+                    fleeVertical,
+                    player.position()
+            );
 
-        if (SteveLogic.isTerrified(brain)) {
-            speed = baseSpeed + 1.0;
-        }
+            if (SteveLogic.isTerrified(brain)) {
+                speed = baseSpeed * 1.3;
+            }
 
-        if (awayPos != null) {
-            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
+            if (awayPos != null) {
+                entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
+            }
         }
     }
 

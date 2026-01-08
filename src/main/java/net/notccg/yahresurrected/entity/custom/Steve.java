@@ -22,6 +22,10 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import java.util.List;
 
 public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
+    // Notes:
+    // Base movement should always be 1.0f
+    // Multiplier for sprinting should be 1.2f
+    // Multiplier for sneaking should be 0.3f
 
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -70,7 +74,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public List<? extends ExtendedSensor<? extends Steve>> getSensors() {
         return ObjectArrayList.of(
-                new PlayerSoundsSensor<>(),
+                new PlayerWalkSensor<>(),
                 new SpotPlayerSensor<>(),
                 new InterestedBlocksSensor<>(),
                 new InterestedItemsSensor<>(),
@@ -85,13 +89,11 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 new LookAtTarget<>(),
                 new FleeOrApproachPlayer<>(
                         ModItems.SPELLBOOKI.get(),
-                        1.5,
+                        1,
                         16,
                         8,
                         2,
-                        1,
-                        0.1,
-                        30
+                        1
                 ),
                 new LookAtSpottedPlayer<>(5),
                 new GoToSleepBehaviour<>(1)
@@ -102,7 +104,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new SetInterestedBlockTarget<>(1.0f, 2, 10),
-                new SteveWander<>(1.25f, 1, 10, 8, 8),
+                new SteveWander<>(1.0f, 1, 10, 8, 8),
                 new SetRandomLookTarget<>()
         );
     }

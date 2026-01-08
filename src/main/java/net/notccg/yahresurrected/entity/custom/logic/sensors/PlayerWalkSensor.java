@@ -15,7 +15,7 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;
 
-public class PlayerSoundsSensor<E extends Mob> extends ExtendedSensor<E> {
+public class PlayerWalkSensor<E extends Mob> extends ExtendedSensor<E> {
     @Override
     public List<MemoryModuleType<?>> memoriesUsed() {
         return ObjectArrayList.of(

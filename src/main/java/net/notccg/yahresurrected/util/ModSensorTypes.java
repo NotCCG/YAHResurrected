@@ -24,8 +24,8 @@ public class ModSensorTypes {
     public static final RegistryObject<SensorType<SpotPlayerSensor<?>>> SPOT_PLAYER_SENSOR =
             SENSOR_TYPES.register("spotplayersensor", sensorType(SpotPlayerSensor::new));
 
-    public static final RegistryObject<SensorType<PlayerSoundsSensor<?>>> PLAYER_SOUND_SENSOR =
-            SENSOR_TYPES.register("playersoundssensor", sensorType(PlayerSoundsSensor::new));
+    public static final RegistryObject<SensorType<PlayerWalkSensor<?>>> PLAYER_SOUND_SENSOR =
+            SENSOR_TYPES.register("playersoundssensor", sensorType(PlayerWalkSensor::new));
 
     public static final RegistryObject<SensorType<InterestedItemsSensor<?>>> INTERESTED_ITEMS_SENSOR =
             SENSOR_TYPES.register("interesteditemssensor", sensorType(InterestedItemsSensor::new));

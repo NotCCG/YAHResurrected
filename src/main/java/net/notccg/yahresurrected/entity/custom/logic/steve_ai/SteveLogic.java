@@ -3,7 +3,6 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
@@ -122,6 +121,16 @@ public class SteveLogic {
 
     public static boolean isVeryParanoid(Brain<?> brain) {
         return getParanoia(brain) >= 0.75;
+    }
+
+    // Mixed Emotion Logic
+
+    public static boolean isCautious(Brain<?> brain) {
+        return  getFear(brain) > 0.0 && getCuriosity(brain) > 0.0;
+    }
+
+    public static boolean isPanicked(Brain<?> brain) {
+        return isScared(brain) && isParanoid(brain);
     }
 
     // Interests Logic And Definitions
