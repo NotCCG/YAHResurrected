@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
@@ -19,7 +18,6 @@ import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetRandomLookTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 
@@ -113,17 +111,15 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         2,
                         1
                 ),
-                new LookAtSpottedPlayer<>(5),
-                new GoToSleepBehaviour<>(1)
+                new LookAtSpottedPlayer<>(5)
         );
     }
 
     @Override
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new SetInterestedBlockTarget<>(1.0f, 2, 10),
-                new SteveWander<>(1.0f, 1, 10, 8, 8),
-                new SetRandomLookTarget<>()
+                new SetInterestedBlockTarget<>(1.0f, 2, 80),
+                new SteveWander<>(1.0f, 1, 32, 8)
         );
     }
 }

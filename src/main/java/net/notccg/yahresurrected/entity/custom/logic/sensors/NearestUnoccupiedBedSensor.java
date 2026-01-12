@@ -52,7 +52,6 @@ public class NearestUnoccupiedBedSensor<E extends PathfinderMob> extends Extende
             BlockPos immutablePos = pos.immutable();
 
             if (!SteveLogic.isUnoccupiedBed(level, immutablePos)) return;
-
             brain.setMemory(bedLoc, immutablePos);
         }
     }

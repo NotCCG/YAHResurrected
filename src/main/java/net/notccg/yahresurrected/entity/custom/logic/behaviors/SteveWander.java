@@ -17,29 +17,31 @@ import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import java.util.List;
 
 public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+    private static final int MIN_REPATH_TICKS = 10;
+    private static final int MAX_REPATH_TICKS = 1200;
     private final float speed;
     private final int arriveDistance;
-    private final int repathInterval;
     private final int wanderHorizontal;
     private final int wanderVertical;
 
 
-    private long nextWonderTick = 0;
+    private long nextWanderTick = 0;
 
-    public SteveWander(float speed, int arriveDistance, int repathInterval, int wanderHorizonal, int wanderVertical) {
+    public SteveWander(float speed, int arriveDistance, int wanderHorizonal, int wanderVertical) {
         this.speed = speed;
         this.arriveDistance = arriveDistance;
-        this.repathInterval = repathInterval;
         this.wanderHorizontal = wanderHorizonal;
         this.wanderVertical = wanderVertical;
     }
+
+
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
                 Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_ABSENT),
-                Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
+                Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
                 Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED)
         );
     }
@@ -47,17 +49,21 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
         var brain = entity.getBrain();
-        Vec3 randomPos = DefaultRandomPos.getPosAway(entity, wanderHorizontal, wanderVertical, entity.position());
 
-        if (gameTime < nextWonderTick) return;
-        nextWonderTick = gameTime + repathInterval;
+        if (gameTime < nextWanderTick) return;
+        int nextInterval = entity.getRandom().nextInt(
+                MAX_REPATH_TICKS - MIN_REPATH_TICKS + 1
+        ) + MIN_REPATH_TICKS;
 
-        // Don't continue if there is already a target to walk to
-        if (brain.getMemory(MemoryModuleType.WALK_TARGET).isPresent()) return;
-        if (brain.getMemory(MemoryModuleType.LOOK_TARGET).isPresent()) {
-            brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
-        }
+        nextWanderTick = gameTime + nextInterval;
+
+        Vec3 randomPos = DefaultRandomPos.getPos(entity, wanderHorizontal, wanderVertical);
+        if (randomPos == null) return;
+
+        brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+
         WalkTarget walkTarget = new WalkTarget(randomPos, speed, arriveDistance);
+
         BlockPos walkPos = walkTarget.getTarget().currentBlockPosition();
         BlockPos lookPos = walkPos.above();
 
