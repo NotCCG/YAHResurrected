@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.phys.Vec3;
@@ -58,9 +59,11 @@ public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<
         var brain = entity.getBrain();
 
         if (gameTime < nextLookAroundTick) return;
-
         int nextInterval = entity.getRandom().nextInt(
                 MAX_TICKS - MIN_TICKS + 1
         ) + MIN_TICKS;
+
+        BlockPos newLookPos =  randomBlockPosInFov(entity, 1, 32, 60, 85);
+        brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(newLookPos));
     }
 }
