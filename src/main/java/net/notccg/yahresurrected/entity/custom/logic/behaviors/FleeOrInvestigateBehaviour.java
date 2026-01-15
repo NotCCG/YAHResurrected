@@ -11,8 +11,10 @@ import net.minecraft.world.entity.ai.behavior.PositionTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.level.chunk.SingleValuePalette;
 import net.minecraft.world.phys.Vec3;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
@@ -24,6 +26,8 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
     private final int repathInterval;
 
     private long nextTick = 0;
+    private final int fleeVertical = 8;
+    private final int fleeHorizontal = 24;
 
     private long lastProcessedSoundTime = Long.MIN_VALUE;
 
@@ -36,6 +40,7 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
+                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.HEARD_SOUND_POS.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.LAST_HEARD_TIME.get(), MemoryStatus.VALUE_PRESENT),
@@ -65,6 +70,16 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
 
             BlockPos targetPos = BlockPos.containing(heardPos);
             BlockPos lookPos = targetPos.above();
+
+            if (SteveLogic.isParanoid(brain) || SteveLogic.isVeryParanoid(brain)) {
+                Vec3 fleePos = DefaultRandomPos.getPosAway(
+                        entity,
+                        fleeHorizontal,
+                        fleeVertical,
+                        heardPos
+                );
+                brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(fleePos, investigateSpeed, arriveDistance));
+            }
 
             brain.setMemory(ModMemoryTypes.INVESTIGATE_TARGET.get(), targetPos);
             brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, investigateSpeed, arriveDistance));

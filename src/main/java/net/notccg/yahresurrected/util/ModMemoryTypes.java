@@ -59,7 +59,7 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Long>> LAST_HURT =
+    public static final RegistryObject<MemoryModuleType<Boolean>> PLAYER_HURT =
             MEMORY_MODULE_TYPES.register(
                     "last_hurt",
                     () -> new MemoryModuleType<>(Optional.empty())

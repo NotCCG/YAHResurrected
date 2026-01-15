@@ -103,7 +103,8 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                     player.position()
             );
 
-            if (SteveLogic.isTerrified(brain)) {
+            boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
+            if (SteveLogic.isTerrified(brain) || hasBeenHurtByPlayer) {
                 speed = baseSpeed * 1.3;
             }
 

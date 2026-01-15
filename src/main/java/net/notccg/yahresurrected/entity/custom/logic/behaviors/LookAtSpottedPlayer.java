@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
@@ -28,6 +29,7 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
+                Pair.of(ModMemoryTypes.PLAYER_HURT.get(), MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED)
         );
@@ -48,6 +50,11 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
             brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
             return;
+        }
+        boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
+        if (hasBeenHurtByPlayer) {
+            double fear = SteveLogic.getFear(brain);
+            SteveLogic.addFear(brain, 0.05);
         }
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
         brain.eraseMemory(MemoryModuleType.WALK_TARGET);

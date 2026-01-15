@@ -80,7 +80,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             long now = level().getGameTime();
 
             brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
-            brain.setMemory(ModMemoryTypes.LAST_HURT.get(), now);
+            brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
         }
         return result;
     }
