@@ -102,15 +102,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new MoveToWalkTarget<>(),
-                new LookAtTarget<>(),
-                new FleeOrApproachPlayer<>(
-                        ModItems.SPELLBOOKI.get(),
-                        1,
-                        16,
-                        8,
-                        2,
-                        1
-                )
+                new LookAtTarget<>()
         );
     }
 

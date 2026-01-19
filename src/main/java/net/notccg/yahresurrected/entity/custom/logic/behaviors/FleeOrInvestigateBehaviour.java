@@ -5,15 +5,15 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
-import net.minecraft.world.entity.ai.behavior.PositionTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
-import net.minecraft.world.level.chunk.SingleValuePalette;
 import net.minecraft.world.phys.Vec3;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
@@ -21,7 +21,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import java.util.List;
 
 public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
-    private final float investigateSpeed;
+    private final float baseInvestigateSpeed;
     private final int arriveDistance;
     private final int repathInterval;
 
@@ -32,10 +32,22 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
     private long lastProcessedSoundTime = Long.MIN_VALUE;
 
     public FleeOrInvestigateBehaviour(int arriveDistance, int repathInterval, float investigateSpeed) {
-        this.investigateSpeed = investigateSpeed;
+        this.baseInvestigateSpeed = investigateSpeed;
         this.arriveDistance = arriveDistance;
         this.repathInterval = repathInterval;
     }
+
+    private static boolean shouldFlee(Brain<?> brain) {
+        return SteveLogic.isTerrified(brain) ||
+                SteveLogic.isPanicked(brain) ||
+                SteveLogic.isParanoid(brain) ||
+                SteveLogic.isVeryParanoid(brain) ||
+                brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
+    };
+
+    private static boolean shouldCautiouslyInvestigate(Brain<?> brain) {
+        return SteveLogic.isCautious(brain);
+    };
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
@@ -62,48 +74,65 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
 
         var brain = entity.getBrain();
 
-        Long heardTime = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).get();
-        Vec3 heardPos = brain.getMemory(ModMemoryTypes.HEARD_SOUND_POS.get()).get();
+        Long heardTime = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(null);
+        Vec3 heardPos = brain.getMemory(ModMemoryTypes.HEARD_SOUND_POS.get()).orElse(null);
+
+        // A catch for any wackiness
+        if (heardTime == null || heardPos == null)
+            return;
 
         if (heardTime > lastProcessedSoundTime) {
             lastProcessedSoundTime = heardTime;
-
+            entity.setPose(Pose.STANDING);
             BlockPos targetPos = BlockPos.containing(heardPos);
-            BlockPos lookPos = targetPos.above();
 
-            if (SteveLogic.isParanoid(brain) || SteveLogic.isVeryParanoid(brain)) {
+            HeardSoundType heardSoundType = brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).orElse(null);
+            if (heardSoundType != null) {
+                if (heardSoundType == HeardSoundType.CONTAINER_OPEN || heardSoundType == HeardSoundType.CONTAINER_CLOSE) {
+                    SteveLogic.addCuriosity(brain, 0.1f);
+                }
+                if (heardSoundType == HeardSoundType.FOOTSTEPS) {
+                    SteveLogic.addCuriosity(brain, 0.25f);
+                    SteveLogic.addFear(brain, 0.1f);
+                }
+                if (heardSoundType == HeardSoundType.BLOCK_PLACE || heardSoundType == HeardSoundType.BLOCK_BREAK) {
+                    SteveLogic.addCuriosity(brain, 0.1f);
+                    SteveLogic.addFear(brain, 0.01f);
+                }
+            };
+
+            if (shouldFlee(brain)) {
+                float fleeSpeed = baseInvestigateSpeed * 1.3f;
                 Vec3 fleePos = DefaultRandomPos.getPosAway(
                         entity,
                         fleeHorizontal,
                         fleeVertical,
                         heardPos
                 );
-                brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(fleePos, investigateSpeed, arriveDistance));
+                if (fleePos == null) return;
+                BlockPos fleeLookPos = BlockPos.containing(fleePos).above();
+                brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(fleePos, fleeSpeed, arriveDistance));
+                brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(fleeLookPos));
+            } else {
+                BlockPos lookPos = targetPos.above();
+
+                float investigateSpeed = baseInvestigateSpeed;
+
+                if (shouldCautiouslyInvestigate(brain)) {
+                    entity.setPose(Pose.CROUCHING);
+                    investigateSpeed = baseInvestigateSpeed * 1.3f;
+                }
+                brain.setMemory(ModMemoryTypes.INVESTIGATE_TARGET.get(), targetPos);
+                brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, investigateSpeed, arriveDistance));
+                brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
             }
-
-            brain.setMemory(ModMemoryTypes.INVESTIGATE_TARGET.get(), targetPos);
-            brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, investigateSpeed, arriveDistance));
-        } else {
-            BlockPos current = brain.getMemory(ModMemoryTypes.INVESTIGATE_TARGET.get()).orElse(null);
-            if (current == null) return;
-
-            BlockPos lookCurrent = current.above();
-
-            if (entity.blockPosition().closerThan(current, arriveDistance)) {
-                brain.eraseMemory(ModMemoryTypes.INVESTIGATE_TARGET.get());
-                brain.eraseMemory(ModMemoryTypes.LAST_HEARD_TIME.get());
-                brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-                brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
-                return;
-            }
-            brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(current, investigateSpeed, arriveDistance));
-            brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookCurrent));
         }
     }
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
         Brain<?> brain = entity.getBrain();
+        entity.setPose(Pose.STANDING);
 
         brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
         brain.eraseMemory(ModMemoryTypes.INVESTIGATE_TARGET.get());
