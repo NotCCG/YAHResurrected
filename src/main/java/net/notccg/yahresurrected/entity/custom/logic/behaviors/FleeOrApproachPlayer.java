@@ -55,7 +55,6 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
-        this.nextRepathTick = 0;
         double speed = baseSpeed;
         Brain<?> brain = entity.getBrain();
         Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);

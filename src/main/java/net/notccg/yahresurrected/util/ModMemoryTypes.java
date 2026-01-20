@@ -41,6 +41,12 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<Long>> EMOTION_UPDATED =
+            MEMORY_MODULE_TYPES.register(
+                    "emotion_updated",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
     public static final RegistryObject<MemoryModuleType<Double>> CURIOSITY_LEVEL =
             MEMORY_MODULE_TYPES.register(
                     "curiosity_level",
