@@ -77,7 +77,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
         if (!level().isClientSide && pSource.getEntity() instanceof Player player) {
             var brain = this.getBrain();
-            long now = level().getGameTime();
 
             brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
@@ -111,6 +110,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return BrainActivityGroup.idleTasks(
                 new LookAtSpottedPlayer<>(5),
                 new SetInterestedBlockTarget<>(1.0f, 2, 80),
+                new EmotionControlBehaviour<>(60, 0.875, 0.75, 0.5),
                 new SteveWander<>(1.0f, 1, 32, 8),
                 new SteveRandomLook<>()
         );
