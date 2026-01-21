@@ -53,6 +53,11 @@ public class YouAreHerobrineResurrected {
                     Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     ModSpawnRules::canSpawnMostlyInDay
             );
+
+            SpawnPlacements.register(ModEntities.SLAYER.get(),
+                    SpawnPlacements.Type.ON_GROUND,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    ModSpawnRules::canSpawnMostlyInDay);
         });
     }
 

@@ -7,7 +7,7 @@ import net.notccg.yahresurrected.entity.client.ModModelLayers;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 
 public class SlayerRenderer extends HunterRenderer {
-    private static final ResourceLocation SLAYER_TEXTURE_LOCATION =
+    private static final ResourceLocation SLAYER_LOCATION =
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/humanoid_test.png");
 
     public SlayerRenderer(EntityRendererProvider.Context pContext) {
@@ -16,6 +16,6 @@ public class SlayerRenderer extends HunterRenderer {
 
     @Override
     public ResourceLocation getTextureLocation(AbstractHunter hunterEntity) {
-        return SLAYER_TEXTURE_LOCATION;
+        return SLAYER_LOCATION;
     }
 }
