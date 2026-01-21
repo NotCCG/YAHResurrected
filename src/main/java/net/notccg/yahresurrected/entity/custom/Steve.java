@@ -109,6 +109,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new LookAtSpottedPlayer<>(5),
+                new FleeOrApproachPlayer<>(ModItems.SPELLBOOKI.get(), 1.0, 24, 8, 4, 1.25),
+                new FleeOrInvestigateBehaviour<>(2, 20, 1),
                 new SetInterestedBlockTarget<>(1.0f, 2, 80),
                 new EmotionControlBehaviour<>(60, 0.875, 0.75, 0.5),
                 new SteveWander<>(1.0f, 1, 32, 8),

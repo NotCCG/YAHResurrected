@@ -17,7 +17,7 @@ public class HunterRenderer extends MobRenderer<AbstractHunter, HunterModel<Abst
 
     public HunterRenderer(EntityRendererProvider.Context pContext) {
         this(pContext, ModModelLayers.HUNTER_MAIN, ModModelLayers.HUNTER_INNER, ModModelLayers.HUNTER_OUTER);
-}
+    }
 
     public HunterRenderer(EntityRendererProvider.Context pContext, ModelLayerLocation hunterMain, ModelLayerLocation hunterInner, ModelLayerLocation hunterOuter) {
         super(pContext, new HunterModel<>(pContext.bakeLayer(hunterMain)), 0.5f);
