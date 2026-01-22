@@ -2,6 +2,7 @@ package net.notccg.yahresurrected.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -79,13 +80,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKV.get())
-                .pattern(" F ")
+                .pattern("EFE")
                 .pattern("SBD")
-                .pattern("   ")
+                .pattern("NAN")
                 .define('S', ModItems.STEVESOUL.get())
                 .define('B', ModItems.SKINBOOK.get())
                 .define('D', ModItems.INVISIBLEDUST.get())
                 .define('F', Items.FEATHER)
+                .define('E', ModItems.EVILDIAMONDMATTER.get())
+                .define('N', Items.NETHERITE_INGOT)
+                .define('A', Items.ANCIENT_DEBRIS)
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
@@ -115,6 +119,39 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.CHORUS_FRUIT), has(Items.CHORUS_FRUIT))
                 .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CASTCREEPERBOOK.get())
+                .pattern("GCG")
+                .pattern("DBD")
+                .pattern("GTG")
+                .define('G', Items.GUNPOWDER)
+                .define('C', Items.CREEPER_HEAD)
+                .define('B', ModItems.SKINBOOK.get())
+                .define('D', ModItems.INVISIBLEDUST.get())
+                .define('T', Items.TNT)
+                .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CASTSKELETONBOOK.get())
+                .pattern("BHB")
+                .pattern("DSD")
+                .pattern("BBB")
+                .define('B', Items.BONE)
+                .define('H', Items.SKELETON_SKULL)
+                .define('D', ModItems.INVISIBLEDUST.get())
+                .define('S', ModItems.SKINBOOK.get())
+                .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
+                .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CASTZOMBIEBOOK.get())
+                .pattern("RZR")
+                .pattern("DSD")
+                .pattern("RRR")
+                .define('R', Items.ROTTEN_FLESH)
+                .define('Z', Items.ZOMBIE_HEAD)
+                .define('D', ModItems.INVISIBLEDUST.get())
+                .define('S', ModItems.SKINBOOK.get())
+                .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
+                .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FLESHSTICK.get())
                 .pattern(" V ")
@@ -125,13 +162,24 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EVILDIAMONDMATTER.get())
-                .pattern("VVV")
+                .pattern("AVA")
                 .pattern("VDV")
-                .pattern("VVV")
+                .pattern("AVA")
                 .define('V', ModItems.VILLAGERHEART.get())
                 .define('D', Items.DIAMOND)
+                .define('A', Items.ANCIENT_DEBRIS)
                 .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
-                .save(pWriter);
+                .save(pWriter, new ResourceLocation("youareherobrineresurrected", "evil_diamond_matter"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EVILDIAMONDMATTER.get())
+                .pattern("VAV")
+                .pattern("ADA")
+                .pattern("VAV")
+                .define('V', ModItems.VILLAGERHEART.get())
+                .define('D', Items.DIAMOND)
+                .define('A', Items.ANCIENT_DEBRIS)
+                .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
+                .save(pWriter, new ResourceLocation("youareherobrineresurrected", "evil_diamond_matter_alt"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.EVILDIAMONDSWORD.get())
                 .pattern(" E ")
@@ -184,7 +232,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" S ")
                 .define('B', Items.BEDROCK)
                 .define('S', Items.STICK)
-                .unlockedBy(getHasName(Items.BEDROCK), has(Items.BEDROCK))
+                .unlockedBy(getHasName(ModItems.BEDROCKPIXAXE.get()), has(ModItems.BEDROCKPIXAXE.get()))
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.BEDROCK)
@@ -195,7 +243,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STONE)
                 .unlockedBy(getHasName(Items.BEDROCK), has(Items.BEDROCK))
                 .save(pWriter);
-
     }
 
     protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTIme, String pGroup) {
