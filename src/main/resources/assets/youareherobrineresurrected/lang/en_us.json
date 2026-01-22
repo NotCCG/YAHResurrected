@@ -15,6 +15,9 @@
   "item.youareherobrineresurrected.spell_book_v": "Spell Book V",
   "item.youareherobrineresurrected.spell_book_vi": "Spell Book VI",
   "item.youareherobrineresurrected.spell_book_vii": "Spell Book VII",
+  "item.youareherobrineresurrected.casting_book_creeper": "Summon Creeper",
+  "item.youareherobrineresurrected.casting_book_skeleton": "Summon Skeleton",
+  "item.youareherobrineresurrected.casting_book_zombie": "Summon Zombie",
   "item.youareherobrineresurrected.invisible_dust": "Invisible Dust",
   "item.youareherobrineresurrected.evil_diamond_pickaxe": "Evil Diamond Pickaxe",
   "item.youareherobrineresurrected.evil_diamond_axe": "Evil Diamond Axe",
@@ -39,6 +42,9 @@
   "tooltip.youareherobrineresurrected.spell_book_v.tooltip": "Toggles the ability to fly when used.",
   "tooltip.youareherobrineresurrected.spell_book_vi.tooltip": "When in inventory, Creepers will now ignore you.",
   "tooltip.youareherobrineresurrected.spell_book_vii.tooltip": "When in inventory, Endermen will now ignore you.",
+  "tooltip.youareherobrineresurrected.cast_creeper_book.tooltip": "Right click to summon 1-3 creepers around you.",
+  "tooltip.youareherobrineresurrected.cast_skeleton_book.tooltip": "Right click to summon 1-3 skeletons around you.",
+  "tooltip.youareherobrineresurrected.cast_zombie_book.tooltip": "Right click to summon 1-3 zombies around you.",
 
   "creativetab.yahr_tab": "YAHR"
 }

@@ -18,14 +18,12 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.STEVESOUL.get()))
                     .title(Component.translatable("creativetab.yahr_tab"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.VILLAGERHEART.get());
                         output.accept(ModItems.STEVESOUL.get());
-                        output.accept(ModItems.SKINBOOK.get());
-                        output.accept(ModItems.INVISIBLEDUST.get());
+                        output.accept(ModItems.VILLAGERHEART.get());
                         output.accept(ModItems.FLESHSTICK.get());
-                        output.accept(ModItems.ICERUBY.get());
                         output.accept(ModItems.EVILDIAMONDMATTER.get());
                         output.accept(ModItems.EVILDIAMOND.get());
+                        output.accept(ModItems.SKINBOOK.get());
                         output.accept(ModItems.SPELLBOOKI.get());
                         output.accept(ModItems.SPELLBOOKII.get());
                         output.accept(ModItems.SPELLBOOKIII.get());
@@ -33,18 +31,23 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SPELLBOOKV.get());
                         output.accept(ModItems.SPELLBOOKVI.get());
                         output.accept(ModItems.SPELLBOOKVII.get());
+                        output.accept(ModItems.CASTCREEPERBOOK.get());
+                        output.accept(ModItems.CASTSKELETONBOOK.get());
+                        output.accept(ModItems.CASTZOMBIEBOOK.get());
                         output.accept(ModItems.EVILDIAMONDPICKAXE.get());
                         output.accept(ModItems.EVILDIAMONDAXE.get());
                         output.accept(ModItems.EVILDIAMONDSHOVEL.get());
                         output.accept(ModItems.EVILDIAMONDHOE.get());
                         output.accept(ModItems.EVILDIAMONDSWORD.get());
-                        output.accept(ModItems.STEVE_SPAWN_EGG.get());
-                        output.accept(ModItems.HUNTER_SPAWN_EGG.get());
+                        output.accept(ModItems.ICERUBY.get());
                         output.accept(ModBlocks.ICE_RUBY_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get());
+                        output.accept(ModItems.INVISIBLEDUST.get());
                         output.accept(ModBlocks.INVISIBLE_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_INVISIBLE_ORE.get());
+                        output.accept(ModItems.HUNTER_SPAWN_EGG.get());
                         output.accept(ModItems.SLAYER_SPAWN_EGG.get());
+                        output.accept(ModItems.STEVE_SPAWN_EGG.get());
                     })
                     .build());
 

@@ -56,6 +56,15 @@ public class ModItems {
     public static final RegistryObject<Item> SPELLBOOKVII = ITEMS.register("spell_book_vii",
             () -> new SpellBookSevenItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
+    public static final RegistryObject<Item> CASTCREEPERBOOK = ITEMS.register("casting_book_creeper",
+            () -> new CastCreeperBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(32)));
+
+    public static final RegistryObject<Item> CASTSKELETONBOOK = ITEMS.register("casting_book_skeleton",
+            () -> new CastSkeletonBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(64)));
+
+    public static final RegistryObject<Item> CASTZOMBIEBOOK = ITEMS.register("casting_book_zombie",
+            () -> new CastZombieBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(64)));
+
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));
 
