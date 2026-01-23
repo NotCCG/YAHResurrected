@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.notccg.yahresurrected.block.ModBlocks;
+import net.notccg.yahresurrected.datagen.ModCriteriaTriggers;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.entity.client.renderer.HunterRenderer;
 import net.notccg.yahresurrected.entity.client.renderer.SlayerRenderer;
@@ -58,6 +59,8 @@ public class YouAreHerobrineResurrected {
                     SpawnPlacements.Type.ON_GROUND,
                     Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     ModSpawnRules::canSpawnMostlyInDay);
+
+            ModCriteriaTriggers.register();
         });
     }
 

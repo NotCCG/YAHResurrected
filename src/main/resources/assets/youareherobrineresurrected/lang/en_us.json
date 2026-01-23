@@ -1,6 +1,8 @@
 {
   "advancements.youareherobrineresurrected.root.title": "You are Herobrine!",
+  "advancements.youareherobrineresurrected.sunburn.title": "The sunlight burns my skin.",
   "advancements.youareherobrineresurrected.root.description": "You are Herobrine!",
+  "advancements.youareherobrineresurrected.sunburn.description": "You should avoid sunlight for now.",
 
   "entity.youareherobrineresurrected.hunter": "Hunter",
   "entity.youareherobrineresurrected.slayer": "Slayer",

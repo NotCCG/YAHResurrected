@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.event;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.*;
@@ -18,6 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.datagen.ModCriteriaTriggers;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
@@ -47,6 +49,9 @@ public class ModEvents {
             if (player.isOnFire() || hasSpellBookII(player)) return;
             if (level.canSeeSky(player.blockPosition())) return;
             player.setSecondsOnFire(3);
+            if (player instanceof ServerPlayer sp) {
+                ModCriteriaTriggers.SUNBURN.trigger(sp);
+            }
         }
 
         @SubscribeEvent
