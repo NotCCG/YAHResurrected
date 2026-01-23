@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
+import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,5 +57,9 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(Items.NETHERITE_SHOVEL)
                 .add(Items.NETHERITE_SWORD)
                 .add(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE);
+
+        this.tag(ModTags.Items.HEARTS)
+                .add(ModItems.VILLAGERHEART.get())
+                .add(ModItems.ILLAGERHEART.get());
     }
 }

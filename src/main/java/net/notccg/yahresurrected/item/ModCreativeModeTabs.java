@@ -20,6 +20,7 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.STEVESOUL.get());
                         output.accept(ModItems.VILLAGERHEART.get());
+                        output.accept(ModItems.ILLAGERHEART.get());
                         output.accept(ModItems.FLESHSTICK.get());
                         output.accept(ModItems.EVILDIAMONDMATTER.get());
                         output.accept(ModItems.EVILDIAMOND.get());
@@ -31,6 +32,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SPELLBOOKV.get());
                         output.accept(ModItems.SPELLBOOKVI.get());
                         output.accept(ModItems.SPELLBOOKVII.get());
+                        output.accept(ModItems.SPELLBOOKVIII.get());
                         output.accept(ModItems.CASTCREEPERBOOK.get());
                         output.accept(ModItems.CASTSKELETONBOOK.get());
                         output.accept(ModItems.CASTZOMBIEBOOK.get());

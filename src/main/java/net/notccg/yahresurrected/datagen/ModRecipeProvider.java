@@ -1,8 +1,14 @@
 package net.notccg.yahresurrected.datagen;
 
+import net.minecraft.advancements.CriterionTriggerInstance;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -11,6 +17,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.util.ModTags;
 
 import java.util.Iterator;
 import java.util.List;
@@ -22,10 +29,28 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         super(pOutput);
     }
 
+    protected static CriterionTriggerInstance hasAny(TagKey<Item> tag) {
+        return InventoryChangeTrigger.TriggerInstance.hasItems(
+                ItemPredicate.Builder.item().of(tag).build()
+        );
+    }
+
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         oreBlasting(pWriter, EVIL_DIAMONDS, RecipeCategory.MISC, ModItems.EVILDIAMOND.get(), 1f, 100, "evil_diamond");
         oreSmelting(pWriter, EVIL_DIAMONDS, RecipeCategory.MISC, ModItems.EVILDIAMOND.get(), 1f, 100, "evil_diamond");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.VILLAGERHEART.get())
+                .pattern("IHI")
+                .pattern("HGH")
+                .pattern("MHN")
+                .define('I', ModItems.INVISIBLEDUST.get())
+                .define('H', ModItems.ILLAGERHEART.get())
+                .define('G', Items.GHAST_TEAR)
+                .define('M', Items.GLISTERING_MELON_SLICE)
+                .define('N', Items.NETHER_WART)
+                .unlockedBy("has_a_heart", hasAny(ModTags.Items.HEARTS))
+                .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SKINBOOK.get())
                 .pattern(" LP")
@@ -119,6 +144,20 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.CHORUS_FRUIT), has(Items.CHORUS_FRUIT))
                 .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SPELLBOOKVIII.get())
+                .pattern("DNE")
+                .pattern("dSd")
+                .pattern("eIe")
+                .define('D', Items.DIAMOND_PICKAXE)
+                .define('N', Items.NETHERITE_PICKAXE)
+                .define('E', ModItems.EVILDIAMONDPICKAXE.get())
+                .define('d', ModItems.EVILDIAMONDMATTER.get())
+                .define('S', ModItems.SKINBOOK.get())
+                .define('e', Items.ENDER_EYE)
+                .define('I', ModItems.INVISIBLEDUST.get())
+                .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
+                .save(pWriter);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CASTCREEPERBOOK.get())
                 .pattern("GCG")
                 .pattern("DBD")
@@ -157,15 +196,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" V ")
                 .pattern(" V ")
                 .pattern(" V ")
-                .define('V', ModItems.VILLAGERHEART.get())
-                .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
+                .define('V', Ingredient.of(ModTags.Items.HEARTS))
+                .unlockedBy("has_a_heart", hasAny(ModTags.Items.HEARTS))
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EVILDIAMONDMATTER.get())
                 .pattern("AVA")
                 .pattern("VDV")
                 .pattern("AVA")
-                .define('V', ModItems.VILLAGERHEART.get())
+                .define('V', Ingredient.of(ModTags.Items.HEARTS))
                 .define('D', Items.DIAMOND)
                 .define('A', Items.ANCIENT_DEBRIS)
                 .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
@@ -178,7 +217,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('V', ModItems.VILLAGERHEART.get())
                 .define('D', Items.DIAMOND)
                 .define('A', Items.ANCIENT_DEBRIS)
-                .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
+                .unlockedBy("has_a_heart",
+                        InventoryChangeTrigger.TriggerInstance.hasItems(
+                                ItemPredicate.Builder.item()
+                                        .of(ModTags.Items.HEARTS)
+                                        .build()
+                        ))
                 .save(pWriter, new ResourceLocation("youareherobrineresurrected", "evil_diamond_matter_alt"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.EVILDIAMONDSWORD.get())

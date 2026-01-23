@@ -18,6 +18,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         simpleItem(ModItems.VILLAGERHEART);
+        simpleItem(ModItems.ILLAGERHEART);
         simpleItem(ModItems.SKINBOOK);
         simpleItem(ModItems.STEVESOUL);
         simpleItem(ModItems.INVISIBLEDUST);
@@ -32,6 +33,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SPELLBOOKV);
         simpleItem(ModItems.SPELLBOOKVI);
         simpleItem(ModItems.SPELLBOOKVII);
+        simpleItem(ModItems.SPELLBOOKVIII);
         simpleItem(ModItems.CASTCREEPERBOOK);
         simpleItem(ModItems.CASTSKELETONBOOK);
         simpleItem(ModItems.CASTZOMBIEBOOK);
@@ -46,6 +48,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.STEVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.HUNTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SLAYER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+
+        // Utility items, not for gameplay
+
+        simpleItem(ModItems.ADVANCEMENT_ROOT_ICON);
 
     }
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {

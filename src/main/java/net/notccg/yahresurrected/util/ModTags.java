@@ -26,6 +26,8 @@ public class ModTags {
     public static class Items {
         public static final TagKey<Item> STEVE_LOVED = tag("steve_loved");
 
+        public static final TagKey<Item> HEARTS = tag("hearts_from_villager_like");
+
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name));
         }

@@ -18,6 +18,18 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     protected void start() {
         add("villager_heart_from_villager", new AddItemModifier(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("entities/villager")).build() }, ModItems.VILLAGERHEART.get()));
+
+        add("illager_heart_from_evoker", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/evoker")).build() }, ModItems.ILLAGERHEART.get()));
+
+        add("illager_heart_from_vindicator", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/vindicator")).build() }, ModItems.ILLAGERHEART.get()));
+
+        add("illager_heart_from_pillager", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/pillager")).build() }, ModItems.ILLAGERHEART.get()));
+
+        add("illager_heart_from_witch", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(new ResourceLocation("entities/witch")).build() }, ModItems.ILLAGERHEART.get()));
     }
     //Well you found me, congratulations.
     //Was it worth it?

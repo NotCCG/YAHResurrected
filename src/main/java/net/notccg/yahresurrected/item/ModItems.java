@@ -9,12 +9,16 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.item.custom.*;
+import net.notccg.yahresurrected.item.custom.util.AdvancementRootIconItem;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, YouAreHerobrineResurrected.MOD_ID);
 
     public static final RegistryObject<Item> VILLAGERHEART = ITEMS.register("villager_heart",
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+    public static final RegistryObject<Item> ILLAGERHEART = ITEMS.register("illager_heart",
             () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> STEVESOUL = ITEMS.register("steve_soul",
@@ -55,6 +59,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> SPELLBOOKVII = ITEMS.register("spell_book_vii",
             () -> new SpellBookSevenItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+
+    public static final RegistryObject<Item> SPELLBOOKVIII = ITEMS.register("spell_book_viii",
+            () -> new SpellBookEightItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     public static final RegistryObject<Item> CASTCREEPERBOOK = ITEMS.register("casting_book_creeper",
             () -> new CastCreeperBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(32)));
@@ -102,6 +109,12 @@ public class ModItems {
     public static final RegistryObject<Item> SLAYER_SPAWN_EGG = ITEMS.register("slayer_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.SLAYER, 0x454545, 0xABD36F,
                     new Item.Properties()));
+
+
+    // Utility items, not for use in gameplay.
+
+    public static final RegistryObject<Item> ADVANCEMENT_ROOT_ICON = ITEMS.register("advancement_root_icon",
+            () -> new AdvancementRootIconItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

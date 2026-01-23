@@ -1,7 +1,13 @@
 {
+  "advancements.youareherobrineresurrected.root.title": "You are Herobrine!",
+  "advancements.youareherobrineresurrected.root.description": "You are Herobrine!",
+
   "entity.youareherobrineresurrected.hunter": "Hunter",
+  "entity.youareherobrineresurrected.slayer": "Slayer",
+  "entity.youareherobrineresurrected.steve": "Steve",
 
   "item.youareherobrineresurrected.villager_heart": "Villager Heart",
+  "item.youareherobrineresurrected.illager_heart": "Illager Heart",
   "item.youareherobrineresurrected.steve_soul": "Steve Soul",
   "item.youareherobrineresurrected.skin_book": "Skin Book",
   "item.youareherobrineresurrected.flesh_stick": "Flesh Stick",
@@ -15,6 +21,7 @@
   "item.youareherobrineresurrected.spell_book_v": "Spell Book V",
   "item.youareherobrineresurrected.spell_book_vi": "Spell Book VI",
   "item.youareherobrineresurrected.spell_book_vii": "Spell Book VII",
+  "item.youareherobrineresurrected.spell_book_viii": "Spell Book VIII",
   "item.youareherobrineresurrected.casting_book_creeper": "Summon Creeper",
   "item.youareherobrineresurrected.casting_book_skeleton": "Summon Skeleton",
   "item.youareherobrineresurrected.casting_book_zombie": "Summon Zombie",
@@ -42,9 +49,12 @@
   "tooltip.youareherobrineresurrected.spell_book_v.tooltip": "Toggles the ability to fly when used.",
   "tooltip.youareherobrineresurrected.spell_book_vi.tooltip": "When in inventory, Creepers will now ignore you.",
   "tooltip.youareherobrineresurrected.spell_book_vii.tooltip": "When in inventory, Endermen will now ignore you.",
+  "tooltip.youareherobrineresurrected.spell_book_viii.tooltip": "Right click a block to DELETE it. You will not get the block back so be careful",
   "tooltip.youareherobrineresurrected.cast_creeper_book.tooltip": "Right click to summon 1-3 creepers around you.",
   "tooltip.youareherobrineresurrected.cast_skeleton_book.tooltip": "Right click to summon 1-3 skeletons around you.",
   "tooltip.youareherobrineresurrected.cast_zombie_book.tooltip": "Right click to summon 1-3 zombies around you.",
+
+  "tooltip.youareherobrineresurrected.advancent_root_icon.tooltip": "You shouldn't have this, stop cheating!",
 
   "creativetab.yahr_tab": "YAHR"
 }
