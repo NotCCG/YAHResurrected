@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bedrock": {
+    "has_bedrock_pickaxe": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:bedrock"
+              "youareherobrineresurrected:bedrock_pickaxe"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_bedrock",
+      "has_bedrock_pickaxe",
       "has_the_recipe"
     ]
   ],

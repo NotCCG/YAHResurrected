@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.notccg.yahresurrected.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "youareherobrineresurrected.refmap.json",
+  "mixins": [],
+  "client": [
+    "AbstractClientPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

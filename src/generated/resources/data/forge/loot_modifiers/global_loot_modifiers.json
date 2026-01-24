@@ -1,6 +1,10 @@
 {
   "entries": [
-    "youareherobrineresurrected:villager_heart_from_villager"
+    "youareherobrineresurrected:villager_heart_from_villager",
+    "youareherobrineresurrected:illager_heart_from_evoker",
+    "youareherobrineresurrected:illager_heart_from_witch",
+    "youareherobrineresurrected:illager_heart_from_vindicator",
+    "youareherobrineresurrected:illager_heart_from_pillager"
   ],
   "replace": false
 }

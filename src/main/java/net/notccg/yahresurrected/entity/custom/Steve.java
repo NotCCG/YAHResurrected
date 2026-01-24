@@ -80,6 +80,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
             brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
+            brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), 0.0);
+            System.out.println("the player hurt me!");
         }
         return result;
     }
@@ -100,6 +102,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
+                new FleeOrApproachPlayer<>(ModItems.SPELLBOOKI.get(), 1.0F, 24, 8, 4, 1.25),
                 new MoveToWalkTarget<>(),
                 new LookAtTarget<>()
         );
@@ -108,8 +111,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new LookAtSpottedPlayer<>(5),
-                new FleeOrApproachPlayer<>(ModItems.SPELLBOOKI.get(), 1.0, 24, 8, 4, 1.25),
+                new LookAtSpottedPlayer<>(5, 60),
                 new FleeOrInvestigateBehaviour<>(2, 20, 1),
                 new SetInterestedBlockTarget<>(1.0f, 2, 80),
                 new EmotionControlBehaviour<>(60, 0.875, 0.75, 0.5),

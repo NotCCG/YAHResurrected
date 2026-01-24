@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.event;
 
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,9 +9,22 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.client.ModModelLayers;
 import net.notccg.yahresurrected.entity.client.models.HunterModel;
 import net.notccg.yahresurrected.entity.client.models.SteveModel;
+import net.notccg.yahresurrected.util.OverrideSkinLayer;
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
+
+    @SubscribeEvent
+    public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
+        PlayerRenderer defaultRenderer = event.getSkin("default");
+        if (defaultRenderer != null) {
+            defaultRenderer.addLayer(new OverrideSkinLayer(defaultRenderer));
+        }
+    }
+
+
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.STEVE_MAIN, SteveModel::createBodyLayer);

@@ -1,28 +1,26 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
+    "has_a_heart": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "youareherobrineresurrected:hearts_from_villager_like"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "youareherobrineresurrected:flesh_stick"
       },
       "trigger": "minecraft:recipe_unlocked"
-    },
-    "has_villager_heart": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "youareherobrineresurrected:villager_heart"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
-      "has_villager_heart",
+      "has_a_heart",
       "has_the_recipe"
     ]
   ],

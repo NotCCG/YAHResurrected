@@ -2,11 +2,14 @@ package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -14,13 +17,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
+import net.notccg.yahresurrected.util.ModTags;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
 import java.util.List;
 
 public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private final Item cloakingItem;
-    private final double baseSpeed;
+    private final float baseSpeed;
     private final int fleeHorizontal;
     private final int fleeVertical;
 
@@ -30,7 +34,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private long nextRepathTick = 0;
 
     public FleeOrApproachPlayer(Item cloakingItem,
-                                double baseSpeed,
+                                float baseSpeed,
                                 int fleeHorizontal,
                                 int fleeVertical,
                                 double baseFleeRadius,
@@ -69,31 +73,16 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             return;
         }
 
-
+        boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
         double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
         fear = SteveLogic.clampEmotion(fear);
 
-        if (fear != 0.0) {
-            double fear01 = fear / 2.0;
-            double fleeRadius = baseFleeRadius + (fear01 * fearRadiusScale);
-            double fleeRadiusSqr = fleeRadius * fleeRadius;
-
-            // Steve will only flee when the player is within radius
-            if (entity.distanceToSqr(player) > fleeRadiusSqr) {
-                entity.getNavigation().stop();
-                return;
-            }
-
-            // Steve will "hesitate" before fleeing
-            if (brain.hasMemoryValue(ModMemoryTypes.HESITATION_COOLDOWN.get())) {
-                entity.getNavigation().stop();
-                return;
-            }
+        if (fear != 0.0 || hasBeenHurtByPlayer) {
 
             if (gameTime < nextRepathTick)
                 return;
 
-            nextRepathTick = gameTime + 30; // Once every 1.5 seconds
+            nextRepathTick = gameTime + 10; // Once every .5 seconds
 
             Vec3 awayPos = DefaultRandomPos.getPosAway(
                     entity,
@@ -101,20 +90,22 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                     fleeVertical,
                     player.position()
             );
+            if (awayPos == null) return;
 
-            boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
             if (SteveLogic.isTerrified(brain) || hasBeenHurtByPlayer) {
-                speed = baseSpeed * 1.3;
+                System.out.println("running from player");
+                speed = baseSpeed * 1.3F;
+            } else {
+                speed = baseSpeed;
             }
-
-            if (awayPos != null) {
-                entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
-            }
+            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
         }
     }
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
-        entity.getNavigation().stop();
+        Brain<?> brain = entity.getBrain();
+        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+        brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }

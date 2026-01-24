@@ -44,10 +44,14 @@ public class SteveLogic {
     public static void addFear(Brain<?> brain, double amount) {
         double next = clampEmotion(getFear(brain) + amount);
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
+        System.out.println("Adding " + amount + " fear");
+        System.out.println("Fear is now" + getFear(brain));
     }
     public static void reduceFear(Brain<?> brain, double amount) {
         double next = clampEmotion(getFear(brain) - amount);
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
+        System.out.println("Removing " + amount + " fear");
+        System.out.println("Fear is now " + getFear(brain));
     }
     public static boolean isCalm(Brain<?> brain) {
         return getFear(brain) == 0.0;
@@ -70,10 +74,14 @@ public class SteveLogic {
     public static void addCuriosity(Brain<?> brain, double amount) {
         double next = clampEmotion(getCuriosity(brain) + amount);
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
+        System.out.println("Adding " + amount + " curiosity");
+        System.out.println("Curiosity is now" + getCuriosity(brain));
     }
     public static void reduceCuriosity(Brain<?> brain, double amount) {
         double next = clampEmotion(getCuriosity(brain) - amount);
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
+        System.out.println("Adding " + amount + " curiosity");
+        System.out.println("Curiosity is now" + getCuriosity(brain));
     }
     public static boolean isIntrigued(Brain<?> brain) {
         return getCuriosity(brain) > 0.0 && getCuriosity(brain) < 1.0;

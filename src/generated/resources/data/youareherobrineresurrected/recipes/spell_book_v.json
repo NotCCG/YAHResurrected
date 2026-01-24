@@ -2,23 +2,32 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
+    "A": {
+      "item": "minecraft:ancient_debris"
+    },
     "B": {
       "item": "youareherobrineresurrected:skin_book"
     },
     "D": {
       "item": "youareherobrineresurrected:invisible_dust"
     },
+    "E": {
+      "item": "youareherobrineresurrected:evil_diamond_matter"
+    },
     "F": {
       "item": "minecraft:feather"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
     },
     "S": {
       "item": "youareherobrineresurrected:steve_soul"
     }
   },
   "pattern": [
-    " F ",
+    "EFE",
     "SBD",
-    "   "
+    "NAN"
   ],
   "result": {
     "item": "youareherobrineresurrected:spell_book_v"
