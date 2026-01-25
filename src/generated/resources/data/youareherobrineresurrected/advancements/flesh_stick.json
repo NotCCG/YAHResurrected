@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:villager_heart",
+  "criteria": {
+    "crafted_flesh_stick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:flesh_stick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.pulsates.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:flesh_stick"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.pulsates.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_flesh_stick"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,58 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "killed_villager": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:villager"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "picked_up_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:villager_heart"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.you_monster.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:villager_heart"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.you_monster.title"
+    }
+  },
+  "requirements": [
+    [
+      "killed_villager"
+    ],
+    [
+      "picked_up_heart"
+    ]
+  ],
+  "rewards": {
+    "experience": 10
+  },
+  "sends_telemetry_event": true
+}

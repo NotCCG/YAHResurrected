@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:villager_heart",
+  "criteria": {
+    "crafted_evil_diamond_matter": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_matter"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.dark_aura.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:evil_diamond_matter"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.dark_aura.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_evil_diamond_matter"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

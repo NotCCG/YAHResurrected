@@ -1,0 +1,38 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "made_redstone_torch": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:redstone_torch"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.redstone_fascination.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:redstone_torch"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.redstone_fascination.title"
+    }
+  },
+  "requirements": [
+    [
+      "made_redstone_torch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

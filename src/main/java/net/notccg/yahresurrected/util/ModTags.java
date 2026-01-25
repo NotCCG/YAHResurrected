@@ -16,6 +16,7 @@ public class ModTags {
         public static final TagKey<Block> NEEDS_EVIL_DIAMOND_TOOL = tag("needs_evil_diamond_tool");
         public static final TagKey<Block> NEEDS_BEDROCK_TOOL = tag("needs_bedrock_tool");
         public static final TagKey<Block> CONTAINER_BLOCK = tag("container_block");
+        public static final TagKey<Block> NECESSARY_BLOCKS = tag("blocks_needed_to_beat_game");
 
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name));
@@ -27,6 +28,8 @@ public class ModTags {
         public static final TagKey<Item> STEVE_LOVED = tag("steve_loved");
 
         public static final TagKey<Item> HEARTS = tag("hearts_from_villager_like");
+
+        public static final TagKey<Item> SPELL_BOOKS = tag("spell_books");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name));

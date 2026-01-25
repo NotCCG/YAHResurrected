@@ -27,7 +27,7 @@ public class ModPlacedFeatures {
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(60))));
 
         register(context, INVISIBLE_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_INVISIBLE_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(24,
+                ModOrePlacement.commonOrePlacement(64,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32))));
 
     }

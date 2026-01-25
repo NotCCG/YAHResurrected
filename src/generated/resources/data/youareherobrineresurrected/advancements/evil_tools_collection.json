@@ -1,0 +1,102 @@
+{
+  "parent": "youareherobrineresurrected:evil_pickaxe",
+  "criteria": {
+    "get_evil_diamond_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_axe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "get_evil_diamond_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_hoe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "get_evil_diamond_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "get_evil_diamond_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_shovel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "get_evil_diamond_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.evil_tools_collection.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:evil_diamond_hoe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.evil_tools_collection.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_evil_diamond_pickaxe"
+    ],
+    [
+      "get_evil_diamond_sword"
+    ],
+    [
+      "get_evil_diamond_axe"
+    ],
+    [
+      "get_evil_diamond_shovel"
+    ],
+    [
+      "get_evil_diamond_hoe"
+    ]
+  ],
+  "rewards": {
+    "experience": 500
+  },
+  "sends_telemetry_event": true
+}

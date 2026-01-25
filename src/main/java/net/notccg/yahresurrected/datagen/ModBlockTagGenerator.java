@@ -40,6 +40,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         Blocks.SHULKER_BOX,
                         Blocks.TRAPPED_CHEST);
 
+        this.tag(ModTags.Blocks.NECESSARY_BLOCKS)
+                .add(Blocks.END_PORTAL_FRAME)
+                .add(Blocks.END_PORTAL)
+                .add(Blocks.END_GATEWAY)
+                .add(Blocks.DRAGON_EGG);
+
         this.tag(ModTags.Blocks.NEEDS_BEDROCK_TOOL);
 
         this.tag(ModTags.Blocks.NEEDS_EVIL_DIAMOND_TOOL);

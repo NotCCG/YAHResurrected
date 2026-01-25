@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "C": {
+      "item": "minecraft:creeper_head"
+    },
+    "D": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "pattern": [
+    "GCG",
+    "DBD",
+    "GTG"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:casting_book_creeper"
+  },
+  "show_notification": true
+}

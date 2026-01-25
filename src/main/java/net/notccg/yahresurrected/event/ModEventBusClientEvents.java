@@ -25,6 +25,7 @@ public class ModEventBusClientEvents {
     }
 
 
+
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.STEVE_MAIN, SteveModel::createBodyLayer);

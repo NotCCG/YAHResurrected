@@ -1,0 +1,42 @@
+{
+  "parent": "youareherobrineresurrected:evil_diamond",
+  "criteria": {
+    "craft_evil_diamond_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.evil_sword.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:evil_diamond_sword",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.evil_sword.title"
+    }
+  },
+  "requirements": [
+    [
+      "craft_evil_diamond_sword"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": true
+}

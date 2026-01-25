@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "craft_bedrock": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:bedrock"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.bedrock_get.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:bedrock"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.bedrock_get.title"
+    }
+  },
+  "requirements": [
+    [
+      "craft_bedrock"
+    ]
+  ],
+  "rewards": {
+    "experience": 1000
+  },
+  "sends_telemetry_event": true
+}

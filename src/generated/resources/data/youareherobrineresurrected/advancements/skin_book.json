@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "has_skin_book": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:skin_book"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.squishy.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.squishy.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_skin_book"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

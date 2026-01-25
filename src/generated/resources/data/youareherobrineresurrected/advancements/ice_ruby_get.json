@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "get_ice_ruby": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:ice_ruby"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.absolute_zero.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:ice_ruby"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.absolute_zero.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_ice_ruby"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  },
+  "sends_telemetry_event": true
+}

@@ -28,15 +28,12 @@ public class ModConfiguredFeatures {
                 ModBlocks.ICE_RUBY_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceable, ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get().defaultBlockState()));
 
-        register(context, OVERWORLD_ICE_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIceRubyOres, 1));
-
         List<OreConfiguration.TargetBlockState> overworldInvisibleOres = List.of(OreConfiguration.target(stoneReplaceable,
                 ModBlocks.INVISIBLE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceable, ModBlocks.DEEPSLATE_INVISIBLE_ORE.get().defaultBlockState()));
 
-        register(context, OVERWORLD_INVISIBLE_ORE_KEY, Feature.ORE, new OreConfiguration(overworldInvisibleOres, 2));
-
-
+        register(context, OVERWORLD_ICE_RUBY_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIceRubyOres, 1));
+        register(context, OVERWORLD_INVISIBLE_ORE_KEY, Feature.ORE, new OreConfiguration(overworldInvisibleOres, 3));
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "D": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "H": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "S": {
+      "item": "youareherobrineresurrected:skin_book"
+    }
+  },
+  "pattern": [
+    "BHB",
+    "DSD",
+    "BBB"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:casting_book_skeleton"
+  },
+  "show_notification": true
+}

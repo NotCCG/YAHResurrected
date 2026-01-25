@@ -1,0 +1,42 @@
+{
+  "parent": "youareherobrineresurrected:bedrock_get",
+  "criteria": {
+    "bedrock_pickaxe_get": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:bedrock_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.bedrock_pickaxe_get.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "youareherobrineresurrected:bedrock_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.bedrock_pickaxe_get.title"
+    }
+  },
+  "requirements": [
+    [
+      "bedrock_pickaxe_get"
+    ]
+  ],
+  "rewards": {
+    "experience": 9999
+  },
+  "sends_telemetry_event": true
+}

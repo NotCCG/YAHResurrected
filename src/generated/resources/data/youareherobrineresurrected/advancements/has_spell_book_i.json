@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "has_spell_book_i": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:spell_book_i"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.john_cena.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:spell_book_i"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.john_cena.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_spell_book_i"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

@@ -61,5 +61,15 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ModTags.Items.HEARTS)
                 .add(ModItems.VILLAGERHEART.get())
                 .add(ModItems.ILLAGERHEART.get());
+
+        this.tag(ModTags.Items.SPELL_BOOKS)
+                .add(ModItems.SPELLBOOKI.get())
+                .add(ModItems.SPELLBOOKII.get())
+                .add(ModItems.SPELLBOOKIII.get())
+                .add(ModItems.SPELLBOOKIV.get())
+                .add(ModItems.SPELLBOOKV.get())
+                .add(ModItems.SPELLBOOKVI.get())
+                .add(ModItems.SPELLBOOKVII.get())
+                .add(ModItems.SPELLBOOKVIII.get());
     }
 }

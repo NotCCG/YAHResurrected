@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:ancient_debris"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "V": {
+      "item": "youareherobrineresurrected:villager_heart"
+    }
+  },
+  "pattern": [
+    "VAV",
+    "ADA",
+    "VAV"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:evil_diamond_matter"
+  },
+  "show_notification": true
+}

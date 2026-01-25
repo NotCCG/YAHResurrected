@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "E": {
+      "item": "youareherobrineresurrected:evil_diamond_pickaxe"
+    },
+    "I": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "N": {
+      "item": "minecraft:netherite_pickaxe"
+    },
+    "S": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "d": {
+      "item": "youareherobrineresurrected:evil_diamond_matter"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "DNE",
+    "dSd",
+    "eIe"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:spell_book_viii"
+  },
+  "show_notification": true
+}

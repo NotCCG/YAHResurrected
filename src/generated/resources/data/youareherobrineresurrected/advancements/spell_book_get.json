@@ -1,0 +1,39 @@
+{
+  "parent": "youareherobrineresurrected:skin_book",
+  "criteria": {
+    "has_spell_book": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "youareherobrineresurrected:spell_books"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.my_first_spell.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:spell_book_i"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.my_first_spell.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_spell_book"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  },
+  "sends_telemetry_event": true
+}

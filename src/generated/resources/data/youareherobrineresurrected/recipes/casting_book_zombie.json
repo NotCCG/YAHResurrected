@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "R": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "S": {
+      "item": "youareherobrineresurrected:skin_book"
+    },
+    "Z": {
+      "item": "minecraft:zombie_head"
+    }
+  },
+  "pattern": [
+    "RZR",
+    "DSD",
+    "RRR"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:casting_book_zombie"
+  },
+  "show_notification": true
+}

@@ -1,7 +1,10 @@
 package net.notccg.yahresurrected.event;
 
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +22,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.datagen.ModCriteriaTriggers;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
@@ -47,10 +49,17 @@ public class ModEvents {
             Level level = player.level();
             if (!level.isDay()) return;
             if (player.isOnFire() || hasSpellBookII(player)) return;
-            if (level.canSeeSky(player.blockPosition())) return;
+            if (!level.canSeeSky(player.blockPosition())) return;
             player.setSecondsOnFire(3);
             if (player instanceof ServerPlayer sp) {
-                ModCriteriaTriggers.SUNBURN.trigger(sp);
+                ResourceLocation id = new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "sunburn"); // advancement id
+                Advancement adv = sp.server.getAdvancements().getAdvancement(id);
+                if (adv != null) {
+                    AdvancementProgress progress = sp.getAdvancements().getOrStartProgress(adv);
+                    if (!progress.isDone()) {
+                        sp.getAdvancements().award(adv, "sunburn_trigger");
+                    }
+                }
             }
         }
 

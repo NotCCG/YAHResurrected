@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:evil_diamond_matter",
+  "criteria": {
+    "smelted_evil_diamond": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:evil_diamond"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.pure_evil.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "youareherobrineresurrected:evil_diamond"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.pure_evil.title"
+    }
+  },
+  "requirements": [
+    [
+      "smelted_evil_diamond"
+    ]
+  ],
+  "rewards": {
+    "experience": 120
+  },
+  "sends_telemetry_event": true
+}
