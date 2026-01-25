@@ -33,6 +33,9 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput,lookupProvider, blockTagGenerator.contentsGetter(), YouAreHerobrineResurrected.MOD_ID,
                 existingFileHelper));
 
+        ModStructureTagGenerator structureTagGenerator = generator.addProvider(event.includeServer(),
+                new ModStructureTagGenerator(packOutput, lookupProvider, YouAreHerobrineResurrected.MOD_ID, existingFileHelper));
+
         generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput));
 
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));

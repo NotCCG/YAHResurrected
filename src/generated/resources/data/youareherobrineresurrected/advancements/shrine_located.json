@@ -1,0 +1,42 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "shrine_located": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:shrine"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.where_it_starts.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:soul_campfire"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.where_it_starts.title"
+    }
+  },
+  "requirements": [
+    [
+      "shrine_located"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

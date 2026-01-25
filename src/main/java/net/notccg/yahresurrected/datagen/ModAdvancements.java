@@ -19,38 +19,12 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.util.ModStructures;
 import net.notccg.yahresurrected.util.ModTags;
 
 import java.util.function.Consumer;
 
 public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGenerator {
-    private static String id(String path) {
-        return YouAreHerobrineResurrected.MOD_ID + ":" + path;
-    }
-    private static String langTitle(String name) {
-        return "advancements." + YouAreHerobrineResurrected.MOD_ID + "." + name + ".title";
-    }
-    private static String langDescription(String name) {
-        return "advancements." + YouAreHerobrineResurrected.MOD_ID + "." + name + ".description";
-    }
-
-    private static InventoryChangeTrigger.TriggerInstance hasItem(Item item) {
-        return InventoryChangeTrigger.TriggerInstance.hasItems(
-                ItemPredicate.Builder.item().of(item).build()
-        );
-    }
-
-    private static InventoryChangeTrigger.TriggerInstance hasItemWithTag(TagKey<Item> tagKey) {
-        return InventoryChangeTrigger.TriggerInstance.hasItems(
-                ItemPredicate.Builder.item().of(tagKey).build()
-        );
-    }
-
-    private static PlayerTrigger.TriggerInstance locationDiscovered(ResourceKey<Structure> pStructure) {
-        return PlayerTrigger.TriggerInstance.located(
-                LocationPredicate.Builder.location().setStructure(pStructure).build()
-        );
-    }
 
     @Override
     public void generate(HolderLookup.Provider registries, Consumer<Advancement> saver, ExistingFileHelper existingFileHelper) {
@@ -67,6 +41,23 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                 )
                 .addCriterion("impossible", new ImpossibleTrigger.TriggerInstance())
                 .save(saver, id("root"));
+
+        Advancement shrine_located = Advancement.Builder.advancement()
+                .parent(root)
+                .display(
+                        Items.SOUL_CAMPFIRE,
+                        Component.translatable(langTitle("where_it_starts")),
+                        Component.translatable(langDescription("where_it_starts")),
+                        null,
+                        FrameType.TASK,
+                        true,
+                        true,
+                        true
+                )
+                .addCriterion("shrine_located",
+                        locationDiscovered(ModStructures.SHRINE)
+                )
+                .save(saver, id("shrine_located"));
 
         Advancement sunburn = Advancement.Builder.advancement()
                 .parent(root)
@@ -414,7 +405,33 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                 .save(saver, id("bedrock_pickaxe_get"));
     }
 
+    private static String id(String path) {
+        return YouAreHerobrineResurrected.MOD_ID + ":" + path;
+    }
+    private static String langTitle(String name) {
+        return "advancements." + YouAreHerobrineResurrected.MOD_ID + "." + name + ".title";
+    }
+    private static String langDescription(String name) {
+        return "advancements." + YouAreHerobrineResurrected.MOD_ID + "." + name + ".description";
+    }
 
+    private static InventoryChangeTrigger.TriggerInstance hasItem(Item item) {
+        return InventoryChangeTrigger.TriggerInstance.hasItems(
+                ItemPredicate.Builder.item().of(item).build()
+        );
+    }
+
+    private static InventoryChangeTrigger.TriggerInstance hasItemWithTag(TagKey<Item> tagKey) {
+        return InventoryChangeTrigger.TriggerInstance.hasItems(
+                ItemPredicate.Builder.item().of(tagKey).build()
+        );
+    }
+
+    private static PlayerTrigger.TriggerInstance locationDiscovered(ResourceKey<Structure> pStructure) {
+        return PlayerTrigger.TriggerInstance.located(
+                LocationPredicate.Builder.location().setStructure(pStructure).build()
+        );
+    }
 
     @Override
     public AdvancementSubProvider toSubProvider(ExistingFileHelper existingFileHelper) {
