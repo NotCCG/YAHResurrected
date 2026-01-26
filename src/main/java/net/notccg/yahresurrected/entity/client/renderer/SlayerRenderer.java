@@ -8,7 +8,7 @@ import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 
 public class SlayerRenderer extends HunterRenderer {
     private static final ResourceLocation SLAYER_LOCATION =
-            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/humanoid_test.png");
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/slayer_entity.png");
 
     public SlayerRenderer(EntityRendererProvider.Context pContext) {
         super(pContext, ModModelLayers.SLAYER_MAIN, ModModelLayers.SLAYER_INNER, ModModelLayers.SLAYER_OUTER);

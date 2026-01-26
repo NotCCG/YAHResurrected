@@ -46,6 +46,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(Blocks.END_GATEWAY)
                 .add(Blocks.DRAGON_EGG);
 
+        this.tag(ModTags.Blocks.ILLEGAL_BLOCK_ITEMS)
+                .add(Blocks.NETHER_PORTAL)
+                .add(Blocks.SPAWNER)
+
         this.tag(ModTags.Blocks.NEEDS_BEDROCK_TOOL);
 
         this.tag(ModTags.Blocks.NEEDS_EVIL_DIAMOND_TOOL);
