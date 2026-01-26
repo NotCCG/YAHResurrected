@@ -48,7 +48,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(ModTags.Blocks.ILLEGAL_BLOCK_ITEMS)
                 .add(Blocks.NETHER_PORTAL)
-                .add(Blocks.SPAWNER)
+                .add(Blocks.SPAWNER);
 
         this.tag(ModTags.Blocks.NEEDS_BEDROCK_TOOL);
 
