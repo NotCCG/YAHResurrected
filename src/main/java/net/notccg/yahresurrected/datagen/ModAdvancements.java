@@ -386,6 +386,39 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                 .rewards(AdvancementRewards.Builder.experience(1000))
                 .save(saver, id("bedrock_get"));
 
+        Advancement nether_portal_get = Advancement.Builder.advancement()
+                .parent(bedrock_get)
+                .display(
+                        ModItems.NETHERPORTALITEM.get(),
+                        Component.translatable(langTitle("illegal_item_hell_portal")),
+                        Component.translatable(langDescription("illegal_item_hell_portal")),
+                        null,
+                        FrameType.CHALLENGE,
+                        true,
+                        true,
+                        true
+                )
+                .addCriterion("get_nether_portal_block",
+                        hasItem(ModItems.NETHERPORTALITEM.get())
+                )
+                .rewards(AdvancementRewards.Builder.experience(666))
+                .save(saver, id("nether_portal_get"));
+
+        Advancement monster_spawner_get = Advancement.Builder.advancement()
+                .parent(bedrock_get)
+                .display(
+                        Items.SPAWNER,
+                        Component.translatable(langTitle("illegal_item_spawner")),
+                        Component.translatable(langDescription("illegal_item_spawner")),
+                        null,
+                        FrameType.CHALLENGE,
+                        true,
+                        true,
+                        true
+                )
+                .rewards(AdvancementRewards.Builder.experience(420))
+                .save(saver, id("monster_spawner_get"));
+
         Advancement bedrock_pickaxe_get = Advancement.Builder.advancement()
                 .parent(bedrock_get)
                 .display(

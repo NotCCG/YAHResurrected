@@ -75,6 +75,9 @@ public class ModItems {
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> NETHERPORTALITEM = ITEMS.register("nether_portal_item",
+            () -> new NetherPortalItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(64)));
+
     public static final RegistryObject<Item> EVILDIAMONDPICKAXE = ITEMS.register("evil_diamond_pickaxe",
             () -> new PickaxeItem(ModToolTiers.EVIL_DIAMOND, 0, 0,
                     new Item.Properties().rarity(Rarity.RARE)));

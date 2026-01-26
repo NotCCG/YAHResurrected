@@ -32,7 +32,7 @@
   "advancements.youareherobrineresurrected.evil_pickaxe.description": "Craft an evil diamond pickaxe",
   "advancements.youareherobrineresurrected.evil_sword.description": "Craft an evil diamond sword",
   "advancements.youareherobrineresurrected.evil_tools_collection.description": "Craft all evil diamond tools. Question why you craft a hoe.",
-  "advancements.youareherobrineresurrected.bedrock_get.description": "You crafted bedrock, happy now?",
+  "advancements.youareherobrineresurrected.bedrock_get.description": "You have bedrock, happy now?",
   "advancements.youareherobrineresurrected.soul_harvest.description": "Collect a steve soul",
   "advancements.youareherobrineresurrected.keen_eye.description": "Mine some invisible dust",
   "advancements.youareherobrineresurrected.my_first_spell.description": "Craft a spell book",
@@ -73,6 +73,7 @@
   "item.youareherobrineresurrected.steve_spawn_egg": "Spawn Steve",
   "item.youareherobrineresurrected.hunter_spawn_egg": "Spawn Hunter",
   "item.youareherobrineresurrected.slayer_spawn_egg": "Spawn Slayer",
+  "item.youareherobrineresurrected.nether_portal_item": "Nether Portal",
 
   "block.youareherobrineresurrected.ice_ruby_ore": "Ice Ruby Ore",
   "block.youareherobrineresurrected.deepslate_ice_ruby_ore": "Deepslate Ice Ruby Ore",
