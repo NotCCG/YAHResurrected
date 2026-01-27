@@ -1,0 +1,41 @@
+{
+  "parent": "youareherobrineresurrected:bedrock_get",
+  "criteria": {
+    "get_nether_portal_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "youareherobrineresurrected:nether_portal_item"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.illegal_item_hell_portal.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "youareherobrineresurrected:nether_portal_item"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.illegal_item_hell_portal.title"
+    }
+  },
+  "requirements": [
+    [
+      "get_nether_portal_block"
+    ]
+  ],
+  "rewards": {
+    "experience": 666
+  },
+  "sends_telemetry_event": true
+}

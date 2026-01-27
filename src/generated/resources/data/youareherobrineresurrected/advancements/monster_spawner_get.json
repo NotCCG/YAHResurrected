@@ -1,0 +1,24 @@
+{
+  "parent": "youareherobrineresurrected:bedrock_get",
+  "criteria": {},
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.illegal_item_spawner.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:spawner"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.illegal_item_spawner.title"
+    }
+  },
+  "requirements": [],
+  "rewards": {
+    "experience": 420
+  },
+  "sends_telemetry_event": true
+}

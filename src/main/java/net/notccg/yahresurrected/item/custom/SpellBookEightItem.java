@@ -61,8 +61,8 @@ public class SpellBookEightItem extends Item {
         }
 
         if (!level.isClientSide) {
-            if (hasSilkTouch && clickedBlockState.is()) {
-
+            if (hasSilkTouch && clickedBlockState.is(ModTags.Blocks.ILLEGAL_BLOCK_ITEMS)) {
+                return InteractionResult.SUCCESS;
             }
             level.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 3);
         }

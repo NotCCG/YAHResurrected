@@ -48,7 +48,7 @@ public class ModEvents {
             Player player = event.player;
             Level level = player.level();
             if (!level.isDay()) return;
-            if (player.isOnFire() || hasSpellBookII(player)) return;
+            if (player.isOnFire() || hasSpellBookII(player) || player.isCreative()) return;
             if (!level.canSeeSky(player.blockPosition())) return;
             player.setSecondsOnFire(3);
             if (player instanceof ServerPlayer sp) {
