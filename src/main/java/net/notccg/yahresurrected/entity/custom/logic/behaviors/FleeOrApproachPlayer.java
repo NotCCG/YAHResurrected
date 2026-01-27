@@ -50,7 +50,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
-                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
+                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.HESITATION_COOLDOWN.get(), MemoryStatus.REGISTERED)
@@ -61,6 +61,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     protected void start(ServerLevel level, E entity, long gameTime) {
         double speed = baseSpeed;
         Brain<?> brain = entity.getBrain();
+        if (!brain.hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get())) return;
         Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
 
         if (player == null)
