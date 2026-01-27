@@ -73,7 +73,7 @@
   "item.youareherobrineresurrected.steve_spawn_egg": "Spawn Steve",
   "item.youareherobrineresurrected.hunter_spawn_egg": "Spawn Hunter",
   "item.youareherobrineresurrected.slayer_spawn_egg": "Spawn Slayer",
-  "item.youareherobrineresurrected.nether_portal_item": "Nether Portal",
+  "item.youareherobrineresurrected.nether_portal_item": "item.minecraft.nether_portal",
 
   "block.youareherobrineresurrected.ice_ruby_ore": "Ice Ruby Ore",
   "block.youareherobrineresurrected.deepslate_ice_ruby_ore": "Deepslate Ice Ruby Ore",
@@ -88,8 +88,8 @@
   "tooltip.youareherobrineresurrected.spell_book_v.tooltip": "Toggles the ability to fly when used.",
   "tooltip.youareherobrineresurrected.spell_book_vi.tooltip": "When in inventory, Creepers will now ignore you.",
   "tooltip.youareherobrineresurrected.spell_book_vii.tooltip": "When in inventory, Endermen will now ignore you.",
-  "tooltip.youareherobrineresurrected.spell_book_viii.tooltip": "Right click a block to DELETE it. You will not get the block back so be careful",
   "tooltip.youareherobrineresurrected.cast_creeper_book.tooltip": "Right click to summon 1-3 creepers around you.",
+  "tooltip.youareherobrineresurrected.spell_book_viii.tooltip": "Right click a block to DELETE it. You will not get the block back so be careful \n\n Enchanting with Silk Touch will allow you to get illegal blocks ONLY.",
   "tooltip.youareherobrineresurrected.cast_skeleton_book.tooltip": "Right click to summon 1-3 skeletons around you.",
   "tooltip.youareherobrineresurrected.cast_zombie_book.tooltip": "Right click to summon 1-3 zombies around you.",
 

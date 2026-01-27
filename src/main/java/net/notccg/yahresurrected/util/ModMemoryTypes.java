@@ -110,4 +110,9 @@ public class ModMemoryTypes {
             MEMORY_MODULE_TYPES.register("heard_sound_type",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<BlockPos>> CONTAINER_BLOCK =
+            MEMORY_MODULE_TYPES.register("container_block",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }

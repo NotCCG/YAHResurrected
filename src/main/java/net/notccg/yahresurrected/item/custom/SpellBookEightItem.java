@@ -2,6 +2,7 @@ package net.notccg.yahresurrected.item.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModTags;
 
 public class SpellBookEightItem extends Item {
@@ -61,10 +63,29 @@ public class SpellBookEightItem extends Item {
         }
 
         if (!level.isClientSide) {
+            ServerLevel serverLevel = (ServerLevel) level;
+
             if (hasSilkTouch && clickedBlockState.is(ModTags.Blocks.ILLEGAL_BLOCK_ITEMS)) {
+                if (clickedBlockState.is(Blocks.NETHER_PORTAL)) {
+                    ItemStack portalItem = new ItemStack(ModItems.NETHERPORTALITEM.get(), 1);
+
+                    if (!player.getInventory().add(portalItem)) {
+                        player.drop(portalItem, false);
+                    }
+                    serverLevel.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 2);
+
+                    return InteractionResult.SUCCESS;
+                }
+                Item asItem = clickedBlockState.getBlock().asItem();
+
+                ItemStack illegalItem = new ItemStack(asItem, 1);
+                if (!player.getInventory().add(illegalItem)) {
+                    player.drop(illegalItem, false);
+                }
+
                 return InteractionResult.SUCCESS;
             }
-            level.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 3);
+            serverLevel.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 2);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
     }

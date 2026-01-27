@@ -64,8 +64,16 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
             Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
 
             visited.add(target.immutable());
-
             brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
+
+            if (visited.size() > 1024) {
+                int excess = visited.size() - 1024;
+                var it = visited.iterator();
+                while (excess-- > 0 && it.hasNext()) {
+                    it.next();
+                    it.remove();
+                }
+            }
 
             brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
             brain.eraseMemory(MemoryModuleType.WALK_TARGET);

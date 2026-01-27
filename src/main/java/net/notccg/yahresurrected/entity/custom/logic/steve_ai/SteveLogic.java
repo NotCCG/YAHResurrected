@@ -142,11 +142,13 @@ public class SteveLogic {
             Blocks.BIRCH_WALL_SIGN,
             Blocks.CHERRY_SIGN,
             Blocks.CHERRY_WALL_SIGN,
+            Blocks.CHEST,
             Blocks.CRIMSON_SIGN,
             Blocks.CRIMSON_WALL_SIGN,
             Blocks.DARK_OAK_SIGN,
             Blocks.DARK_OAK_WALL_SIGN,
             Blocks.DIAMOND_BLOCK,
+            Blocks.ENDER_CHEST,
             Blocks.IRON_DOOR,
             Blocks.JUNGLE_SIGN,
             Blocks.JUNGLE_WALL_SIGN,
@@ -158,6 +160,7 @@ public class SteveLogic {
             Blocks.REDSTONE_WIRE,
             Blocks.REDSTONE_TORCH,
             Blocks.SPRUCE_SIGN,
+            Blocks.TRAPPED_CHEST,
             Blocks.WARPED_SIGN,
             Blocks.WARPED_WALL_SIGN
     );

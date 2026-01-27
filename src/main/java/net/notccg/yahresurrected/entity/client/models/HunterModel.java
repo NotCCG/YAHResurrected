@@ -4,6 +4,7 @@ import net.minecraft.client.model.AnimationUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -35,28 +36,42 @@ public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<
                 this.leftArmPose = ArmPose.BOW_AND_ARROW;
             }
         }
+        if (mainHand.is(ItemTags.SWORDS)) {
+            if (pEntity.getMainArm() == HumanoidArm.RIGHT) {
+                this.rightArmPose = ArmPose.ITEM;
+            } else {
+                this.leftArmPose = ArmPose.ITEM;
+            }
+        }
 
         super.prepareMobModel(pEntity, pLimbSwing, pLimbSwingAmount, pPartialTick);
     }
 
     @Override
     public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+        this.leftArmPose = ArmPose.EMPTY;
+        this.rightArmPose = ArmPose.EMPTY;
+
+        ItemStack mainHand = pEntity.getMainHandItem();
+
+        if (pEntity.isUsingItem() && pEntity.getUseItem().is(Items.BONE)) {
+            if (pEntity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
+                this.rightArmPose = ArmPose.BOW_AND_ARROW;
+            } else {
+                this.leftArmPose = ArmPose.BOW_AND_ARROW;
+            }
+        }
+
         super.setupAnim(pEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
-        ItemStack mainHandItem = pEntity.getMainHandItem();
-        if (pEntity.isAggressive() && (mainHandItem.isEmpty() || !mainHandItem.is(Items.BOW))) {
-            float $$7 = Mth.sin(this.attackTime * 3.1415927F);
-            float $$8 = Mth.sin((1.0F - (1.0F - this.attackTime) * (1.0F - this.attackTime)) * 3.1415927F);
-            this.rightArm.zRot = 0.0F;
-            this.leftArm.zRot = 0.0F;
-            this.rightArm.yRot = -(0.1F - $$7 * 0.6F);
-            this.leftArm.yRot = 0.1F - $$7 * 0.6F;
-            this.rightArm.xRot = -1.5707964F;
-            this.leftArm.xRot = -1.5707964F;
-            ModelPart armRot = this.rightArm;
-            armRot.xRot -= $$7 * 1.2F - $$8 * 0.4F;
-            armRot = this.leftArm;
-            armRot.xRot -= $$7 * 1.2F - $$8 * 0.4F;
-            AnimationUtils.bobArms(this.rightArm, this.leftArm, pAgeInTicks);
+
+        boolean inBowPose = (this.rightArmPose == ArmPose.BOW_AND_ARROW) || (this.leftArmPose == ArmPose.BOW_AND_ARROW);
+
+        boolean swordLike =
+                !mainHand.isEmpty()
+                        && mainHand.canPerformAction(net.minecraftforge.common.ToolActions.SWORD_SWEEP);
+
+        if (!inBowPose && pEntity.isAggressive() && swordLike) {
+            this.setupAttackAnimation(pEntity, pAgeInTicks);
         }
     }
 }

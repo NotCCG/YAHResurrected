@@ -1,6 +1,11 @@
 package net.notccg.yahresurrected.entity.custom;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,7 +26,9 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     // Notes:
@@ -118,5 +125,50 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 new SteveWander<>(1.0f, 1, 32, 8),
                 new SteveRandomLook<>()
         );
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+
+        var brain = this.getBrain();
+
+        brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).ifPresent(visitedSet -> {
+            ListTag listTag = new ListTag();
+            for (BlockPos pos : visitedSet) {
+                listTag.add(NbtUtils.writeBlockPos(pos));
+            }
+            pCompound.put("VisitedBlocks", listTag);
+        });
+
+        brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).ifPresent(f -> pCompound.putDouble("FearLevel", f));
+        brain.getMemory(ModMemoryTypes.CURIOSITY_LEVEL.get()).ifPresent(c -> pCompound.putDouble("CuriosityLevel", c));
+        brain.getMemory(ModMemoryTypes.PARANOIA_LEVEL.get()).ifPresent(p -> pCompound.putDouble("ParanoiaLevel", p));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+
+        var brain = this.getBrain();
+
+        if (pCompound.contains("VisitedBlocks", Tag.TAG_LIST)) {
+            ListTag listTag = pCompound.getList("VisitedBlocks", Tag.TAG_COMPOUND);
+            Set<BlockPos> visitedSet = new HashSet<>();
+            for (int i = 0; i < listTag.size(); i++) {
+                visitedSet.add(NbtUtils.readBlockPos(listTag.getCompound(i)));
+            }
+            brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), visitedSet);
+        }
+
+        if (pCompound.contains("FearLevel", Tag.TAG_DOUBLE)) {
+            brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), pCompound.getDouble("FearLevel"));
+        }
+        if (pCompound.contains("CuriosityLevel", Tag.TAG_DOUBLE)) {
+            brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), pCompound.getDouble("CuriosityLevel"));
+        }
+        if (pCompound.contains("ParanoiaLevel", Tag.TAG_DOUBLE)) {
+            brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), pCompound.getDouble("ParanoiaLevel"));
+        }
     }
 }

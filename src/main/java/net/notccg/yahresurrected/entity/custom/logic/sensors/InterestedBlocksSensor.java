@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
+import net.notccg.yahresurrected.util.ModTags;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.HashSet;
@@ -71,6 +72,11 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
 
             brain.setMemory(targetType, immutablePos);
             brain.setMemory(visitedType, new HashSet<>(visited));
+
+            if (level.getBlockState(immutablePos).is(ModTags.Blocks.CONTAINER_BLOCK)) {
+                brain.setMemory(ModMemoryTypes.CONTAINER_BLOCK.get(), immutablePos);
+                return;
+            }
 
             return;
         }
