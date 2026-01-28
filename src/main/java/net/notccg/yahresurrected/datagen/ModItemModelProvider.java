@@ -17,15 +17,17 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        simpleItem(ModItems.VILLAGERHEART);
-        simpleItem(ModItems.ILLAGERHEART);
-        simpleItem(ModItems.SKINBOOK);
-        simpleItem(ModItems.STEVESOUL);
-        simpleItem(ModItems.INVISIBLEDUST);
-        simpleItem(ModItems.ICERUBY);
+        simpleItem(ModItems.CASTCREEPERBOOK);
+        simpleItem(ModItems.CASTSKELETONBOOK);
+        simpleItem(ModItems.CASTZOMBIEBOOK);
         simpleItem(ModItems.EVILDIAMONDMATTER);
         simpleItem(ModItems.EVILDIAMOND);
         simpleItem(ModItems.FLESHSTICK);
+        simpleItem(ModItems.ICERUBY);
+        simpleItem(ModItems.INVISIBLEDUST);
+        simpleItem(ModItems.ILLAGERHEART);
+        simpleItem(ModItems.NETHERPORTALITEM);
+        simpleItem(ModItems.SKINBOOK);
         simpleItem(ModItems.SPELLBOOKI);
         simpleItem(ModItems.SPELLBOOKII);
         simpleItem(ModItems.SPELLBOOKIII);
@@ -34,20 +36,18 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SPELLBOOKVI);
         simpleItem(ModItems.SPELLBOOKVII);
         simpleItem(ModItems.SPELLBOOKVIII);
-        simpleItem(ModItems.CASTCREEPERBOOK);
-        simpleItem(ModItems.CASTSKELETONBOOK);
-        simpleItem(ModItems.CASTZOMBIEBOOK);
-        simpleItem(ModItems.NETHERPORTALITEM);
+        simpleItem(ModItems.STEVESOUL);
+        simpleItem(ModItems.VILLAGERHEART);
 
-        handheldItem(ModItems.BEDROCKPIXAXE);
+        handHeldItemSpecifyTexture(ModItems.BEDROCKPIXAXE, "deliberately_missing_texture.png");
         handheldItem(ModItems.EVILDIAMONDAXE);
+        handheldItem(ModItems.EVILDIAMONDHOE);
         handheldItem(ModItems.EVILDIAMONDPICKAXE);
         handheldItem(ModItems.EVILDIAMONDSHOVEL);
-        handheldItem(ModItems.EVILDIAMONDHOE);
         handheldItem(ModItems.EVILDIAMONDSWORD);
 
-        withExistingParent(ModItems.STEVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.HUNTER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModItems.STEVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SLAYER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
         // Utility items, not for gameplay
@@ -55,10 +55,20 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.ADVANCEMENT_ROOT_ICON);
 
     }
+    private ItemModelBuilder handHeldItemSpecifyTexture(RegistryObject<Item> item, String texture) {
+        return withExistingParent(item.getId().getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc(texture));
+    }
+
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder simpleItemSpecifyTexture(RegistryObject<Item> item, String texture) {
+        return withExistingParent(item.getId().getPath(), mcLoc("item/handheld"))
+                .texture("layer0", modLoc(texture));
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

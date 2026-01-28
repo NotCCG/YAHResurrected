@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.SPOTTED_PLAYER.get());
-    private static final double SIGHT_RANGE = 32.0;
+    private static final double SIGHT_RANGE = 64.0;
     private static final double SIGHT_RANGE_SQR = SIGHT_RANGE * SIGHT_RANGE;
 
     private static final float FOV_DEGREES = 120.0f;

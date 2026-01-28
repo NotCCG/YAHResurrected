@@ -36,7 +36,7 @@ import java.util.Set;
 public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     // Notes:
     // Base movement should always be 1.0f
-    // Multiplier for sprinting should be 1.2f
+    // Multiplier for sprinting should be 1.3f
     // Multiplier for sneaking should be 0.3f
 
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {

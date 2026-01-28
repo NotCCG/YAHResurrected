@@ -1,8 +1,12 @@
 package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
+import com.google.errorprone.annotations.Var;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
@@ -169,7 +173,7 @@ public class SteveLogic {
     String[] STEVE_NAMES = {
             "Player",
             "Steve",
-            "DanTDM",
+            "SlenderKinGamer",
             "NotCCG"
     };
 
