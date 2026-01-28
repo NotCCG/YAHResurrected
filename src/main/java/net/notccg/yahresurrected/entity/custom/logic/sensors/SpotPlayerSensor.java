@@ -62,8 +62,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
             return;
         }
-        System.out.println("player spotted");
-        brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 60L);
+        brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 1200L);
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Player player, float totalFovDegrees) {

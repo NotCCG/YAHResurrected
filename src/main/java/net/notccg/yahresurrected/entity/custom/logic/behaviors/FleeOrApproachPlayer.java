@@ -50,11 +50,20 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
+                Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
+                Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.HESITATION_COOLDOWN.get(), MemoryStatus.REGISTERED)
         );
+    }
+
+    private static BlockPos getWalkablePos(ServerLevel level, BlockPos target) {
+        if (!level.getBlockState(target).getCollisionShape(level, target).isEmpty()) {
+            return target.above();
+        }
+        return target;
     }
 
     @Override
@@ -78,12 +87,20 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
         fear = SteveLogic.clampEmotion(fear);
 
-        if (fear != 0.0 || hasBeenHurtByPlayer) {
+        if (fear > 0.0 || hasBeenHurtByPlayer) {
+            WalkTarget walkPos = brain.getMemory(MemoryModuleType.WALK_TARGET).orElse(null);
+            if (walkPos != null) {
+                BlockPos walkPosTarget = walkPos.getTarget().currentBlockPosition();
+                int closeEnough = walkPos.getCloseEnoughDist();
+                if (entity.blockPosition().closerThan(walkPosTarget, closeEnough)) {
+                    nextRepathTick = gameTime;
+                }
+            }
 
             if (gameTime < nextRepathTick)
                 return;
 
-            nextRepathTick = gameTime + 10; // Once every .5 seconds
+            nextRepathTick = gameTime + 60; // Once every 3 seconds
 
             Vec3 awayPos = DefaultRandomPos.getPosAway(
                     entity,
@@ -94,19 +111,17 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             if (awayPos == null) return;
 
             if (SteveLogic.isTerrified(brain) || hasBeenHurtByPlayer) {
-                System.out.println("running from player");
                 speed = baseSpeed * 1.3F;
             } else {
                 speed = baseSpeed;
             }
-            entity.getNavigation().moveTo(awayPos.x, awayPos.y, awayPos.z, speed);
-        }
-    }
+            BlockPos pos = BlockPos.containing(awayPos.x, awayPos.y, awayPos.z);
+            BlockPos reachablePos = getWalkablePos(level, pos);
+            WalkTarget fleeTarget = new WalkTarget(reachablePos, (float) speed, 0);
+            BlockPos lookPos = pos.above();
 
-    @Override
-    protected void stop(ServerLevel level, E entity, long gameTime) {
-        Brain<?> brain = entity.getBrain();
-        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-        brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+            brain.setMemory(MemoryModuleType.WALK_TARGET, fleeTarget);
+            brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
+        }
     }
 }

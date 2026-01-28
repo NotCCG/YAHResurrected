@@ -16,11 +16,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
+import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -88,6 +91,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
             brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), 0.0);
+            SteveLogic.addFear(brain, 0.5);
             System.out.println("the player hurt me!");
         }
         return result;
@@ -98,8 +102,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public List<? extends ExtendedSensor<? extends Steve>> getSensors() {
         return ObjectArrayList.of(
-                new PlayerWalkSensor<>(),
                 new SpotPlayerSensor<>(),
+                new PlayerWalkSensor<>(),
                 new InterestedBlocksSensor<>(),
                 new InterestedItemsSensor<>(),
                 new NearestUnoccupiedBedSensor<>()
@@ -109,7 +113,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new FleeOrApproachPlayer<>(ModItems.SPELLBOOKI.get(), 1.0F, 64, 8, 16, 1.25),
                 new MoveToWalkTarget<>(),
                 new LookAtTarget<>()
         );
@@ -118,12 +121,17 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new LookAtSpottedPlayer<>(5, 60),
-                new FleeOrInvestigateBehaviour<>(2, 20, 1),
-                new SetInterestedBlockTarget<>(1.0f, 2, 80),
-                new EmotionControlBehaviour<>(60, 0.875, 0.75, 0.5),
-                new SteveWander<>(1.0f, 1, 32, 8),
-                new SteveRandomLook<>()
+                new FirstApplicableBehaviour<Steve>(
+                        new FleeOrApproachPlayer<>(ModItems.SPELLBOOKI.get(), 1.0F, 32, 8, 10, 1),
+                        new LookAtSpottedPlayer<>(5, 60),
+                        new FleeOrInvestigateBehaviour<>(2, 20, 1),
+                        new SetInterestedBlockTarget<>(1.0f, 2, 80),
+                        new EmotionControlBehaviour<>(60, 0.875, 0.75, 0.5)
+                ),
+                new OneRandomBehaviour<>(
+                        new SteveWander<>(1.0f, 1, 32, 8),
+                        new SteveRandomLook<>()
+                )
         );
     }
 

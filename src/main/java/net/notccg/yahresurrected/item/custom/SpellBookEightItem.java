@@ -7,6 +7,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -16,10 +17,19 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModTags;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class SpellBookEightItem extends Item {
     public SpellBookEightItem(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.spell_book_viii.tooltip"));
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
     @Override
@@ -82,7 +92,7 @@ public class SpellBookEightItem extends Item {
                 if (!player.getInventory().add(illegalItem)) {
                     player.drop(illegalItem, false);
                 }
-
+                serverLevel.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 2);
                 return InteractionResult.SUCCESS;
             }
             serverLevel.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 2);
