@@ -115,4 +115,9 @@ public class ModMemoryTypes {
             MEMORY_MODULE_TYPES.register("container_block",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<BlockPos>> PLAYER_HIT_POS =
+            MEMORY_MODULE_TYPES.register("player_hit_pos",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
 }

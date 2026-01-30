@@ -87,10 +87,13 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
         if (!level().isClientSide && pSource.getEntity() instanceof Player player) {
             var brain = this.getBrain();
+            BlockPos playerPos = player.getOnPos().above();
 
             brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
             brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), 0.0);
+            brain.setMemory(ModMemoryTypes.PLAYER_HIT_POS.get(), playerPos);
+
             SteveLogic.addFear(brain, 0.5);
             System.out.println("the player hurt me!");
         }

@@ -49,16 +49,15 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
         var brain = entity.getBrain();
-
         if (gameTime < nextWanderTick) return;
-        int nextInterval = entity.getRandom().nextInt(
-                MAX_REPATH_TICKS - MIN_REPATH_TICKS + 1
-        ) + MIN_REPATH_TICKS;
-
-        nextWanderTick = gameTime + nextInterval;
 
         Vec3 randomPos = DefaultRandomPos.getPos(entity, wanderHorizontal, wanderVertical);
         if (randomPos == null) return;
+
+        int nextInterval = entity.getRandom().nextInt(
+                MAX_REPATH_TICKS - MIN_REPATH_TICKS + 1
+        ) + MIN_REPATH_TICKS;
+        nextWanderTick = gameTime + nextInterval;
 
         brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
 
