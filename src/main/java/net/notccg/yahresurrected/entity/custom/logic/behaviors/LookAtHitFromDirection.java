@@ -2,9 +2,11 @@ package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
@@ -30,5 +32,13 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
     protected void start(ServerLevel level, E entity, long gameTime) {
         Brain<?> brain = entity.getBrain();
 
+        BlockPos lookPos = brain.getMemory(ModMemoryTypes.PLAYER_HIT_POS.get()).orElse(null);
+        if (lookPos == null) return;
+
+        if (brain.hasMemoryValue(MemoryModuleType.WALK_TARGET)) {
+            brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+        }
+        brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
+        brain.eraseMemory(ModMemoryTypes.PLAYER_HIT_POS.get());
     }
 }

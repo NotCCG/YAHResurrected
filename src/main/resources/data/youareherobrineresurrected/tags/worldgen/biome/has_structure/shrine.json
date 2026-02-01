@@ -2,9 +2,9 @@
   "replace" : false,
 
   "values" : [
-    "#minecraft:is_jungle",
-    "#minecraft:is_forest",
-    "#minecraft:is_taiga",
+    "#minecraft:jungle",
+    "#minecraft:forest",
+    "#minecraft:taiga",
     "minecraft:desert",
     "minecraft:plains",
     "minecraft:snowy_plains",

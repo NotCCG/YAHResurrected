@@ -18,6 +18,7 @@ public class ModStructureTagGenerator extends StructureTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         this.tag(ModTags.Structures.STEVE_HOUSES)
-                .add(ModStructures.STEVE_HOUSE_PLAINS);
+                .add(ModStructures.STEVE_HOUSE_PLAINS)
+                .add(ModStructures.STEVE_HOUSE_SPRUCE);
     }
 }

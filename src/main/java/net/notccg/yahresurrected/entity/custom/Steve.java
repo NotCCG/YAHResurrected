@@ -126,6 +126,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<Steve>(
                         new FleeOrApproachPlayer<>(ModItems.SPELLBOOKI.get(), 1.0F, 32, 8, 10, 1),
+                        new LookAtHitFromDirection<>(),
                         new LookAtSpottedPlayer<>(5, 60),
                         new FleeOrInvestigateBehaviour<>(2, 20, 1),
                         new SetInterestedBlockTarget<>(1.0f, 2, 80),

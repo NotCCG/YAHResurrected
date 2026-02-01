@@ -39,7 +39,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.STEVESOUL);
         simpleItem(ModItems.VILLAGERHEART);
 
-        handHeldItemSpecifyTexture(ModItems.BEDROCKPIXAXE, "deliberately_missing_texture.png");
+        handheldItem(ModItems.BEDROCKPIXAXE);
         handheldItem(ModItems.EVILDIAMONDAXE);
         handheldItem(ModItems.EVILDIAMONDHOE);
         handheldItem(ModItems.EVILDIAMONDPICKAXE);
@@ -55,20 +55,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.ADVANCEMENT_ROOT_ICON);
 
     }
-    private ItemModelBuilder handHeldItemSpecifyTexture(RegistryObject<Item> item, String texture) {
-        return withExistingParent(item.getId().getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc(texture));
-    }
 
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "item/" + item.getId().getPath()));
-    }
-
-    private ItemModelBuilder simpleItemSpecifyTexture(RegistryObject<Item> item, String texture) {
-        return withExistingParent(item.getId().getPath(), mcLoc("item/handheld"))
-                .texture("layer0", modLoc(texture));
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
