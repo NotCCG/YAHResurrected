@@ -13,62 +13,37 @@ import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import java.util.List;
 
 public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
-    private final long emotionRundownTicks;
-    private final double fearDecreaseMultiplier;
-    private final double curiosityDecreaseMultiplier;
-    private final double paranoiaDecreaseMultiplier;
+    private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES =
+            ObjectArrayList.of(
+                    Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.PARANOIA_LEVEL.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.HEARD_SOUND_TYPE.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.LAST_HEARD_TIME.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED)
+            );
 
-    private long nextRundownInterval = 0;
+    private final long updateInterval;
 
-    public EmotionControlBehaviour(long emotionRundownTicks, double fearDecreaseMultiplier, double curiosityDecreaseMultiplier, double paranoiaDecreaseMultiplier) {
-        this.emotionRundownTicks = emotionRundownTicks;
-        this.fearDecreaseMultiplier = fearDecreaseMultiplier;
-        this.curiosityDecreaseMultiplier = curiosityDecreaseMultiplier;
-        this.paranoiaDecreaseMultiplier = paranoiaDecreaseMultiplier;
+    private long nextUpdateTick = 0;
+
+    EmotionControlBehaviour(long updateInterval) {
+        this.updateInterval = updateInterval;
     }
 
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-        return ObjectArrayList.of(
-                Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.VALUE_PRESENT),
-                Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.VALUE_PRESENT),
-                Pair.of(ModMemoryTypes.PARANOIA_LEVEL.get(), MemoryStatus.VALUE_PRESENT),
-                Pair.of(ModMemoryTypes.EMOTION_UPDATED.get(), MemoryStatus.VALUE_PRESENT));
+        return MEMORIES;
     }
 
     @Override
-    protected void start(ServerLevel level, E entity, long gameTime) {
-        long now = level.getGameTime();
-        if (now < nextRundownInterval) return;
-        nextRundownInterval = now + emotionRundownTicks;
+    protected void tick(ServerLevel level, E entity, long gameTime) {
+        if (gameTime < nextUpdateTick) return;
+        nextUpdateTick = gameTime + updateInterval;
 
         var brain = entity.getBrain();
-        double fearLevel = SteveLogic.getFear(brain);
-        double curiosityLevel = SteveLogic.getCuriosity(brain);
-        double paranoiaLevel = SteveLogic.getParanoia(brain);
-
-        if (fearLevel > 0.0) {
-            double newFearLevel = fearLevel * fearDecreaseMultiplier;
-            if (newFearLevel < 0.05) {
-                newFearLevel = 0.0;
-            }
-            brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), newFearLevel);
-        }
-
-        if (curiosityLevel > 0.0) {
-            double newCuriosityLevel = curiosityLevel * curiosityDecreaseMultiplier;
-            if (newCuriosityLevel < 0.5) {
-                newCuriosityLevel = 0.0;
-            };
-            brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), newCuriosityLevel);
-        }
-
-        if (paranoiaLevel > 0.0) {
-            double newParanoiaLevel = paranoiaLevel * paranoiaDecreaseMultiplier;
-            if (newParanoiaLevel < 0.05) {
-                newParanoiaLevel = 0.0;
-            };
-            brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), newParanoiaLevel);
-        }
+        double fear = SteveLogic.getFear(brain);
+        double curiosity = SteveLogic.getCuriosity(brain);
+        double paranoia = SteveLogic.getParanoia(brain);
     }
 }

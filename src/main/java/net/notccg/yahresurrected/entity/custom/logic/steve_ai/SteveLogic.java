@@ -36,10 +36,7 @@ public class SteveLogic {
     }
 
     public static double getParanoia(Brain<?> brain) {
-        double paranoiaMemory = brain.getMemory(ModMemoryTypes.PARANOIA_LEVEL.get()).orElse(0.0);
-        double fearMemory = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
-        double paranoiaMultiplier = fearMemory * 0.50;
-        return paranoiaMemory + paranoiaMultiplier;
+        return brain.getMemory(ModMemoryTypes.PARANOIA_LEVEL.get()).orElse(0.0);
     }
 
     // Fear Logic

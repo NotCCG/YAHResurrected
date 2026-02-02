@@ -7,7 +7,9 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -40,12 +42,10 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
         long now = level.getGameTime();
         if (now < nextScanTick)
             return;
-
         nextScanTick = now + SCAN_INTERVAL_TICKS;
-
         var brain = entity.getBrain();
-
         AABB box = entity.getBoundingBox().inflate(SIGHT_RANGE);
+
 
         Player visibleNearest = level.getEntitiesOfClass(Player.class, box, p ->
                 !p.isSpectator()
@@ -62,7 +62,12 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
             return;
         }
+        if (visibleNearest.getInventory().contains(
+                new ItemStack(ModItems.SPELLBOOKI.get()))) return;
+
         brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 1200L);
+        brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 1200L);
+        brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Player player, float totalFovDegrees) {

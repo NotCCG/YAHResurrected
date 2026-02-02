@@ -35,15 +35,21 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Double>> FEAR_LEVEL =
+    public static final RegistryObject<MemoryModuleType<Boolean>> PLAYER_IS_SPOTTED =
             MEMORY_MODULE_TYPES.register(
-                    "fear_level",
+                    "player_is_spotted",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Long>> EMOTION_UPDATED =
+    public static final RegistryObject<MemoryModuleType<Long>> LAST_SPOTTED_PLAYER_TIME =
             MEMORY_MODULE_TYPES.register(
-                    "emotion_updated",
+                    "last_spotted_player_time",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Double>> FEAR_LEVEL =
+            MEMORY_MODULE_TYPES.register(
+                    "fear_level",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
