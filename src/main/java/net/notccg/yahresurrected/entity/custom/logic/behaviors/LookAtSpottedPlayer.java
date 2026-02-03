@@ -19,12 +19,10 @@ import java.util.List;
 
 public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
     private final int updateIntervalTicks;
-    private int fearUpdateInterval;
     private long nextUpdateTick = 0;
 
-    public LookAtSpottedPlayer(int updateIntervalTicks, int fearUpdateInterval) {
+    public LookAtSpottedPlayer(int updateIntervalTicks) {
         this.updateIntervalTicks = updateIntervalTicks;
-        this.fearUpdateInterval = fearUpdateInterval;
     }
 
     @Override
@@ -53,12 +51,7 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
             brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
             return;
         }
-        boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
-        if (hasBeenHurtByPlayer) {
-            SteveLogic.addFear(brain, gameTime, .0005);
-        }
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
-        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
     }
 
     @Override

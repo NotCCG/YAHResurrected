@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -24,22 +25,6 @@ public class PlayerWalkSensor<E extends Mob> extends ExtendedSensor<E> {
                 ModMemoryTypes.HEARD_SOUND_POS.get(),
                 ModMemoryTypes.LAST_HEARD_TIME.get()
         );
-    }
-
-    private static void setHeardSoundIfNewer(Brain<?> brain,
-                                             long now,
-                                             Player source,
-                                             Vec3 pos,
-                                             HeardSoundType type) {
-        long last = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(Long.MIN_VALUE);
-
-        if (now <= last)
-            return;
-
-        brain.setMemory(ModMemoryTypes.HEARD_SOUND.get(), source);
-        brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), pos);
-        brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), type);
-        brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
     }
 
     @Override
@@ -82,6 +67,19 @@ public class PlayerWalkSensor<E extends Mob> extends ExtendedSensor<E> {
 
         if (movementSqr < MIN_MOVEMENT_SQR) {
             return;
+        }
+        boolean playerHasBeenSeen = brain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get());
+        boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
+
+        if ((playerHasBeenSeen && !hasBeenHurtByPlayer) || (!playerHasBeenSeen && !hasBeenHurtByPlayer)) {
+            SteveLogic.addCuriosity(brain, now, 0.15);
+        }
+        if (!playerHasBeenSeen && hasBeenHurtByPlayer) {
+            SteveLogic.addParanoia(brain, now, 0.2);
+            SteveLogic.addFear(brain, now, 0.05);
+        }
+        if (playerHasBeenSeen && hasBeenHurtByPlayer) {
+            SteveLogic.addFear(brain, now, 0.25);
         }
 
         brain.setMemory(ModMemoryTypes.HEARD_SOUND.get(), nearest);

@@ -18,6 +18,7 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES = ObjectArrayList.of(
             Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
             Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
+            Pair.of(ModMemoryTypes.LAST_HURT_BY.get(), MemoryStatus.VALUE_PRESENT),
             Pair.of(ModMemoryTypes.PLAYER_HURT.get(), MemoryStatus.VALUE_PRESENT),
             Pair.of(ModMemoryTypes.PLAYER_HIT_POS.get(), MemoryStatus.VALUE_PRESENT)
     );

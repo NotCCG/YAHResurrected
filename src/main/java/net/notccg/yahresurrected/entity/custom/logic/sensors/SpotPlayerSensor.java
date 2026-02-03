@@ -62,11 +62,12 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
             return;
         }
+
         if (visibleNearest.getInventory().contains(
                 new ItemStack(ModItems.SPELLBOOKI.get()))) return;
 
-        brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 1200L);
-        brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 1200L);
+        brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 120L);
+        brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
     }
 

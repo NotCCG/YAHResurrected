@@ -75,6 +75,7 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
 
             if (level.getBlockState(immutablePos).is(ModTags.Blocks.CONTAINER_BLOCK)) {
                 brain.setMemory(ModMemoryTypes.CONTAINER_BLOCK.get(), immutablePos);
+                SteveLogic.addCuriosity(brain, gameTime, 0.05);
                 return;
             }
 
