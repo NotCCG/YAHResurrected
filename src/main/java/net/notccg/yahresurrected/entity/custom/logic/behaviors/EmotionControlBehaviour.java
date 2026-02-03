@@ -46,7 +46,7 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
 
     private double baseParanoiaScale = 1;
 
-    EmotionControlBehaviour(long updateInterval,
+    public EmotionControlBehaviour(long updateInterval,
                             double baseFearIncreaseRadius,
                             double baseCuriosityIncrease) {
         this.updateInterval = updateInterval;

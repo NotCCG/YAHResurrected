@@ -118,6 +118,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
+                new EmotionControlBehaviour(20, 8, 3),
                 new MoveToWalkTarget<>(),
                 new LookAtTarget<>()
         );
@@ -156,8 +157,14 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         });
 
         brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).ifPresent(f -> pCompound.putDouble("FearLevel", f));
+        brain.getMemory(ModMemoryTypes.FEAR_ANCHOR.get()).ifPresent(fa -> pCompound.putDouble("FearAnchor", fa));
+        brain.getMemory(ModMemoryTypes.FEAR_CHANGE.get()).ifPresent(fc -> pCompound.putLong("FearChange", fc));
         brain.getMemory(ModMemoryTypes.CURIOSITY_LEVEL.get()).ifPresent(c -> pCompound.putDouble("CuriosityLevel", c));
+        brain.getMemory(ModMemoryTypes.CURIOSITY_ANCHOR.get()).ifPresent(ca -> pCompound.putDouble("CuriosityAnchor", ca));
+        brain.getMemory(ModMemoryTypes.CURIOSITY_CHANGE.get()).ifPresent(cc -> pCompound.putLong("CuriosityChange", cc));
         brain.getMemory(ModMemoryTypes.PARANOIA_LEVEL.get()).ifPresent(p -> pCompound.putDouble("ParanoiaLevel", p));
+        brain.getMemory(ModMemoryTypes.PARANOIA_ANCHOR.get()).ifPresent(pa -> pCompound.putDouble("ParanoiaAnchor", pa));
+        brain.getMemory(ModMemoryTypes.PARANOIA_CHANGE.get()).ifPresent(pc -> pCompound.putLong("ParanoiaChange", pc));
         brain.getMemory(ModMemoryTypes.PLAYER_IS_SPOTTED.get()).ifPresent(sp -> pCompound.putBoolean("PlayerIsSpotted", sp));
         brain.getMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get()).ifPresent(st -> pCompound.putLong("SpottedPlayerTime", st));
     }
@@ -180,12 +187,33 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         if (pCompound.contains("FearLevel", Tag.TAG_DOUBLE)) {
             brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), pCompound.getDouble("FearLevel"));
         }
+        if (pCompound.contains("FearAnchor", Tag.TAG_DOUBLE)) {
+            brain.setMemory(ModMemoryTypes.FEAR_ANCHOR.get(), pCompound.getDouble("FearAnchor"));
+        }
+        if (pCompound.contains("FearChange", Tag.TAG_LONG)) {
+            brain.setMemory(ModMemoryTypes.FEAR_CHANGE.get(), pCompound.getLong("FearChange"));
+        }
+
         if (pCompound.contains("CuriosityLevel", Tag.TAG_DOUBLE)) {
             brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), pCompound.getDouble("CuriosityLevel"));
         }
+        if (pCompound.contains("CuriosityAnchor", Tag.TAG_DOUBLE)) {
+            brain.setMemory(ModMemoryTypes.CURIOSITY_ANCHOR.get(), pCompound.getDouble("CuriosityAnchor"));
+        }
+        if (pCompound.contains("CuriosityChange", Tag.TAG_LONG)) {
+            brain.setMemory(ModMemoryTypes.CURIOSITY_CHANGE.get(), pCompound.getLong("CuriosityChange"));
+        }
+
         if (pCompound.contains("ParanoiaLevel", Tag.TAG_DOUBLE)) {
             brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), pCompound.getDouble("ParanoiaLevel"));
         }
+        if (pCompound.contains("ParanoiaAnchor", Tag.TAG_DOUBLE)) {
+            brain.setMemory(ModMemoryTypes.PARANOIA_ANCHOR.get(), pCompound.getDouble("ParanoiaAnchor"));
+        }
+        if (pCompound.contains("ParanoiaChange", Tag.TAG_LONG)) {
+            brain.setMemory(ModMemoryTypes.PARANOIA_CHANGE.get(), pCompound.getLong("ParanoiaChange"));
+        }
+
         if (pCompound.contains("PlayerIsSpotted", Tag.TAG_BYTE)) {
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 1200L);
         }
