@@ -7,6 +7,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -96,7 +97,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), 0.0);
             brain.setMemory(ModMemoryTypes.PLAYER_HIT_POS.get(), playerPos);
 
-            SteveLogic.addFear(brain, 0.5);
             System.out.println("the player hurt me!");
         }
         return result;

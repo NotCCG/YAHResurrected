@@ -57,7 +57,7 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
         Brain<?> brain = entity.getBrain();
-        if (SteveLogic.isUneasy(brain) || SteveLogic.isScared(brain) || SteveLogic.isTerrified(brain)) return;
+        if (SteveLogic.isUneasy(brain, gameTime) || SteveLogic.isScared(brain, gameTime) || SteveLogic.isTerrified(brain, gameTime)) return;
         if (gameTime > this.nextOkSleepTime) {
             MemoryModuleType<BlockPos> bedTarget = ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get();
             BlockPos bedPos = brain.getMemory(bedTarget).orElse(null);

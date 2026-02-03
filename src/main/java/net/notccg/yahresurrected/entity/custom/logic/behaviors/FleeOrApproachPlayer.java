@@ -73,7 +73,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
         double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
         fear = SteveLogic.clampEmotion(fear);
 
-        if (SteveLogic.isScared(brain) || hasBeenHurtByPlayer) {
+        if (SteveLogic.isScared(brain, gameTime) || hasBeenHurtByPlayer) {
             WalkTarget walkPos = brain.getMemory(MemoryModuleType.WALK_TARGET).orElse(null);
             if (walkPos != null) {
                 BlockPos walkPosTarget = walkPos.getTarget().currentBlockPosition();
@@ -96,7 +96,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             );
             if (awayPos == null) return;
 
-            if (SteveLogic.isTerrified(brain) || hasBeenHurtByPlayer) {
+            if (SteveLogic.isTerrified(brain, gameTime) || hasBeenHurtByPlayer) {
                 speed = baseSpeed * 1.3F;
             } else {
                 speed = baseSpeed;

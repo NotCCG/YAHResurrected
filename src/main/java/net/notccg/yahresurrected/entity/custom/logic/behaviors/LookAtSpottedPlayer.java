@@ -55,8 +55,7 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
         }
         boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
         if (hasBeenHurtByPlayer) {
-            double fear = SteveLogic.getFear(brain);
-            SteveLogic.addFear(brain, 0.0005);
+            SteveLogic.addFear(brain, gameTime, .0005);
         }
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
         brain.eraseMemory(MemoryModuleType.WALK_TARGET);

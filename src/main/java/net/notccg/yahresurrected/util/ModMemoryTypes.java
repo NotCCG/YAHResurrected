@@ -53,15 +53,51 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<Double>> FEAR_ANCHOR =
+            MEMORY_MODULE_TYPES.register(
+                    "fear_anchor",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Long>> FEAR_CHANGE =
+            MEMORY_MODULE_TYPES.register(
+                    "fear_change",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
     public static final RegistryObject<MemoryModuleType<Double>> CURIOSITY_LEVEL =
             MEMORY_MODULE_TYPES.register(
                     "curiosity_level",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<Double>> CURIOSITY_ANCHOR =
+            MEMORY_MODULE_TYPES.register(
+                    "curiosity_anchor",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Long>> CURIOSITY_CHANGE =
+            MEMORY_MODULE_TYPES.register(
+                    "curiosity_change",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
     public static final RegistryObject<MemoryModuleType<Double>> PARANOIA_LEVEL =
             MEMORY_MODULE_TYPES.register(
                     "paranoia_level",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Double>> PARANOIA_ANCHOR =
+            MEMORY_MODULE_TYPES.register(
+                    "paranoia_anchor",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Long>> PARANOIA_CHANGE =
+            MEMORY_MODULE_TYPES.register(
+                    "paranoia_change",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 

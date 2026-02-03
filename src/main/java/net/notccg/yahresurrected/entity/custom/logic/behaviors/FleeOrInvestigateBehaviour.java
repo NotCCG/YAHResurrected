@@ -37,16 +37,15 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
         this.repathInterval = repathInterval;
     }
 
-    private static boolean shouldFlee(Brain<?> brain) {
-        return SteveLogic.isTerrified(brain) ||
-                SteveLogic.isPanicked(brain) ||
-                SteveLogic.isParanoid(brain) ||
-                SteveLogic.isVeryParanoid(brain) ||
+    private static boolean shouldFlee(Brain<?> brain, long gameTime) {
+        return SteveLogic.isTerrified(brain, gameTime) ||
+                SteveLogic.isParanoid(brain, gameTime) ||
+                SteveLogic.isVeryParanoid(brain, gameTime) ||
                 brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
     };
 
-    private static boolean shouldCautiouslyInvestigate(Brain<?> brain) {
-        return SteveLogic.isCautious(brain);
+    private static boolean shouldCautiouslyInvestigate(Brain<?> brain, long gameTime) {
+        return SteveLogic.isCautious(brain, gameTime);
     };
 
     @Override
@@ -89,19 +88,19 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
             HeardSoundType heardSoundType = brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).orElse(null);
             if (heardSoundType != null) {
                 if (heardSoundType == HeardSoundType.CONTAINER_OPEN || heardSoundType == HeardSoundType.CONTAINER_CLOSE) {
-                    SteveLogic.addCuriosity(brain, 0.1f);
+                    SteveLogic.addCuriosity(brain, gameTime, 0.1f);
                 }
                 if (heardSoundType == HeardSoundType.FOOTSTEPS) {
-                    SteveLogic.addCuriosity(brain, 0.25f);
-                    SteveLogic.addFear(brain, 0.1f);
+                    SteveLogic.addCuriosity(brain, gameTime, 0.25f);
+                    SteveLogic.addFear(brain, gameTime, .1f);
                 }
                 if (heardSoundType == HeardSoundType.BLOCK_PLACE || heardSoundType == HeardSoundType.BLOCK_BREAK) {
-                    SteveLogic.addCuriosity(brain, 0.1f);
-                    SteveLogic.addFear(brain, 0.01f);
+                    SteveLogic.addCuriosity(brain, gameTime, 0.1f);
+                    SteveLogic.addFear(brain, gameTime, .01f);
                 }
             };
 
-            if (shouldFlee(brain)) {
+            if (shouldFlee(brain, gameTime)) {
                 float fleeSpeed = baseInvestigateSpeed * 1.3f;
                 Vec3 fleePos = DefaultRandomPos.getPosAway(
                         entity,
@@ -118,7 +117,7 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
 
                 float investigateSpeed = baseInvestigateSpeed;
 
-                if (shouldCautiouslyInvestigate(brain)) {
+                if (shouldCautiouslyInvestigate(brain, gameTime)) {
                     entity.setPose(Pose.CROUCHING);
                     investigateSpeed = baseInvestigateSpeed * 1.3f;
                 }
