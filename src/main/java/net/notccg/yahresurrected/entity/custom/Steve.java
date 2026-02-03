@@ -90,7 +90,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
             brain.setMemory(ModMemoryTypes.LAST_HURT_BY.get(), player);
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
-            brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), 0.0);
             brain.setMemory(ModMemoryTypes.PLAYER_HIT_POS.get(), playerPos);
 
             System.out.println("the player hurt me!");
