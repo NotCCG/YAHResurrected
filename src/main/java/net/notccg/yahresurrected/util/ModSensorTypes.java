@@ -32,4 +32,7 @@ public class ModSensorTypes {
 
     public static final RegistryObject<SensorType<NearestUnoccupiedBedSensor<?>>> UNOCCUPIED_BED_SENSOR =
             SENSOR_TYPES.register("unoccupiedbedsensor", sensorType(NearestUnoccupiedBedSensor::new));
+
+    public static final RegistryObject<SensorType<NearbyCreepersSensor<?>>> NEARBY_CREEPERS_SENSOR =
+            SENSOR_TYPES.register("nearbycreeperssensor", sensorType(NearbyCreepersSensor::new));
 }

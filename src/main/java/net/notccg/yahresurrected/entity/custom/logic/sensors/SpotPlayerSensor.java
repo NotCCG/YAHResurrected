@@ -23,7 +23,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
     private static final double SIGHT_RANGE_SQR = SIGHT_RANGE * SIGHT_RANGE;
 
     private static final float FOV_DEGREES = 120.0f;
-    private static final int SCAN_INTERVAL_TICKS = 30;
+    private static final int SCAN_INTERVAL_TICKS = 10; // twice a second
 
     private long nextScanTick = 0;
 
@@ -75,7 +75,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
         double dx = player.getX() - mob.getX();
         double dz = player.getZ() - mob.getZ();
 
-        double angleToPlayer = Math.toDegrees(Math.atan2(dz, dx)) - 90.0;
+        double angleToPlayer = Math.toDegrees(Math.atan2(dz, dx)) - 100.0;
         float headYaw = mob.getYHeadRot();
         double delta = Mth.wrapDegrees(angleToPlayer - headYaw);
 

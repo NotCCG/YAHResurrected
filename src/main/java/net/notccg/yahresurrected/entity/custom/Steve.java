@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
@@ -58,6 +59,11 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         this.setYHeadRot(bodyYaw + deltaYaw);
 
         this.setXRot(Mth.clamp(this.getXRot(), -maxHeadPitch, maxHeadPitch));
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
     }
 
     @Override
@@ -113,7 +119,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new EmotionControlBehaviour(10, 8, 3),
+                new EmotionControlBehaviour(5, 8, 3),
                 new MoveToWalkTarget<>(),
                 new LookAtTarget<>()
         );

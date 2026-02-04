@@ -1,7 +1,9 @@
 package net.notccg.yahresurrected.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
@@ -160,6 +162,11 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<BlockPos>> PLAYER_HIT_POS =
             MEMORY_MODULE_TYPES.register("player_hit_pos",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<Creeper>> NEARBY_CREEPERS =
+            MEMORY_MODULE_TYPES.register("nearby_creepers",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 }

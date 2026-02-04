@@ -10,6 +10,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,6 +29,14 @@ public abstract class AbstractSteve extends PathfinderMob {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.MOVEMENT_SPEED,0.2);
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level pLevel) {
+        GroundPathNavigation nav =new GroundPathNavigation(this, pLevel);
+        nav.setCanOpenDoors(true);
+        nav.setCanPassDoors(true);
+        return nav;
     }
 
     @Nullable
