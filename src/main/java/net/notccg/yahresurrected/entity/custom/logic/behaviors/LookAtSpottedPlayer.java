@@ -4,21 +4,17 @@ import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
 import java.util.List;
 
 public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
-    private final int updateIntervalTicks;
+    private final long updateIntervalTicks;
     private long nextUpdateTick = 0;
 
     public LookAtSpottedPlayer(int updateIntervalTicks) {

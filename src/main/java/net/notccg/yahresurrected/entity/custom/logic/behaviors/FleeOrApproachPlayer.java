@@ -62,6 +62,11 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
+        if (gameTime < nextRepathTick)
+            return;
+
+        nextRepathTick = gameTime + 60;
+
         Brain<?> brain = entity.getBrain();
         Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
         if (player == null)
@@ -83,11 +88,6 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 }
             }
 
-            if (gameTime < nextRepathTick)
-                return;
-
-            nextRepathTick = gameTime + 60; // Once every 3 seconds
-
             Vec3 awayPos = DefaultRandomPos.getPosAway(
                     entity,
                     fleeHorizontal,
@@ -98,13 +98,12 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
             if (SteveLogic.isTerrified(brain, gameTime) || hasBeenHurtByPlayer) {
                 speed = baseSpeed * 1.3F;
-            } else {
-                speed = baseSpeed;
             }
+
             BlockPos pos = BlockPos.containing(awayPos.x, awayPos.y, awayPos.z);
             BlockPos reachablePos = getWalkablePos(level, pos);
             WalkTarget fleeTarget = new WalkTarget(reachablePos, (float) speed, 0);
-            BlockPos lookPos = pos.above();
+            BlockPos lookPos = reachablePos.above();
 
             brain.setMemory(MemoryModuleType.WALK_TARGET, fleeTarget);
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));

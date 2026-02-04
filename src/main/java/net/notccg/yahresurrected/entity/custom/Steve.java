@@ -110,6 +110,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return ObjectArrayList.of(
                 new SpotPlayerSensor<>(),
                 // new PlayerWalkSensor<>(),
+                new NearbyCreepersSensor<>(),
                 new InterestedBlocksSensor<>() //,
                 // new InterestedItemsSensor<>(),
                 // new NearestUnoccupiedBedSensor<>()
@@ -132,6 +133,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         // new FleeOrApproachPlayer<>(1.0F, 32, 8, 10, 1),
                         new LookAtHitFromDirection<>(),
                         new LookAtSpottedPlayer<>(5),
+                        // new RunFromCreepers<>(10),
                         // new FleeOrInvestigateBehaviour<>(2, 20, 1),
                         new SetInterestedBlockTarget<>(1.0f, 2, 80)
                 ),
