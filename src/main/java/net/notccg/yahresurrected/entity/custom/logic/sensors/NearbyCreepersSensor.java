@@ -7,7 +7,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
@@ -54,18 +53,22 @@ public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSenso
                 .min(Comparator.comparingDouble(entity::distanceToSqr))
                 .orElse(null);
 
-        if (creeper == null) return;
+        if (creeper == null) {
+            brain.eraseMemory(ModMemoryTypes.NEARBY_CREEPERS.get());
+            return;
+        }
 
         brain.setMemory(ModMemoryTypes.NEARBY_CREEPERS.get(), creeper);
+        System.out.println("Steve senses a creeper nearby");
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Creeper creeper, float totalFovDegrees) {
         double dx = creeper.getX() - mob.getX();
         double dz = creeper.getZ() - mob.getZ();
 
-        double angleToPlayer = Math.toDegrees(Math.atan2(dz, dx)) - 100.0;
+        double angleToCreeper = Math.toDegrees(Math.atan2(dz, dx)) - 100.0;
         float headYaw = mob.getYHeadRot();
-        double delta = Mth.wrapDegrees(angleToPlayer - headYaw);
+        double delta = Mth.wrapDegrees(angleToCreeper - headYaw);
 
         return Math.abs(delta) <= (totalFovDegrees * 0.5);
     }
