@@ -44,10 +44,11 @@ public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSens
     protected void doTick(ServerLevel level, E entity) {
         long gameTime = level.getGameTime();
         if (gameTime < nextScanTick) return;
+        nextScanTick = gameTime + SCAN_INTERVAL_TICKS;
 
         var brain = entity.getBrain();
 
-        MemoryModuleType<BlockPos> locType = ModMemoryTypes.INTERESTED_ITEM_LOCATION.get();
+        MemoryModuleType<ItemEntity> locType = ModMemoryTypes.INTERESTED_ITEM.get();
 
         if (brain.hasMemoryValue(locType)) return;
 
@@ -63,6 +64,8 @@ public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSens
             brain.eraseMemory(locType);
             return;
         }
-        brain.setMemory(locType, nearest.blockPosition());
+
+        System.out.println("Found item " + nearest);
+        brain.setMemory(locType, nearest);
     }
 }

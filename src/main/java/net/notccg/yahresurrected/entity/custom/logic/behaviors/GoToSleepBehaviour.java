@@ -20,17 +20,18 @@ import java.util.List;
 public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
             ObjectArrayList.of(
-                    Pair.of(MemoryModuleType.NEAREST_BED, MemoryStatus.VALUE_PRESENT),
+                    Pair.of(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get(), MemoryStatus.VALUE_PRESENT),
                     Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
                     Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
-                    Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.VALUE_ABSENT)
+                    Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.VALUE_ABSENT),
+                    Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT)
             );
 
     private long nextOkSleepTime;
     private final float walkSpeed;
 
-    private static final int COOLDOWN_AFTER_WAKING_UP = 100;
+    private static final long COOLDOWN_AFTER_WAKING_UP = 100L;
     private static final int closeEnough = 1;
 
     public GoToSleepBehaviour(float walkSpeed) {
@@ -51,7 +52,7 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
-        return level.isDay();
+        return level.isNight();
     }
 
     @Override
@@ -64,6 +65,10 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
             BlockPos walkTarget = getWalkablePos(level, bedPos);
             if (bedPos == null) return;
             if (entity.blockPosition().closerThan(bedPos, closeEnough)) {
+                entity.getNavigation().stop();
+                brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+                brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+
                 entity.startSleeping(bedPos);
             }
             brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkTarget, walkSpeed, closeEnough));
@@ -76,7 +81,7 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
     protected void stop(ServerLevel level, E entity, long gameTime) {
         if (entity.isSleeping()) {
             entity.stopSleeping();
-            this.nextOkSleepTime = gameTime + 40L;
+            this.nextOkSleepTime = gameTime + COOLDOWN_AFTER_WAKING_UP;
         }
     }
 }

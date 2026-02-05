@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractSteve extends PathfinderMob {
     protected AbstractSteve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setCanPickUpLoot(true);
     }
 
     //Basic Steve Entity Setup
@@ -73,7 +74,6 @@ public abstract class AbstractSteve extends PathfinderMob {
         }
         return HumanoidModel.ArmPose.EMPTY;
     }
-
 
     @Nullable
     @Override

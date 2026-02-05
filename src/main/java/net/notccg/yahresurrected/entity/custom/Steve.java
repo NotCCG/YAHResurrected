@@ -7,8 +7,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -103,6 +106,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return result;
     }
 
+    private static String NAME = new SteveLogic().getSteveName();
+
     // Primary Steve AI behaviour
 
     @Override
@@ -111,9 +116,9 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 new SpotPlayerSensor<>(),
                 // new PlayerWalkSensor<>(),
                 new NearbyCreepersSensor<>(),
-                new InterestedBlocksSensor<>() //,
+                new InterestedBlocksSensor<>(),
                 // new InterestedItemsSensor<>(),
-                // new NearestUnoccupiedBedSensor<>()
+                new NearestUnoccupiedBedSensor<>()
         );
     }
 
@@ -130,12 +135,13 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<Steve>(
-                        // new FleeOrApproachPlayer<>(1.0F, 32, 8, 10, 1),
+                        new FleeOrApproachPlayer<>(1.0F, 32, 8, 10, 1),
                         new LookAtHitFromDirection<>(),
                         new LookAtSpottedPlayer<>(5),
                         // new RunFromCreepers<>(10),
                         // new FleeOrInvestigateBehaviour<>(2, 20, 1),
-                        new SetInterestedBlockTarget<>(1.0f, 2, 80)
+                        new SetInterestedBlockTarget<>(1.0f, 2, 80),
+                        new GoToSleepBehaviour<>(1)
                 ),
                 new OneRandomBehaviour<Steve>(
                         new SteveWander<>(1.0f, 1, 32, 8),

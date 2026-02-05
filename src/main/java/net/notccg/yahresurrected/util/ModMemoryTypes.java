@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -140,7 +141,7 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<BlockPos>> INTERESTED_ITEM_LOCATION =
+    public static final RegistryObject<MemoryModuleType<ItemEntity>> INTERESTED_ITEM =
             MEMORY_MODULE_TYPES.register("interested_items_loc",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
