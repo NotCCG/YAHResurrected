@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "youareherobrineresurrected:steve_house_jungle",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 12555413,
+
+    "spacing": 64,
+
+    "separation": 63,
+
+    "type": "minecraft:random_spread"
+  }
+}

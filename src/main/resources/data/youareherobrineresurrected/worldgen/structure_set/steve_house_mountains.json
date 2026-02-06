@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "youareherobrineresurrected:steve_house_mountains",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 789874914,
+
+    "spacing": 64,
+
+    "separation": 63,
+
+    "type": "minecraft:random_spread"
+  }
+}

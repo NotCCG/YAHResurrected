@@ -4,6 +4,9 @@
   "values": [
     "minecraft:plains",
     "minecraft:forest",
-    "windswept_hills"
+    "minecraft:windswept_hills",
+    "minecraft:meadow",
+    "minecraft:birch_forrest",
+    "minecraft:old_growth_birch_forrest"
   ]
 }

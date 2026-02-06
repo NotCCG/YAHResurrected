@@ -1,0 +1,17 @@
+{
+  "structures": [
+    {
+      "structure": "youareherobrineresurrected:steve_house_cold",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 6969420,
+
+    "spacing": 64,
+
+    "separation": 63,
+
+    "type": "minecraft:random_spread"
+  }
+}

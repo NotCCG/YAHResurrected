@@ -18,7 +18,7 @@ import java.util.List;
 
 public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(
-            ModMemoryTypes.INTERESTED_ITEM_LOCATION.get()
+            ModMemoryTypes.INTERESTED_ITEM.get()
     );
     private static final int XY_RANGE = 16;
     private static final int Y_RANGE = 8;

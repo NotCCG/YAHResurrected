@@ -6,6 +6,7 @@ import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.advancements.AdvancementSubProvider;
+import net.minecraft.data.worldgen.Structures;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -52,12 +53,57 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                         FrameType.TASK,
                         true,
                         true,
-                        true
+                        false
                 )
                 .addCriterion("shrine_located",
                         locationDiscovered(ModStructures.SHRINE)
                 )
                 .save(saver, id("shrine_located"));
+
+        Advancement steve_house_found = Advancement.Builder.advancement()
+                .parent(root)
+                .display(
+                        Items.OAK_DOOR,
+                        Component.translatable(langTitle("home_invader")),
+                        Component.translatable(langDescription("home_invader")),
+                        null,
+                        FrameType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("steve_house_desert_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_DESERT)
+                )
+                .addCriterion("steve_house_jungle_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_JUNGLE)
+                )
+                .addCriterion("steve_house_mountains_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_MOUNTAINS)
+                )
+                .addCriterion("steve_house_plains_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_PLAINS)
+                )
+                .addCriterion("steve_house_red_desert_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_RED_DESERT)
+                )
+                .addCriterion("steve_house_snowy_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_SNOWY)
+                )
+                .addCriterion("steve_house_spruce_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_SPRUCE)
+                )
+                .requirements( new String[][] {
+                        {"steve_house_desert_found"},
+                        {"steve_house_jungle_found"},
+                        {"steve_house_mountains_found"},
+                        {"steve_house_plains_found"},
+                        {"steve_house_red_desert_found"},
+                        {"steve_house_snowy_found"},
+                        {"steve_house_spruce_found"}
+                        }
+                )
+                .save(saver, "steve_house_found");
 
         Advancement sunburn = Advancement.Builder.advancement()
                 .parent(root)
