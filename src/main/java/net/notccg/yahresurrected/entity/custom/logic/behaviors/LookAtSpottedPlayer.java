@@ -47,6 +47,7 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
             brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
             return;
         }
+        System.out.println("looking at player");
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
     }
 

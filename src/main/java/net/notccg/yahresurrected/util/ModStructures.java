@@ -12,7 +12,7 @@ public class ModStructures {
     public static ResourceKey<Structure> SHRINE = structure("shrine");
 
     public static ResourceKey<Structure> STEVE_HOUSE_DESERT = structure("steve_house_desert");
-    public static ResourceKey<Structure> STEVE_HOUSE_JUNGLE = structure("steve_house_jungle");
+    public static ResourceKey<Structure> STEVE_HOUSE_JUNGLE = structure("steve_house_jungle.json");
     public static ResourceKey<Structure> STEVE_HOUSE_MOUNTAINS = structure("steve_house_mountains");
     public static ResourceKey<Structure> STEVE_HOUSE_PLAINS = structure("steve_house_plains");
     public static ResourceKey<Structure> STEVE_HOUSE_RED_DESERT = structure("steve_house_red_desert");

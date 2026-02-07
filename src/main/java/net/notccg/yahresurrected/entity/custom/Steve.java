@@ -50,18 +50,18 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public void aiStep() {
         super.aiStep();
 
-        final float maxHeadYaw = 60.0f;
-        final float maxHeadPitch = 90.0f;
+        // final float maxHeadYaw = 60.0f;
+        // final float maxHeadPitch = 90.0f;
 
-        float bodyYaw = this.getYRot();
-        float headYaw = this.getYHeadRot();
+        // float bodyYaw = this.getYRot();
+        // float headYaw = this.getYHeadRot();
 
-        float deltaYaw = Mth.wrapDegrees(headYaw - bodyYaw);
-        deltaYaw = Mth.clamp(deltaYaw, -maxHeadYaw, maxHeadYaw);
+        // float deltaYaw = Mth.wrapDegrees(headYaw - bodyYaw);
+        // deltaYaw = Mth.clamp(deltaYaw, -maxHeadYaw, maxHeadYaw);
 
-        this.setYHeadRot(bodyYaw + deltaYaw);
+        // this.setYHeadRot(bodyYaw + deltaYaw);
 
-        this.setXRot(Mth.clamp(this.getXRot(), -maxHeadPitch, maxHeadPitch));
+        // this.setXRot(Mth.clamp(this.getXRot(), -maxHeadPitch, maxHeadPitch));
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return ObjectArrayList.of(
                 new SpotPlayerSensor<>(),
                 // new PlayerWalkSensor<>(),
-                new NearbyCreepersSensor<>(),
+                // new NearbyCreepersSensor<>(),
                 new InterestedBlocksSensor<>(),
                 // new InterestedItemsSensor<>(),
                 new NearestUnoccupiedBedSensor<>()
@@ -140,8 +140,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         new LookAtSpottedPlayer<>(5),
                         // new RunFromCreepers<>(10),
                         // new FleeOrInvestigateBehaviour<>(2, 20, 1),
-                        new SetInterestedBlockTarget<>(1.0f, 2, 80),
-                        new GoToSleepBehaviour<>(1)
+                        new SetInterestedBlockTarget<>(1.0f, 1, 20)//,
+                        // new GoToSleepBehaviour<>(1)
                 ),
                 new OneRandomBehaviour<Steve>(
                         new SteveWander<>(1.0f, 1, 32, 8),

@@ -66,6 +66,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
         if (visibleNearest.getInventory().contains(
                 new ItemStack(ModItems.SPELLBOOKI.get()))) return;
 
+        System.out.println("player spotted");
         brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 120L);
         brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
@@ -75,7 +76,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
         double dx = player.getX() - mob.getX();
         double dz = player.getZ() - mob.getZ();
 
-        double angleToPlayer = Math.toDegrees(Math.atan2(dz, dx)) - 100.0;
+        double angleToPlayer = Math.toDegrees(Math.atan2(dz, dx)) - 80.0;
         float headYaw = mob.getYHeadRot();
         double delta = Mth.wrapDegrees(angleToPlayer - headYaw);
 

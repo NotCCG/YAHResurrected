@@ -44,7 +44,7 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
     private long previousSpottedPlayerTime = 0;
     private long previousHeardSoundTime = 0;
 
-    private double baseParanoiaScale = 1;
+    private double baseParanoiaScale = 0.1;
 
     public EmotionControlBehaviour(long updateInterval,
                             double baseFearIncreaseRadius,
@@ -63,6 +63,7 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
     protected void tick(ServerLevel level, E entity, long gameTime) {
         if (gameTime < nextUpdateTick) return;
         nextUpdateTick = gameTime + updateInterval;
+        System.out.println("Emotion Control Tick");
 
         var brain = entity.getBrain();
         double paranoia = SteveLogic.getParanoia(brain, gameTime);

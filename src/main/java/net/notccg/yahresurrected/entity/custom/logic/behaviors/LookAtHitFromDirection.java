@@ -31,8 +31,9 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
     protected void start(ServerLevel level, E entity, long gameTime) {
         Brain<?> brain = entity.getBrain();
 
-        BlockPos lookPos = brain.getMemory(ModMemoryTypes.PLAYER_HIT_POS.get()).orElse(null);
-        if (lookPos == null) return;
+        BlockPos hitPos = brain.getMemory(ModMemoryTypes.PLAYER_HIT_POS.get()).orElse(null);
+        if (hitPos == null) return;
+        BlockPos lookPos = hitPos.above();
 
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         brain.eraseMemory(ModMemoryTypes.PLAYER_HIT_POS.get());

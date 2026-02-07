@@ -7,7 +7,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.*;
-import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
@@ -30,9 +29,9 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
             ObjectArrayList.of(
+                    Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
+                    Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
-                    Pair.of(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), MemoryStatus.REGISTERED),
-                    Pair.of(ModMemoryTypes.PLAYER_HURT.get(), MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_PRESENT),
                     Pair.of(ModMemoryTypes.VISITED_BLOCKS.get(), MemoryStatus.REGISTERED)
             );
@@ -58,12 +57,14 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
         MemoryModuleType<BlockPos> interestedType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
 
-
         BlockPos target = brain.getMemory(interestedType).orElse(null);
-        BlockPos walkPos = getWalkablePos(level, target);
         if (target == null) return;
 
+        BlockPos walkPos = getWalkablePos(level, target);
+        if (walkPos == null) return;
+
         if (entity.blockPosition().closerThan(target, arriveDistance)) {
+            System.out.println("steve visited his block");
             Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
 
             visited.add(target.immutable());
@@ -83,23 +84,15 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
             brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
             return;
         }
-        boolean playerHasBeenSeen = brain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get());
-        boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
 
-        if ((playerHasBeenSeen && !hasBeenHurtByPlayer) || (!playerHasBeenSeen && !hasBeenHurtByPlayer)) {
-            SteveLogic.addCuriosity(brain, gameTime, 0.05);
-        }
-        if (!playerHasBeenSeen && hasBeenHurtByPlayer) {
-            SteveLogic.addParanoia(brain, gameTime, 0.1);
-            SteveLogic.addFear(brain, gameTime, 0.01);
-        }
-        if (playerHasBeenSeen && hasBeenHurtByPlayer) {
-            SteveLogic.addFear(brain, gameTime, 0.1);
-        }
-
+        System.out.println("steve set his walk target to " + walkPos);
         brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, arriveDistance));
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkPos));
-        brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
     }
 
+    @Override
+    protected void stop(E entity) {
+        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
+        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+    }
 }
