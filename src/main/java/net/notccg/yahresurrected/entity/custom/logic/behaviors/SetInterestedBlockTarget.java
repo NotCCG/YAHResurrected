@@ -63,12 +63,13 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
         BlockPos walkPos = getWalkablePos(level, target);
         if (walkPos == null) return;
 
-        if (entity.blockPosition().closerThan(target, arriveDistance)) {
+        if (entity.blockPosition().closerThan(walkPos, arriveDistance)) {
             System.out.println("steve visited his block");
             Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
 
+            visited.add(walkPos.immutable());
             visited.add(target.immutable());
-            brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
+
 
             if (visited.size() > 1024) {
                 int excess = visited.size() - 1024;
@@ -79,6 +80,8 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
                 }
             }
 
+            brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
+
             brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
             brain.eraseMemory(MemoryModuleType.WALK_TARGET);
             brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
@@ -86,13 +89,12 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
         }
 
         System.out.println("steve set his walk target to " + walkPos);
-        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, arriveDistance));
+        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, 1));
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkPos));
     }
 
     @Override
     protected void stop(E entity) {
-        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
-        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+        super.stop(entity);
     }
 }

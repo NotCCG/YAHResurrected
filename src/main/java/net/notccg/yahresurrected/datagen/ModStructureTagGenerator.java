@@ -24,6 +24,6 @@ public class ModStructureTagGenerator extends StructureTagsProvider {
                 .add(ModStructures.STEVE_HOUSE_PLAINS)
                 .add(ModStructures.STEVE_HOUSE_RED_DESERT)
                 .add(ModStructures.STEVE_HOUSE_SPRUCE)
-                .add(ModStructures.STEVE_HOUSE_SNOWY);
+                .add(ModStructures.STEVE_HOUSE_COLD);
     }
 }

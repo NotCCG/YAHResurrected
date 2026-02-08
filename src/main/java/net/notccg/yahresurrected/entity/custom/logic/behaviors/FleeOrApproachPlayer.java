@@ -105,6 +105,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             WalkTarget fleeTarget = new WalkTarget(reachablePos, (float) speed, 0);
             BlockPos lookPos = reachablePos.above();
 
+            System.out.println("steve is running from the player");
             brain.setMemory(MemoryModuleType.WALK_TARGET, fleeTarget);
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         }

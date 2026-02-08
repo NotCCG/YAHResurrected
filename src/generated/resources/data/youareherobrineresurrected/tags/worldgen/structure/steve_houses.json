@@ -1,6 +1,11 @@
 {
   "values": [
+    "youareherobrineresurrected:steve_house_desert",
+    "youareherobrineresurrected:steve_house_jungle",
+    "youareherobrineresurrected:steve_house_mountains",
     "youareherobrineresurrected:steve_house_plains",
-    "youareherobrineresurrected:steve_house_spruce"
+    "youareherobrineresurrected:steve_house_red_desert",
+    "youareherobrineresurrected:steve_house_spruce",
+    "youareherobrineresurrected:steve_house_cold"
   ]
 }

@@ -60,10 +60,23 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
     }
 
     @Override
+    protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
+        return true;
+    }
+
+    @Override
+    protected void start(ServerLevel level, E entity, long gameTime) {
+        this.nextUpdateTick = gameTime;
+
+        var brain = entity.getBrain();
+        this.previousSpottedPlayerTime = brain.getMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get()).orElse(0L);
+        this.previousHeardSoundTime = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(0L);
+    }
+
+    @Override
     protected void tick(ServerLevel level, E entity, long gameTime) {
         if (gameTime < nextUpdateTick) return;
         nextUpdateTick = gameTime + updateInterval;
-        System.out.println("Emotion Control Tick");
 
         var brain = entity.getBrain();
         double paranoia = SteveLogic.getParanoia(brain, gameTime);
@@ -94,9 +107,11 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                             .orElse(null);
                     if (overThreshold != null) {
                         if (SteveLogic.isTerrified(brain, gameTime) || hasBeenHurtByPlayer) {
-                            SteveLogic.addFear(brain, gameTime,paranoiaSqr);
+                            SteveLogic.addFear(brain, gameTime, paranoiaSqr);
+                            System.out.println("Steve saw the player and is scared");
                         } else {
-                        SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
+                            SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
+                            System.out.println("Steve saw the player and is curious");
                         }
                     }
                 }
@@ -112,8 +127,10 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                 previousHeardSoundTime = heardSoundTime;
 
                 if (hasBeenHurtByPlayer || SteveLogic.isParanoid(brain, gameTime) || SteveLogic.isScared(brain, gameTime)) {
+                    System.out.println("Steve heard something and got scared");
                     SteveLogic.addFear(brain, gameTime, paranoiaSqr);
                 } else {
+                    System.out.println("Steve heard something and is curious about it");
                     SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
                 }
             }

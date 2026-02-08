@@ -1,0 +1,156 @@
+{
+  "parent": "youareherobrineresurrected:root",
+  "criteria": {
+    "steve_house_cold_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_cold"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "steve_house_desert_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_desert"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "steve_house_jungle_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_jungle"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "steve_house_mountains_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_mountains"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "steve_house_plains_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_plains"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "steve_house_red_desert_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_red_desert"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    },
+    "steve_house_spruce_found": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "youareherobrineresurrected:steve_house_spruce"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.youareherobrineresurrected.home_invader.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:oak_door"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.youareherobrineresurrected.home_invader.title"
+    }
+  },
+  "requirements": [
+    [
+      "steve_house_desert_found"
+    ],
+    [
+      "steve_house_jungle_found"
+    ],
+    [
+      "steve_house_mountains_found"
+    ],
+    [
+      "steve_house_plains_found"
+    ],
+    [
+      "steve_house_red_desert_found"
+    ],
+    [
+      "steve_house_cold_found"
+    ],
+    [
+      "steve_house_spruce_found"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

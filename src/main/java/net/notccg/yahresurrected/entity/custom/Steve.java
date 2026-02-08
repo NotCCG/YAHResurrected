@@ -114,8 +114,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public List<? extends ExtendedSensor<? extends Steve>> getSensors() {
         return ObjectArrayList.of(
                 new SpotPlayerSensor<>(),
-                // new PlayerWalkSensor<>(),
-                // new NearbyCreepersSensor<>(),
+                new PlayerWalkSensor<>(),
+                new NearbyCreepersSensor<>(),
                 new InterestedBlocksSensor<>(),
                 // new InterestedItemsSensor<>(),
                 new NearestUnoccupiedBedSensor<>()
@@ -125,9 +125,9 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public BrainActivityGroup<? extends Steve> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
-                new EmotionControlBehaviour(5, 8, 3),
                 new MoveToWalkTarget<>(),
-                new LookAtTarget<>()
+                new LookAtTarget<>(),
+                new EmotionControlBehaviour<>(5, 8, 3)
         );
     }
 
@@ -140,7 +140,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         new LookAtSpottedPlayer<>(5),
                         // new RunFromCreepers<>(10),
                         // new FleeOrInvestigateBehaviour<>(2, 20, 1),
-                        new SetInterestedBlockTarget<>(1.0f, 1, 20)//,
+                        new SetInterestedBlockTarget<>(1.0f, 3, 20)//,
                         // new GoToSleepBehaviour<>(1)
                 ),
                 new OneRandomBehaviour<Steve>(

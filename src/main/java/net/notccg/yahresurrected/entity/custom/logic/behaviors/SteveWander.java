@@ -72,6 +72,7 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
-        entity.getNavigation().stop();
+        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
+        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }

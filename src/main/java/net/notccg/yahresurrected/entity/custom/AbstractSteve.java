@@ -16,12 +16,17 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractSteve extends PathfinderMob {
     protected AbstractSteve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+        this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0f);
+        this.setPathfindingMalus(BlockPathTypes.DOOR_OPEN, 0.0f);
+        this.setPathfindingMalus(BlockPathTypes.DOOR_IRON_CLOSED, 0.0f);;
+
         this.setCanPickUpLoot(true);
     }
 
@@ -29,14 +34,17 @@ public abstract class AbstractSteve extends PathfinderMob {
     public static AttributeSupplier.Builder createAttribute() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
-                .add(Attributes.MOVEMENT_SPEED,0.2);
+                .add(Attributes.MOVEMENT_SPEED,0.3);
     }
 
     @Override
     protected PathNavigation createNavigation(Level pLevel) {
         GroundPathNavigation nav =new GroundPathNavigation(this, pLevel);
+
         nav.setCanOpenDoors(true);
         nav.setCanPassDoors(true);
+        nav.setCanFloat(true);
+
         return nav;
     }
 

@@ -87,8 +87,8 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                 .addCriterion("steve_house_red_desert_found",
                         locationDiscovered(ModStructures.STEVE_HOUSE_RED_DESERT)
                 )
-                .addCriterion("steve_house_snowy_found",
-                        locationDiscovered(ModStructures.STEVE_HOUSE_SNOWY)
+                .addCriterion("steve_house_cold_found",
+                        locationDiscovered(ModStructures.STEVE_HOUSE_COLD)
                 )
                 .addCriterion("steve_house_spruce_found",
                         locationDiscovered(ModStructures.STEVE_HOUSE_SPRUCE)
@@ -99,7 +99,7 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                         {"steve_house_mountains_found"},
                         {"steve_house_plains_found"},
                         {"steve_house_red_desert_found"},
-                        {"steve_house_snowy_found"},
+                        {"steve_house_cold_found"},
                         {"steve_house_spruce_found"}
                         }
                 )
