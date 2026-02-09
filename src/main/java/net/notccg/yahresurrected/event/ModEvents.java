@@ -26,6 +26,7 @@ import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 
 
 public class ModEvents {
@@ -75,7 +76,7 @@ public class ModEvents {
             boolean allowedToTarget =
                     (entity instanceof Creeper && !hasSpellBookVI(player)) ||
                             (entity instanceof EnderMan && !hasSpellBookVII(player)) ||
-                            (entity instanceof AbstractHunter && !hasSpellBookI(player));
+                            (entity instanceof AbstractHunter && SpellBookOneItem.isCloakActivated(player));
 
             if (!allowedToTarget) {
                 event.setCanceled(true);
@@ -91,12 +92,6 @@ public class ModEvents {
                 }
             }
         }
-    }
-
-    private static boolean hasSpellBookI(Player player) {
-        return player.getInventory().contains(
-                new ItemStack(ModItems.SPELLBOOKI.get())
-        );
     }
 
     private static boolean hasSpellBookII(Player player) {

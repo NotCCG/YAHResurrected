@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
-import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
@@ -58,7 +57,7 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
         if (player == null) return;
 
         if (!player.isAlive() || player.isSpectator() || player.isCreative()) return;
-        BlockPos lookPos = player.getOnPos().above();
+        BlockPos lookPos = player.getOnPos().above().above();
 
         System.out.println("[DEBUG] looking at player");
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));

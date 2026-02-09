@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -56,7 +57,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
                         && entity.distanceToSqr(p) <= SIGHT_RANGE_SQR
                         && entity.hasLineOfSight(p)
                         && isInHeadFov(entity, p, FOV_DEGREES)
-                        && !hasCloakingItem(p)
+                        && !SpellBookOneItem.isCloakActivated(p)
                 ).stream()
                 .min(Comparator.comparingDouble(entity::distanceToSqr))
                 .orElse(null);
@@ -67,17 +68,10 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
             return;
         }
 
-        if (visibleNearest.getInventory().contains(
-                new ItemStack(ModItems.SPELLBOOKI.get()))) return;
-
         System.out.println("[DEBUG] Player spotted by Steve");
         brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 120L);
         brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
-    }
-
-    private static boolean hasCloakingItem(Player player) {
-        return player.getInventory().contains(new ItemStack(ModItems.SPELLBOOKI.get()));
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Player player, float totalFovDegrees) {
