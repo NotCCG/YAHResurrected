@@ -3,10 +3,12 @@ package net.notccg.yahresurrected.util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.*;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraftforge.common.Tags;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 
 
@@ -43,6 +45,17 @@ public class ModTags {
         private static TagKey<Structure> tag(String name) {
             return TagKey.create(
                     Registries.STRUCTURE,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name)
+            );
+        }
+    }
+
+    public static class Biomes {
+        public static final TagKey<Biome> ICE_RUBY_BIOMES = tag("ice_ruby_biomes");
+
+        public static TagKey<Biome> tag(String name) {
+            return TagKey.create(
+                    Registries.BIOME,
                     new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name)
             );
         }

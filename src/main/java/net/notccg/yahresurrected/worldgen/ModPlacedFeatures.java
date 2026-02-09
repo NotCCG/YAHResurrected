@@ -24,10 +24,10 @@ public class ModPlacedFeatures {
 
         register(context, ICE_RUBY_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_ICE_RUBY_ORE_KEY),
                 ModOrePlacement.commonOrePlacement(64,
-                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(60))));
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(60))));
 
         register(context, INVISIBLE_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_INVISIBLE_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(64,
+                ModOrePlacement.commonOrePlacement(45,
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32))));
 
     }

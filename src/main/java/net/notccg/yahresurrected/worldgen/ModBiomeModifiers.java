@@ -12,6 +12,7 @@ import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.util.ModTags;
 
 public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_ICE_RUBY_ORE = registerKey("add_ice_ruby_ore");
@@ -22,7 +23,7 @@ public class ModBiomeModifiers {
         var biomes = context.lookup(Registries.BIOME);
 
         context.register(ADD_ICE_RUBY_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(Tags.Biomes.IS_SNOWY),
+                biomes.getOrThrow(ModTags.Biomes.ICE_RUBY_BIOMES),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ICE_RUBY_ORE_PLACED_KEY)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
