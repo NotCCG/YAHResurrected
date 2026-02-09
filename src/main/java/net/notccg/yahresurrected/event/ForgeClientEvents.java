@@ -13,6 +13,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.util.ModConfigCommon;
 
 import java.util.Map;
 
@@ -22,6 +23,7 @@ public class ForgeClientEvents {
 
     @SubscribeEvent
     public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
+        if (!ModConfigCommon.OVERRIDE_SKIN_CONFIG.get()) return;
         if (reentrantGuard) return;
 
         AbstractClientPlayer player = (AbstractClientPlayer) event.getEntity();

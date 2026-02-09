@@ -66,7 +66,7 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
         if (visibleNearest.getInventory().contains(
                 new ItemStack(ModItems.SPELLBOOKI.get()))) return;
 
-        System.out.println("player spotted");
+        System.out.println("[DEBUG] Player spotted by Steve");
         brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 120L);
         brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);

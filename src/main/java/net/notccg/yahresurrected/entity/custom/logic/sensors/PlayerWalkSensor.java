@@ -86,5 +86,6 @@ public class PlayerWalkSensor<E extends Mob> extends ExtendedSensor<E> {
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), nearest.position());
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), HeardSoundType.FOOTSTEPS);
         brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
+        System.out.println("[DEBUG] Steve heard player at " + nearest.position() + " at time " + now);
     }
 }

@@ -75,7 +75,8 @@ public class SteveLogic {
         brain.setMemory(ModMemoryTypes.FEAR_ANCHOR.get(), next);
         brain.setMemory(ModMemoryTypes.FEAR_CHANGE.get(), gameTime);
 
-        System.out.println("adding fear " + amount);
+        System.out.println("[DEBUG] adding fear " + amount);
+        System.out.println("[DEBUG] fear is now " + getFear(brain, gameTime));
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
     }
 
@@ -98,7 +99,8 @@ public class SteveLogic {
         brain.setMemory(ModMemoryTypes.CURIOSITY_ANCHOR.get(), next);
         brain.setMemory(ModMemoryTypes.CURIOSITY_CHANGE.get(), gameTime);
 
-        System.out.println("adding curiosity " + amount);
+        System.out.println("[DEBUG] adding curiosity " + amount);
+        System.out.println("[DEBUG] curiosity is now " + getCuriosity(brain, gameTime));
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
     }
 
@@ -121,7 +123,8 @@ public class SteveLogic {
         brain.setMemory(ModMemoryTypes.PARANOIA_ANCHOR.get(), next);
         brain.setMemory(ModMemoryTypes.PARANOIA_CHANGE.get(), gameTime);
 
-        System.out.println("adding paranoia " + amount);
+        System.out.println("[DEBUG] adding paranoia " + amount);
+        System.out.println("[DEBUG] paranoia is now " + getParanoia(brain, gameTime));
         brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), next);
     }
 

@@ -25,7 +25,6 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
-                Pair.of(ModMemoryTypes.PLAYER_HURT.get(), MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
                 Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED)
         );
@@ -42,12 +41,14 @@ public class LookAtSpottedPlayer <E extends Mob> extends ExtendedBehaviour<E> {
         var brain = entity.getBrain();
 
         Player player = brain.getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
-        if (player == null || !player.isAlive() || player.isSpectator()) {
+        if (player == null) return;
+
+        if (!player.isAlive() || player.isSpectator() || player.isCreative() || !entity.hasLineOfSight(player)) {
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
             brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
             return;
         }
-        System.out.println("looking at player");
+        System.out.println("[DEBUG] looking at player");
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(player, true));
     }
 

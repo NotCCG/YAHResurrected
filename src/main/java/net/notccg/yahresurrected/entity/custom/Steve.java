@@ -127,7 +127,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return BrainActivityGroup.coreTasks(
                 new MoveToWalkTarget<>(),
                 new LookAtTarget<>(),
-                new EmotionControlBehaviour<>(5, 8, 3)
+                new EmotionControlBehaviour<>(5, 8, 0.01)
         );
     }
 

@@ -100,6 +100,7 @@ public class SteveSoundEvents {
             brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), pos);
             brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
             brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), type);
+            System.out.println("[DEBUG] Steve heard a sound " + type);
         }
     }
 }

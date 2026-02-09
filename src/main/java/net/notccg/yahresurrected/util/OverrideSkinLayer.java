@@ -39,6 +39,8 @@ public class OverrideSkinLayer extends RenderLayer<AbstractClientPlayer, PlayerM
                        float netHeadYaw,
                        float headPitch
     ) {
+        if (!ModConfigCommon.OVERRIDE_SKIN_CONFIG.get()) return;
+
         if (player.isSpectator()) return;
 
         PlayerModel<AbstractClientPlayer> model = this.getParentModel();

@@ -7,7 +7,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -19,10 +21,7 @@ import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
-import net.notccg.yahresurrected.util.ModMemoryTypes;
-import net.notccg.yahresurrected.util.ModSensorTypes;
-import net.notccg.yahresurrected.util.ModSpawnRules;
-import net.notccg.yahresurrected.util.ModStructures;
+import net.notccg.yahresurrected.util.*;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
 public class YouAreHerobrineResurrected {
@@ -43,6 +42,8 @@ public class YouAreHerobrineResurrected {
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::commonSetup);
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfigCommon.SPEC, YouAreHerobrineResurrected.MOD_ID + "-client-config.toml");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
