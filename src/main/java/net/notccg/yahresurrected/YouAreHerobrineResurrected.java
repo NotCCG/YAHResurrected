@@ -44,6 +44,7 @@ public class YouAreHerobrineResurrected {
         modEventBus.addListener(this::commonSetup);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfigCommon.SPEC, YouAreHerobrineResurrected.MOD_ID + "-client-config.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ModConfigServer.SPEC, YouAreHerobrineResurrected.MOD_ID + "-server-config.toml");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

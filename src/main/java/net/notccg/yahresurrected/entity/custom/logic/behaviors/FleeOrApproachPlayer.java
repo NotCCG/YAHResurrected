@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
+import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
@@ -103,11 +104,9 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             BlockPos pos = BlockPos.containing(awayPos.x, awayPos.y, awayPos.z);
             BlockPos reachablePos = getWalkablePos(level, pos);
             WalkTarget fleeTarget = new WalkTarget(reachablePos, (float) speed, 0);
-            BlockPos lookPos = reachablePos.above();
 
             System.out.println("steve is running from the player");
             brain.setMemory(MemoryModuleType.WALK_TARGET, fleeTarget);
-            brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         }
     }
 }

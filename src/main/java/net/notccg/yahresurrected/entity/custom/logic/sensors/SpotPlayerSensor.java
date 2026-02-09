@@ -18,8 +18,10 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
-    private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.SPOTTED_PLAYER.get());
-    private static final double SIGHT_RANGE = 64.0;
+    private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.SPOTTED_PLAYER.get(),
+            ModMemoryTypes.PLAYER_IS_SPOTTED.get(),
+            ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get());
+    private static final double SIGHT_RANGE = 32.0;
     private static final double SIGHT_RANGE_SQR = SIGHT_RANGE * SIGHT_RANGE;
 
     private static final float FOV_DEGREES = 120.0f;
@@ -54,12 +56,14 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
                         && entity.distanceToSqr(p) <= SIGHT_RANGE_SQR
                         && entity.hasLineOfSight(p)
                         && isInHeadFov(entity, p, FOV_DEGREES)
+                        && !hasCloakingItem(p)
                 ).stream()
                 .min(Comparator.comparingDouble(entity::distanceToSqr))
                 .orElse(null);
 
         if (visibleNearest == null) {
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
+            brain.eraseMemory(ModMemoryTypes.PLAYER_IS_SPOTTED.get());
             return;
         }
 
@@ -70,6 +74,10 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
         brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 120L);
         brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
+    }
+
+    private static boolean hasCloakingItem(Player player) {
+        return player.getInventory().contains(new ItemStack(ModItems.SPELLBOOKI.get()));
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Player player, float totalFovDegrees) {

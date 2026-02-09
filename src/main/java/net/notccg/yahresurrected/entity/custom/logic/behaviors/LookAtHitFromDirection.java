@@ -13,6 +13,7 @@ import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES = ObjectArrayList.of(
@@ -22,6 +23,9 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
             Pair.of(ModMemoryTypes.PLAYER_HURT.get(), MemoryStatus.VALUE_PRESENT),
             Pair.of(ModMemoryTypes.PLAYER_HIT_POS.get(), MemoryStatus.VALUE_PRESENT)
     );
+
+    public LookAtHitFromDirection() {
+    }
 
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return MEMORIES;
@@ -37,5 +41,10 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
 
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         brain.eraseMemory(ModMemoryTypes.PLAYER_HIT_POS.get());
+    }
+
+    @Override
+    protected void stop(E entity) {
+        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }

@@ -22,7 +22,7 @@ public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSenso
     private static final double SIGHT_RANGE_SQR = SIGHT_RANGE * SIGHT_RANGE;
 
     private static final float FOV_DEGREES = 120.0f;
-    private static final int SCAN_INTERVAL_TICKS = 10; // Twice a second
+    private static final int SCAN_INTERVAL_TICKS = 30; // 1.5 seconds
 
     private long nextScanTick = 0;
 
@@ -59,7 +59,7 @@ public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSenso
         }
 
         brain.setMemory(ModMemoryTypes.NEARBY_CREEPERS.get(), creeper);
-        System.out.println("Steve senses a creeper nearby");
+        System.out.println("[DEBUG] Steve senses a creeper nearby");
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Creeper creeper, float totalFovDegrees) {

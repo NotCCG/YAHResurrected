@@ -66,4 +66,9 @@ public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<
         BlockPos newLookPos =  randomBlockPosInFov(entity, 1, 32, 60, 85);
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(newLookPos));
     }
+
+    @Override
+    protected void stop(E entity) {
+        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+    }
 }

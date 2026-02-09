@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
 
@@ -203,5 +204,9 @@ public class SteveLogic {
         BlockState pBlockstate = level.getBlockState(pos);
         if (!(pBlockstate.getBlock() instanceof BedBlock)) return false;
         return !pBlockstate.getValue(BedBlock.OCCUPIED);
+    }
+
+    public static boolean isEnabled(ForgeConfigSpec.ConfigValue<Boolean> configValue) {
+        return configValue.get();
     }
 }
