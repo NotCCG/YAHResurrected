@@ -59,16 +59,6 @@ public class SteveLogic {
         return emotionalDecay(anchor, fearBaseline, gameTime - changedAt, fearHLTicks);
     }
 
-    public static boolean isUneasy(Brain<?> brain, long gameTime) {
-        return getFear(brain, gameTime) >= 1.0 && getFear(brain, gameTime) < 1.5;
-    }
-    public static boolean isScared(Brain<?> brain, long gameTime) {
-        return getFear(brain, gameTime) >= 1.5 && getFear(brain, gameTime) < 2.0;
-    }
-    public static boolean isTerrified(Brain<?> brain, long gameTime) {
-        return getFear(brain, gameTime) >= 2.0;
-    }
-
     public static void addFear(Brain<?> brain, long gameTime, double amount) {
         double current = getFear(brain, gameTime);
         double next = clampEmotion(current + amount);
@@ -83,6 +73,16 @@ public class SteveLogic {
 
     public static void reduceFear(Brain<?> brain, long gameTime, double amount) {
         addFear(brain, gameTime, -amount);
+    }
+
+    public static boolean isUneasy(Brain<?> brain, long gameTime) {
+        return getFear(brain, gameTime) >= 1.0 && getFear(brain, gameTime) < 1.5;
+    }
+    public static boolean isScared(Brain<?> brain, long gameTime) {
+        return getFear(brain, gameTime) >= 1.5 && getFear(brain, gameTime) < 2.0;
+    }
+    public static boolean isTerrified(Brain<?> brain, long gameTime) {
+        return getFear(brain, gameTime) >= 2.0;
     }
 
     // Curiosity Logic

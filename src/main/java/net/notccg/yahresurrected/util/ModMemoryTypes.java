@@ -11,6 +11,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 
 import java.util.Optional;
@@ -170,4 +171,8 @@ public class ModMemoryTypes {
             MEMORY_MODULE_TYPES.register("nearby_creepers",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<FleeOrApproach>> FLEE_OR_APPROACH =
+            MEMORY_MODULE_TYPES.register("flee_or_approach",
+                    () -> new MemoryModuleType<>(Optional.empty()));
 }

@@ -10,13 +10,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
+import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 
 import java.util.List;
 
-public class PlayerWalkSensor<E extends Mob> extends ExtendedSensor<E> {
+public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
     @Override
     public List<MemoryModuleType<?>> memoriesUsed() {
         return ObjectArrayList.of(
@@ -46,7 +47,9 @@ public class PlayerWalkSensor<E extends Mob> extends ExtendedSensor<E> {
 
         Brain<?> brain = entity.getBrain();
         Player nearest = level.getNearestPlayer(entity, HEARING_RANGE);
-        if (nearest == null || nearest.isSpectator()) {
+        if (nearest == null) return;
+
+        if (nearest.isSpectator() || nearest.isCreative() || SpellBookOneItem.isCloakActivated(nearest)) {
             brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
             brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
             return;

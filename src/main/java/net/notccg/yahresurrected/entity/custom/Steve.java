@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
-import net.notccg.yahresurrected.util.ModConfigServer;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -42,24 +41,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-    }
-
-    @Override
-    public void aiStep() {
-        super.aiStep();
-
-        // final float maxHeadYaw = 60.0f;
-        // final float maxHeadPitch = 90.0f;
-
-        // float bodyYaw = this.getYRot();
-        // float headYaw = this.getYHeadRot();
-
-        // float deltaYaw = Mth.wrapDegrees(headYaw - bodyYaw);
-        // deltaYaw = Mth.clamp(deltaYaw, -maxHeadYaw, maxHeadYaw);
-
-        // this.setYHeadRot(bodyYaw + deltaYaw);
-
-        // this.setXRot(Mth.clamp(this.getXRot(), -maxHeadPitch, maxHeadPitch));
     }
 
     @Override
@@ -99,12 +80,20 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_HURT.get(), true, 1200L);
             brain.setMemory(ModMemoryTypes.PLAYER_HIT_POS.get(), playerPos);
 
-            System.out.println("the player hurt me!");
+            long now = level().getGameTime();
+
+            if (brain.hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get())) {
+                SteveLogic.addFear(brain, now, 0.6);
+                SteveLogic.addParanoia(brain, now, 0.4);
+            } else {
+                SteveLogic.addFear(brain, now, 0.05);
+                SteveLogic.addParanoia(brain, now, 0.1);
+            }
+
+            System.out.println("[YAH:R STEVE-DEBUG] The player hurt me!");
         }
         return result;
     }
-
-    private static String NAME = new SteveLogic().getSteveName();
 
     // Primary Steve AI behaviour
 
@@ -112,7 +101,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public List<? extends ExtendedSensor<? extends Steve>> getSensors() {
         return ObjectArrayList.of(
                 new SpotPlayerSensor<>(),
-                new PlayerWalkSensor<>(),
+                new PlayerWalkingNoiseSensor<>(),
                 new NearbyCreepersSensor<>(),
                 new InterestedBlocksSensor<>(),
                 // new InterestedItemsSensor<>(),
@@ -133,8 +122,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<Steve>(
-                        new LookAtSpottedPlayer<>(5),
-                        new FleeOrApproachPlayer<>(1.0F, 32, 8, 10, 1),
+                        new FleeOrApproachPlayer<>(1.0f, 1, 10, 1, 16, 20),
                         new LookAtHitFromDirection<>(),
                         // new RunFromCreepers<>(10),
                         // new FleeOrInvestigateBehaviour<>(2, 20, 1),

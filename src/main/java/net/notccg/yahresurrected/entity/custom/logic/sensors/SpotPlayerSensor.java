@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
@@ -64,6 +65,12 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
 
         if (visibleNearest == null) {
             brain.eraseMemory(ModMemoryTypes.SPOTTED_PLAYER.get());
+
+            boolean addParanoia = brain.getTimeUntilExpiry(ModMemoryTypes.SPOTTED_PLAYER.get()) > 0;
+            if (addParanoia) {
+                SteveLogic.addParanoia(brain, now, 0.01);
+            }
+
             brain.eraseMemory(ModMemoryTypes.PLAYER_IS_SPOTTED.get());
             return;
         }

@@ -95,6 +95,6 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
     @Override
     protected void stop(E entity) {
-        super.stop(entity);
+        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }
