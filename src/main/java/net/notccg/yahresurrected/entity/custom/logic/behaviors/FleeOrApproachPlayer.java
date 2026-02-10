@@ -19,6 +19,7 @@ import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
 import java.util.List;
+import java.util.UUID;
 
 public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private final float baseSpeed;
@@ -53,14 +54,18 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
-                Pair.of(ModMemoryTypes.FLEE_OR_APPROACH.get(), MemoryStatus.REGISTERED)
+                Pair.of(ModMemoryTypes.FLEE_OR_APPROACH.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.LAST_FLEE_POS.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.LOOK_BACK_UNTIL.get(), MemoryStatus.REGISTERED)
         );
     }
 
 
     @Override
     protected boolean shouldKeepRunning(E entity) {
-        return entity.getBrain().hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get());
+        return entity.getBrain().hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get()) ||
+                entity.getBrain().hasMemoryValue(ModMemoryTypes.LOOK_BACK_UNTIL.get()) ||
+                entity.getBrain().hasMemoryValue(ModMemoryTypes.LAST_PLAYER_SEEN.get());
     }
 
     @Override
@@ -71,9 +76,25 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     @Override
     protected void tick(ServerLevel level, E entity, long gameTime) {
         Player player = entity.getBrain().getMemory(ModMemoryTypes.SPOTTED_PLAYER.get()).orElse(null);
+        if (player == null) {
+            UUID uuid = entity.getBrain().getMemory(ModMemoryTypes.LAST_PLAYER_SEEN.get()).orElse(null);
+            if (uuid != null) {
+                player = level.getPlayerByUUID(uuid);
+            }
+        }
         if (player == null) return;
 
         var brain = entity.getBrain();
+
+        Long lookBackUntil = brain.getMemory(ModMemoryTypes.LOOK_BACK_UNTIL.get()).orElse(null);
+        if (lookBackUntil != null) {
+            if (gameTime <= lookBackUntil) {
+                brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+                brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(player.getEyePosition()));
+                return;
+            }
+            brain.eraseMemory(ModMemoryTypes.LOOK_BACK_UNTIL.get());
+        }
 
         double fear01 = SteveLogic.getFear(brain, gameTime) / 2.0;
         double curiosity01 = SteveLogic.getCuriosity(brain, gameTime) / 2.0;
@@ -115,13 +136,21 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             }
 
             long cooldown = decisionCooldown;
-            if (fleeOrApproach == FleeOrApproach.APPROACH) {
+            if (fleeOrApproach == FleeOrApproach.APPROACH || fleeOrApproach == FleeOrApproach.FLEE) {
                 cooldown = decisionCooldown * 2;
             }
 
             brain.setMemory(ModMemoryTypes.FLEE_OR_APPROACH.get(), fleeOrApproach);
             nextDecisionTick = gameTime + cooldown;
         }
+
+        boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
+        double hurtMultiplier = hasBeenHurtByPlayer ? 1.5 : 1.0;
+
+
+
+        double fleeToDist =
+                (4 + 32 * fearParanoiaMean) * hurtMultiplier;
 
         FleeOrApproach fleeOrApproach = brain.getMemory(ModMemoryTypes.FLEE_OR_APPROACH.get()).orElse(FleeOrApproach.FREEZE);
         if (fleeOrApproach == FleeOrApproach.FREEZE) {
@@ -142,10 +171,23 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(playerEyePos));
         }
         if (fleeOrApproach == FleeOrApproach.FLEE) {
+            Vec3 lastFleePos = brain.getMemory(ModMemoryTypes.LAST_FLEE_POS.get()).orElse(null);
+            if (lastFleePos != null) {
+                double arriveDist = 1.5;
+                double arriveDistSqr = arriveDist * arriveDist;
+                if (entity.position().distanceToSqr(lastFleePos) <= arriveDistSqr) {
+                    brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+                    brain.setMemory(ModMemoryTypes.LOOK_BACK_UNTIL.get(), 40L);
+
+                    brain.eraseMemory(ModMemoryTypes.FLEE_OR_APPROACH.get());
+                }
+            }
+
             Vec3 away = entity.position().subtract(player.position()).normalize();
-            Vec3 fleePos = entity.position().add(away.scale(10.0));
+            Vec3 fleePos = entity.position().add(away.scale(fleeToDist));
             BlockPos lookPos = BlockPos.containing(fleePos).above();
 
+            brain.setMemory(ModMemoryTypes.LAST_FLEE_POS.get(), fleePos);
             brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(fleePos, baseSpeed, 1));
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         }
@@ -153,7 +195,6 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected void stop(E entity) {
-        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
         entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }

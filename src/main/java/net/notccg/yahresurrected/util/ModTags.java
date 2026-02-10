@@ -21,6 +21,9 @@ public class ModTags {
         public static final TagKey<Block> NECESSARY_BLOCKS = tag("blocks_needed_to_beat_game");
         public static final TagKey<Block> ILLEGAL_BLOCK_ITEMS = tag("illegal_block_items");
 
+        public static final TagKey<Block> STRANGE_BLOCKS = tag("strange_blocks");
+        public static final TagKey<Block> HEROBRINE_TELLTALE_SIGNS = tag("herobrine_telltale_signs");
+
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name));
         }

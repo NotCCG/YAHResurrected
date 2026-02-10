@@ -55,7 +55,17 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
     @Override
     public int getExperienceReward() {
-        return 60;
+        int baseReward = 120;
+
+        Brain<?> brain = this.getBrain();
+        double fear = brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).orElse(0.0);
+        double paranoia = brain.getMemory(ModMemoryTypes.PARANOIA_LEVEL.get()).orElse(0.0);
+
+        double fearChangeValue = fear + paranoia;
+        double fearXpMultiplier = fearChangeValue + 0.5;
+        int scaledXpReward = (int) Math.round(baseReward * fearXpMultiplier);
+
+        return Math.max(0, scaledXpReward);
     }
 
     @Override

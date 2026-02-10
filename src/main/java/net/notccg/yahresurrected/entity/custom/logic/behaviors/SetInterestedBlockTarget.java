@@ -64,7 +64,7 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
         if (walkPos == null) return;
 
         if (entity.blockPosition().closerThan(walkPos, arriveDistance)) {
-            System.out.println("steve visited his block");
+            System.out.println("[YAH:R STEVE-DEBUG] Steve visited his block");
             Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
 
             visited.add(walkPos.immutable());
@@ -88,7 +88,7 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
             return;
         }
 
-        System.out.println("steve set his walk target to " + walkPos);
+        System.out.println("[YAH:R STEVE-DEBUG] Steve set his walk target to " + walkPos);
         brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, 1));
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkPos));
     }

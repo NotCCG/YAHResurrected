@@ -22,7 +22,8 @@ import java.util.List;
 public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.SPOTTED_PLAYER.get(),
             ModMemoryTypes.PLAYER_IS_SPOTTED.get(),
-            ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get());
+            ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(),
+            ModMemoryTypes.LAST_PLAYER_SEEN.get());
     private static final double SIGHT_RANGE = 32.0;
     private static final double SIGHT_RANGE_SQR = SIGHT_RANGE * SIGHT_RANGE;
 
@@ -75,8 +76,9 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
             return;
         }
 
-        System.out.println("[DEBUG] Player spotted by Steve");
-        brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 120L);
+        System.out.println("[YAH:R STEVE-DEBUG] Player spotted by Steve");
+        brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 40L);
+        brain.setMemoryWithExpiry(ModMemoryTypes.LAST_PLAYER_SEEN.get(), visibleNearest.getUUID(), 200L);
         brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
     }

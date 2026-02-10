@@ -1,39 +1,39 @@
-[09Feb2026 10:52:36.922] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, /home/zach/.gradle/caches/forge_gradle/assets, --gameDir, ., --fml.forgeVersion, 47.2.19, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, youareherobrineresurrected, --all, --output, /home/zach/IdeaProjects/YAHResurrected/src/generated/resources, --existing, /home/zach/IdeaProjects/YAHResurrected/src/main/resources]
-[09Feb2026 10:52:36.927] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.18 by Arch Linux; OS Linux arch amd64 version 6.18.7-arch1-1
-[09Feb2026 10:52:37.059] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[09Feb2026 10:52:37.140] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/home/zach/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23116!/ Service=ModLauncher Env=CLIENT
-[09Feb2026 10:52:37.423] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.2.19/99f54fe7798c97a9a6e7c962ef94f7d30610122d/javafmllanguage-1.20.1-47.2.19.jar is missing mods.toml file
-[09Feb2026 10:52:37.425] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.20.1-47.2.19/1b32b3f27357ab558a098c1c20e1494558a71b31/lowcodelanguage-1.20.1-47.2.19.jar is missing mods.toml file
-[09Feb2026 10:52:37.427] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.20.1-47.2.19/2eb26ae9afdd5709b9ee9bdf90b9486212a676af/mclanguage-1.20.1-47.2.19.jar is missing mods.toml file
-[09Feb2026 10:52:37.429] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.2.19/7cd28cc091d07bbe6a4f51bf9728ccbc27bfc4fc/fmlcore-1.20.1-47.2.19.jar is missing mods.toml file
-[09Feb2026 10:52:37.513] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[09Feb2026 10:52:38.865] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, /home/zach/.gradle/caches/forge_gradle/assets, --assetIndex, 5, --mod, youareherobrineresurrected, --all, --output, /home/zach/IdeaProjects/YAHResurrected/src/generated/resources, --existing, /home/zach/IdeaProjects/YAHResurrected/src/main/resources]
-[09Feb2026 10:52:39.203] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [youareherobrineresurrected]
-[09Feb2026 10:52:43.705] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.19, for MC 1.20.1 with MCP 20230612.114412
-[09Feb2026 10:52:43.711] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.19 Initialized
-[09Feb2026 10:52:44.320] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/zach/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23181!/assets/.mcassetsroot' uses unexpected schema
-[09Feb2026 10:52:44.320] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/zach/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23181!/data/.mcassetsroot' uses unexpected schema
-[09Feb2026 10:52:44.481] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[09Feb2026 10:52:44.540] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 58 ms
-[09Feb2026 10:52:44.541] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[09Feb2026 10:52:44.584] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 43 ms
-[09Feb2026 10:52:44.585] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: youareherobrineresurrected
-[09Feb2026 10:52:44.676] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: youareherobrineresurrected finished after 91 ms
-[09Feb2026 10:52:44.676] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: youareherobrineresurrected
-[09Feb2026 10:52:44.688] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: youareherobrineresurrected finished after 11 ms
-[09Feb2026 10:52:44.688] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id youareherobrineresurrected
-[09Feb2026 10:52:44.706] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id youareherobrineresurrected finished after 18 ms
-[09Feb2026 10:52:44.707] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id youareherobrineresurrected
-[09Feb2026 10:52:44.708] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id youareherobrineresurrected finished after 1 ms
-[09Feb2026 10:52:44.708] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/structure mod id youareherobrineresurrected
-[09Feb2026 10:52:44.711] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/structure mod id youareherobrineresurrected finished after 2 ms
-[09Feb2026 10:52:44.711] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/biome mod id youareherobrineresurrected
-[09Feb2026 10:52:44.712] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/biome mod id youareherobrineresurrected finished after 0 ms
-[09Feb2026 10:52:44.712] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : youareherobrineresurrected
-[09Feb2026 10:52:44.718] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : youareherobrineresurrected finished after 5 ms
-[09Feb2026 10:52:44.718] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
-[09Feb2026 10:52:44.731] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 12 ms
-[09Feb2026 10:52:44.732] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
-[09Feb2026 10:52:44.898] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 166 ms
-[09Feb2026 10:52:44.899] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 418 ms
-[09Feb2026 10:52:44.910] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 145, old count: 120, new count: 146, removed stale: 0, written: 28
+[10Feb2026 13:23:04.235] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, /home/zach/.gradle/caches/forge_gradle/assets, --gameDir, ., --fml.forgeVersion, 47.2.19, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, youareherobrineresurrected, --all, --output, /home/zach/IdeaProjects/YAHResurrected/src/generated/resources, --existing, /home/zach/IdeaProjects/YAHResurrected/src/main/resources]
+[10Feb2026 13:23:04.238] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.18 by Arch Linux; OS Linux arch amd64 version 6.18.7-arch1-1
+[10Feb2026 13:23:04.351] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[10Feb2026 13:23:04.415] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/home/zach/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23116!/ Service=ModLauncher Env=CLIENT
+[10Feb2026 13:23:04.724] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.20.1-47.2.19/99f54fe7798c97a9a6e7c962ef94f7d30610122d/javafmllanguage-1.20.1-47.2.19.jar is missing mods.toml file
+[10Feb2026 13:23:04.726] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.20.1-47.2.19/1b32b3f27357ab558a098c1c20e1494558a71b31/lowcodelanguage-1.20.1-47.2.19.jar is missing mods.toml file
+[10Feb2026 13:23:04.728] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.20.1-47.2.19/2eb26ae9afdd5709b9ee9bdf90b9486212a676af/mclanguage-1.20.1-47.2.19.jar is missing mods.toml file
+[10Feb2026 13:23:04.731] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file /home/zach/.gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.20.1-47.2.19/7cd28cc091d07bbe6a4f51bf9728ccbc27bfc4fc/fmlcore-1.20.1-47.2.19.jar is missing mods.toml file
+[10Feb2026 13:23:04.813] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[10Feb2026 13:23:06.206] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, /home/zach/.gradle/caches/forge_gradle/assets, --assetIndex, 5, --mod, youareherobrineresurrected, --all, --output, /home/zach/IdeaProjects/YAHResurrected/src/generated/resources, --existing, /home/zach/IdeaProjects/YAHResurrected/src/main/resources]
+[10Feb2026 13:23:06.562] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [youareherobrineresurrected]
+[10Feb2026 13:23:10.941] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.2.19, for MC 1.20.1 with MCP 20230612.114412
+[10Feb2026 13:23:10.943] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.2.19 Initialized
+[10Feb2026 13:23:11.478] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/zach/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23181!/assets/.mcassetsroot' uses unexpected schema
+[10Feb2026 13:23:11.478] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/zach/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1/forge-1.20.1-47.2.19_mapped_parchment_2023.09.03-1.20.1-recomp.jar%23181!/data/.mcassetsroot' uses unexpected schema
+[10Feb2026 13:23:11.642] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[10Feb2026 13:23:11.692] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 50 ms
+[10Feb2026 13:23:11.693] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[10Feb2026 13:23:11.740] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 46 ms
+[10Feb2026 13:23:11.740] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: youareherobrineresurrected
+[10Feb2026 13:23:11.837] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: youareherobrineresurrected finished after 96 ms
+[10Feb2026 13:23:11.837] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: youareherobrineresurrected
+[10Feb2026 13:23:11.846] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: youareherobrineresurrected finished after 9 ms
+[10Feb2026 13:23:11.847] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id youareherobrineresurrected
+[10Feb2026 13:23:11.929] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id youareherobrineresurrected finished after 81 ms
+[10Feb2026 13:23:11.929] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id youareherobrineresurrected
+[10Feb2026 13:23:11.931] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id youareherobrineresurrected finished after 2 ms
+[10Feb2026 13:23:11.931] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/structure mod id youareherobrineresurrected
+[10Feb2026 13:23:11.934] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/structure mod id youareherobrineresurrected finished after 2 ms
+[10Feb2026 13:23:11.934] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:worldgen/biome mod id youareherobrineresurrected
+[10Feb2026 13:23:11.935] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:worldgen/biome mod id youareherobrineresurrected finished after 0 ms
+[10Feb2026 13:23:11.935] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : youareherobrineresurrected
+[10Feb2026 13:23:11.942] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : youareherobrineresurrected finished after 6 ms
+[10Feb2026 13:23:11.942] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
+[10Feb2026 13:23:11.954] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 12 ms
+[10Feb2026 13:23:11.955] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
+[10Feb2026 13:23:12.081] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 126 ms
+[10Feb2026 13:23:12.082] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 440 ms
+[10Feb2026 13:23:12.091] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 147, old count: 147, new count: 148, removed stale: 0, written: 1

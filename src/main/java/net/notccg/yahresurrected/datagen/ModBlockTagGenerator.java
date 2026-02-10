@@ -51,6 +51,17 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(Blocks.NETHER_PORTAL)
                 .add(Blocks.SPAWNER);
 
+        this.tag(ModTags.Blocks.STRANGE_BLOCKS)
+                .add(Blocks.BEDROCK)
+                .add(Blocks.DIAMOND_BLOCK)
+                .add(Blocks.NETHERITE_BLOCK);
+
+        this.tag(ModTags.Blocks.HEROBRINE_TELLTALE_SIGNS)
+                .add(Blocks.IRON_DOOR)
+                .add(Blocks.REDSTONE_TORCH)
+                .add(Blocks.REDSTONE_WALL_TORCH)
+                .add(Blocks.REDSTONE_WIRE);
+
         this.tag(ModTags.Blocks.NEEDS_BEDROCK_TOOL);
 
         this.tag(ModTags.Blocks.NEEDS_EVIL_DIAMOND_TOOL);

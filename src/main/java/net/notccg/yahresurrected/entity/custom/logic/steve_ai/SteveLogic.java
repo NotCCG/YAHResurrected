@@ -2,6 +2,7 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +16,7 @@ import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class SteveLogic {
@@ -66,8 +68,8 @@ public class SteveLogic {
         brain.setMemory(ModMemoryTypes.FEAR_ANCHOR.get(), next);
         brain.setMemory(ModMemoryTypes.FEAR_CHANGE.get(), gameTime);
 
-        System.out.println("[DEBUG] adding fear " + amount);
-        System.out.println("[DEBUG] fear is now " + getFear(brain, gameTime));
+        System.out.println("[YAH:R STEVE-DEBUG] adding fear " + amount);
+        System.out.println("[YAH:R STEVE-DEBUG] fear is now " + getFear(brain, gameTime));
         brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), next);
     }
 
@@ -100,8 +102,8 @@ public class SteveLogic {
         brain.setMemory(ModMemoryTypes.CURIOSITY_ANCHOR.get(), next);
         brain.setMemory(ModMemoryTypes.CURIOSITY_CHANGE.get(), gameTime);
 
-        System.out.println("[DEBUG] adding curiosity " + amount);
-        System.out.println("[DEBUG] curiosity is now " + getCuriosity(brain, gameTime));
+        System.out.println("[YAH:R STEVE-DEBUG] adding curiosity " + amount);
+        System.out.println("[YAH:R STEVE-DEBUG] curiosity is now " + getCuriosity(brain, gameTime));
         brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), next);
     }
 
@@ -124,8 +126,8 @@ public class SteveLogic {
         brain.setMemory(ModMemoryTypes.PARANOIA_ANCHOR.get(), next);
         brain.setMemory(ModMemoryTypes.PARANOIA_CHANGE.get(), gameTime);
 
-        System.out.println("[DEBUG] adding paranoia " + amount);
-        System.out.println("[DEBUG] paranoia is now " + getParanoia(brain, gameTime));
+        System.out.println("[YAH:R STEVE-DEBUG] adding paranoia " + amount);
+        System.out.println("[YAH:R STEVE-DEBUG] paranoia is now " + getParanoia(brain, gameTime));
         brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), next);
     }
 
@@ -175,13 +177,35 @@ public class SteveLogic {
             Blocks.NETHERITE_BLOCK,
             Blocks.OAK_SIGN,
             Blocks.OAK_WALL_SIGN,
-            Blocks.REDSTONE_WIRE,
+            Blocks.REDSTONE_WALL_TORCH,
             Blocks.REDSTONE_TORCH,
+            Blocks.REDSTONE_WIRE,
             Blocks.SPRUCE_SIGN,
             Blocks.TRAPPED_CHEST,
             Blocks.WARPED_SIGN,
             Blocks.WARPED_WALL_SIGN
     );
+
+    public static boolean shouldGainCuriosity(Brain<?> pBrain) {
+        return !(pBrain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get()) &&
+                (pBrain.hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get()) ||
+                pBrain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get())));
+    }
+
+    public static double getCuriosityForBlock(BlockState pState) {
+        if (pState.is(ModTags.Blocks.HEROBRINE_TELLTALE_SIGNS)) return 0.5;
+        if (pState.is(BlockTags.SIGNS)) return 0.35;
+        if (pState.is(ModTags.Blocks.STRANGE_BLOCKS)) return 0.2;
+        if (pState.is(ModTags.Blocks.CONTAINER_BLOCK)) return 0.01;
+
+        return 0.0;
+    }
+
+    public static double getParanoiaForBlock(BlockState pState) {
+        if (pState.is(ModTags.Blocks.HEROBRINE_TELLTALE_SIGNS)) return 0.25;
+        if (pState.is(BlockTags.SIGNS)) return 0.05;
+        return 0.0;
+    }
 
     public static boolean isSteveLovedItem(ItemStack pItemsTack) {
         return pItemsTack.is(ModTags.Items.STEVE_LOVED);

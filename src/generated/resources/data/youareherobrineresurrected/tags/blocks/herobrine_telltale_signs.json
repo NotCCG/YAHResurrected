@@ -1,0 +1,8 @@
+{
+  "values": [
+    "minecraft:iron_door",
+    "minecraft:redstone_torch",
+    "minecraft:redstone_wall_torch",
+    "minecraft:redstone_wire"
+  ]
+}

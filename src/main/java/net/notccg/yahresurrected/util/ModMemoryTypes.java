@@ -16,6 +16,7 @@ import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public class ModMemoryTypes {
     public static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES =
@@ -36,6 +37,12 @@ public class ModMemoryTypes {
     public static final RegistryObject<MemoryModuleType<Player>> SPOTTED_PLAYER =
             MEMORY_MODULE_TYPES.register(
                     "spotted_player",
+                    () -> new MemoryModuleType<>(Optional.empty())
+            );
+
+    public static final RegistryObject<MemoryModuleType<UUID>> LAST_PLAYER_SEEN =
+            MEMORY_MODULE_TYPES.register(
+                    "last_player_seen",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
@@ -174,5 +181,13 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<FleeOrApproach>> FLEE_OR_APPROACH =
             MEMORY_MODULE_TYPES.register("flee_or_approach",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
+    public static final RegistryObject<MemoryModuleType<Vec3>> LAST_FLEE_POS =
+            MEMORY_MODULE_TYPES.register("last_flee_pos",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
+    public static final RegistryObject<MemoryModuleType<Long>> LOOK_BACK_UNTIL =
+            MEMORY_MODULE_TYPES.register("look_back_until",
                     () -> new MemoryModuleType<>(Optional.empty()));
 }

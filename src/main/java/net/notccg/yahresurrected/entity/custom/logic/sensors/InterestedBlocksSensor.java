@@ -7,6 +7,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
@@ -65,12 +66,25 @@ public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSen
             if (visited.contains(immutablePos))
                 continue;
 
+
             Block block = level.getBlockState(immutablePos).getBlock();
-            if (!SteveLogic.INTERESTED_BLOCKS.contains(block))
+            if (!SteveLogic.INTERESTED_BLOCKS.contains(block)) {
                 continue;
+            }
+            BlockState state = level.getBlockState(immutablePos);
+            if (SteveLogic.shouldGainCuriosity(brain)) {
+                double curiosityGrain = SteveLogic.getCuriosityForBlock(state);
+                if (curiosityGrain > 0.0) {
+                    SteveLogic.addCuriosity(brain, gameTime, curiosityGrain);
+                }
+            } else {
+                double paranoiaGain = SteveLogic.getParanoiaForBlock(state);
+                if (paranoiaGain > 0.0) {
+                    SteveLogic.addParanoia(brain, gameTime, paranoiaGain);
+                }
+            }
 
             brain.setMemory(targetType, immutablePos);
-
             return;
         }
 

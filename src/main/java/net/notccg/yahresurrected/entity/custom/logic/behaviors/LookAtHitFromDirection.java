@@ -42,9 +42,4 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         brain.eraseMemory(ModMemoryTypes.PLAYER_HIT_POS.get());
     }
-
-    @Override
-    protected void stop(E entity) {
-        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
-    }
 }
