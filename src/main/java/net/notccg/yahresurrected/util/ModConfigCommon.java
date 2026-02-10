@@ -12,7 +12,7 @@ public class ModConfigCommon {
     static {
         BUILDER.push("YAH:R Common Config");
 
-        OVERRIDE_SKIN_CONFIG = BUILDER.comment("Force Herobrine Skin").define("Skin Override", true);
+        OVERRIDE_SKIN_CONFIG = BUILDER.comment("Force Herobrine Skin (Temporarily disabled by default)").define("Skin Override", false);
         WRATH_OF_JEB = BUILDER.comment("Enable/Disable the W̶̧̤͗Ṙ̸̝̋̿̒A̵̳̗͗͒̏͝T̵̖̗̙̜̤̈́̆͋H̶̡̠̻̭͊͗̇͗͝ ̵̢̫͍͎͆O̵̫̔F̴̛̲̋̃̈́͘ ̵̛̯͇̙͔̺̐̀̕J̶̞̇E̶̖̔̓B̵̮̎̚ (Default: F̷̱̣̞̈́̆A̷͎̼͍͗̓́̏ͅL̸̰͝S̷͓͔͓̬̬͘E̵͓̋̇̄̿͘").define("W̶̧̤͗Ṙ̸̝̋̿̒A̵̳̗͗͒̏͝T̵̖̗̙̜̤̈́̆͋H̶̡̠̻̭͊͗̇͗͝ ̵̢̫͍͎͆O̵̫̔F̴̛̲̋̃̈́͘ ̵̛̯͇̙͔̺̐̀̕J̶̞̇E̶̖̔̓B̵̮̎̚", false);
 
 
