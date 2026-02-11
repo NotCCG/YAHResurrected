@@ -20,7 +20,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 
 import java.util.List;
 
-public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+public class FleeOrInvestigateSoundBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private final float baseInvestigateSpeed;
     private final int arriveDistance;
     private final int repathInterval;
@@ -31,7 +31,7 @@ public class FleeOrInvestigateBehaviour<E extends PathfinderMob> extends Extende
 
     private long lastProcessedSoundTime = Long.MIN_VALUE;
 
-    public FleeOrInvestigateBehaviour(int arriveDistance, int repathInterval, float investigateSpeed) {
+    public FleeOrInvestigateSoundBehaviour(int arriveDistance, int repathInterval, float investigateSpeed) {
         this.baseInvestigateSpeed = investigateSpeed;
         this.arriveDistance = arriveDistance;
         this.repathInterval = repathInterval;

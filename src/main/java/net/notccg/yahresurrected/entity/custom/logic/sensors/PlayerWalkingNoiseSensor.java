@@ -35,7 +35,7 @@ public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
 
     private static final int SCAN_INTERVAL_TICKS = 5;
     private static final double HEARING_RANGE = 14.0;
-    private static final double MIN_MOVEMENT_SQR = 0.003;
+    private static final double MIN_MOVEMENT_SQR = 0.4;
 
     private long nextScanTick = 0;
 
@@ -49,15 +49,12 @@ public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
         Player nearest = level.getNearestPlayer(entity, HEARING_RANGE);
         if (nearest == null) return;
 
-        if (nearest.isSpectator() || nearest.isCreative() || SpellBookOneItem.isCloakActivated(nearest)) {
+        if (nearest.isSpectator() || nearest.isCreative() || !nearest.isAlive() ||
+                (entity.hasLineOfSight(nearest) && !SpellBookOneItem.isCloakActivated(nearest)) ) {
             brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
             brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
-            return;
-        }
-
-        if (entity.hasLineOfSight(nearest)) {
-            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND.get());
-            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
+            brain.eraseMemory(ModMemoryTypes.LAST_HEARD_TIME.get());
+            brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get());
             return;
         }
 
@@ -74,7 +71,7 @@ public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
         boolean playerHasBeenSeen = brain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get());
         boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
 
-        if ((playerHasBeenSeen && !hasBeenHurtByPlayer) || (!playerHasBeenSeen && !hasBeenHurtByPlayer)) {
+        if (!hasBeenHurtByPlayer) {
             SteveLogic.addCuriosity(brain, now, 0.15);
         }
         if (!playerHasBeenSeen && hasBeenHurtByPlayer) {
@@ -89,6 +86,6 @@ public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), nearest.position());
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), HeardSoundType.FOOTSTEPS);
         brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
-        System.out.println("[DEBUG] Steve heard player at " + nearest.position() + " at time " + now);
+        System.out.println("[YAH:R STEVE-DEBUG] Steve heard player at " + nearest.position() + " at time " + now);
     }
 }

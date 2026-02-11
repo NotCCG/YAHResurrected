@@ -134,8 +134,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 new FirstApplicableBehaviour<Steve>(
                         new FleeOrApproachPlayer<>(1.0f, 1, 10, 1, 16, 20),
                         new LookAtHitFromDirection<>(),
-                        // new RunFromCreepers<>(10),
-                        // new FleeOrInvestigateBehaviour<>(2, 20, 1),
+                        new RunFromCreepers<>(10),
+                        // new FleeOrInvestigateSoundBehaviour<>(2, 20, 1),
                         new SetInterestedBlockTarget<>(1.0f, 3, 20)//,
                         // new GoToSleepBehaviour<>(1)
                 ),

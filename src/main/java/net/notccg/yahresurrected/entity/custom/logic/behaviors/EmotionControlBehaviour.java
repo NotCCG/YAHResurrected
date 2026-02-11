@@ -108,10 +108,10 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                     if (overThreshold != null) {
                         if (SteveLogic.isTerrified(brain, gameTime) || hasBeenHurtByPlayer) {
                             SteveLogic.addFear(brain, gameTime, paranoiaSqr);
-                            System.out.println("Steve saw the player and is scared");
+                            System.out.println("[YAH:R STEVE-DEBUG] Steve saw the player and is scared");
                         } else {
                             SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
-                            System.out.println("Steve saw the player and is curious");
+                            System.out.println("[YAH:R STEVE-DEBUG] Steve saw the player and is curious");
                         }
                     }
                 }
@@ -127,10 +127,10 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                 previousHeardSoundTime = heardSoundTime;
 
                 if (hasBeenHurtByPlayer || SteveLogic.isParanoid(brain, gameTime) || SteveLogic.isScared(brain, gameTime)) {
-                    System.out.println("Steve heard something and got scared");
+                    System.out.println("[YAH:R STEVE-DEBUG] Steve heard " + heardSoundType + " and is curious about it");
                     SteveLogic.addFear(brain, gameTime, paranoiaSqr);
                 } else {
-                    System.out.println("Steve heard something and is curious about it");
+                    System.out.println("[YAH:R STEVE-DEBUG] Steve heard " + heardSoundType + " and is curious about it");
                     SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
                 }
             }

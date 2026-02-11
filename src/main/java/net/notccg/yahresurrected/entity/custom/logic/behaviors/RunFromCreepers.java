@@ -38,13 +38,6 @@ public class RunFromCreepers<E extends PathfinderMob> extends ExtendedBehaviour<
             Pair.of(ModMemoryTypes.NEARBY_CREEPERS.get(), MemoryStatus.VALUE_PRESENT)
     );
 
-    private static BlockPos getWalkablePos(ServerLevel level, BlockPos target) {
-        if (!level.getBlockState(target).getCollisionShape(level, target).isEmpty()) {
-            return target.above();
-        }
-        return target;
-    }
-
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return MEMORIES;
@@ -60,27 +53,13 @@ public class RunFromCreepers<E extends PathfinderMob> extends ExtendedBehaviour<
 
         if (creeper == null) return;
 
-        Vec3 awayPos = DefaultRandomPos.getPosAway(
-                entity,
-                fleeHorizontal,
-                fleeVertical,
-                creeper.position()
-        );
+        Vec3 awayPos = entity.position().subtract(creeper.position()).normalize();
+        Vec3 runPos = entity.position().add(awayPos.scale(16));
 
-        if (awayPos == null) return;
+        BlockPos lookPos = BlockPos.containing(runPos).above();
 
-        BlockPos pos = BlockPos.containing(awayPos.x, awayPos.y, awayPos.z);
-        BlockPos reachablePos = getWalkablePos(level, pos);
-        WalkTarget walkTarget = new WalkTarget(reachablePos, speed, 0);
-        BlockPos lookPos = reachablePos.above();
-
-        brain.setMemory(MemoryModuleType.WALK_TARGET, walkTarget);
+        System.out.println("[YAH:R STEVE-DEBUG] Steve is running from a creeper");
+        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(runPos, speed, 1));
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
-    }
-
-    @Override
-    protected void stop(ServerLevel level, E entity, long gameTime) {
-        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
-        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }

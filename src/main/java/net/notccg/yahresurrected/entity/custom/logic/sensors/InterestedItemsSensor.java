@@ -65,7 +65,7 @@ public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSens
             return;
         }
 
-        System.out.println("Found item " + nearest);
+        System.out.println("[YAH:R STEVE-DEBUG] Steve found item " + nearest);
         brain.setMemory(locType, nearest);
     }
 }

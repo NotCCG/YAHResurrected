@@ -18,10 +18,10 @@ import java.util.List;
 public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.NEARBY_CREEPERS.get());
 
-    private static final double SIGHT_RANGE = 64.0;
+    private static final double SIGHT_RANGE = 16.0;
     private static final double SIGHT_RANGE_SQR = SIGHT_RANGE * SIGHT_RANGE;
 
-    private static final float FOV_DEGREES = 120.0f;
+    private static final float FOV_DEGREES = 90.0f;
     private static final int SCAN_INTERVAL_TICKS = 30; // 1.5 seconds
 
     private long nextScanTick = 0;
@@ -46,10 +46,10 @@ public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSenso
         AABB sightRange = entity.getBoundingBox().inflate(SIGHT_RANGE);
 
         Creeper creeper = level.getEntitiesOfClass(Creeper.class, sightRange, c ->
-                entity.distanceToSqr(c) <= SIGHT_RANGE_SQR &&
-                entity.hasLineOfSight(c) &&
-                isInHeadFov(entity, c, FOV_DEGREES)
-        ).stream()
+                        (entity.distanceToSqr(c) <= SIGHT_RANGE_SQR) &&
+                                entity.hasLineOfSight(c) &&
+                                isInHeadFov(entity, c, FOV_DEGREES)
+                ).stream()
                 .min(Comparator.comparingDouble(entity::distanceToSqr))
                 .orElse(null);
 
@@ -59,7 +59,7 @@ public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSenso
         }
 
         brain.setMemory(ModMemoryTypes.NEARBY_CREEPERS.get(), creeper);
-        System.out.println("[DEBUG] Steve senses a creeper nearby");
+        System.out.println("[YAH:R STEVE-DEBUG] Steve senses a creeper nearby");
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Creeper creeper, float totalFovDegrees) {

@@ -32,13 +32,13 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private long nextDecisionTick = 0;
 
     public FleeOrApproachPlayer(float baseSpeed,
-                                int basefleeDist,
+                                int baseFleeDist,
                                 int maxFleeDist,
                                 int baseApproachDist,
                                 int maxApproachDist,
                                 long decisionCooldown) {
         this.baseSpeed = baseSpeed;
-        this.baseFleeDist = basefleeDist;
+        this.baseFleeDist = baseFleeDist;
         this.maxFleeDist = maxFleeDist;
         this.baseApproachDist = baseApproachDist;
         this.maxApproachDist = maxApproachDist;
@@ -154,23 +154,22 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
         FleeOrApproach fleeOrApproach = brain.getMemory(ModMemoryTypes.FLEE_OR_APPROACH.get()).orElse(FleeOrApproach.FREEZE);
         if (fleeOrApproach == FleeOrApproach.FREEZE) {
+            entity.setShiftKeyDown(false);
             Vec3 playerEyePos = player.getEyePosition();
             brain.eraseMemory(MemoryModuleType.WALK_TARGET);
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(playerEyePos));
         }
         if (fleeOrApproach == FleeOrApproach.APPROACH) {
-            if (sneakApproach) {
-                entity.setPose(Pose.CROUCHING);
-            } else {
-                entity.setPose(Pose.STANDING);
-            }
+            entity.setShiftKeyDown(sneakApproach);
 
-            brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(player, baseSpeed, 1));
+            float speed = sneakApproach ? (baseSpeed * 0.3f) : baseSpeed;
+            brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(player, speed, 1));
 
             Vec3 playerEyePos = player.getEyePosition();
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(playerEyePos));
         }
         if (fleeOrApproach == FleeOrApproach.FLEE) {
+            entity.setShiftKeyDown(false);
             Vec3 lastFleePos = brain.getMemory(ModMemoryTypes.LAST_FLEE_POS.get()).orElse(null);
             if (lastFleePos != null) {
                 double arriveDist = 1.5;
@@ -195,6 +194,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected void stop(E entity) {
+        entity.setShiftKeyDown(false);
         entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }
