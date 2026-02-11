@@ -10,7 +10,6 @@ import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
@@ -24,8 +23,6 @@ public class RunFromCreepers<E extends PathfinderMob> extends ExtendedBehaviour<
     private long nextUpdateTick = 0;
 
     private final float speed = 1.3F;
-    private final int fleeHorizontal = 16;
-    private final int fleeVertical = 8;
 
     public RunFromCreepers(long updateTicks) {
         this.updateTicks = updateTicks;

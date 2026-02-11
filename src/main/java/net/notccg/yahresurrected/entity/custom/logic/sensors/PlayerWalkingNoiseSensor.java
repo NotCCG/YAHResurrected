@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
@@ -14,10 +15,13 @@ import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     @Override
     public List<MemoryModuleType<?>> memoriesUsed() {
         return ObjectArrayList.of(
@@ -83,9 +87,24 @@ public class PlayerWalkingNoiseSensor<E extends Mob> extends ExtendedSensor<E> {
         }
 
         brain.setMemory(ModMemoryTypes.HEARD_SOUND.get(), nearest);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set HEARD_SOUND -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                nearest);
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), nearest.position());
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set HEARD_SOUND_POS -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                nearest.position());
         brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), HeardSoundType.FOOTSTEPS);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set HEARD_SOUND_TYPE -> {} FOOTSTEPS expected",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).orElse(null));
         brain.setMemory(ModMemoryTypes.LAST_HEARD_TIME.get(), now);
-        System.out.println("[YAH:R STEVE-DEBUG] Steve heard player at " + nearest.position() + " at time " + now);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set LAST_HEARD_TIME -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                now);
     }
 }

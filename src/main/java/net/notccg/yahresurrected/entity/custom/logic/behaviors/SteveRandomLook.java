@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,10 +14,13 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final int MIN_TICKS = 10;
     private static final int MAX_TICKS = 1200;
 
@@ -65,6 +69,10 @@ public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<
 
         BlockPos newLookPos =  randomBlockPosInFov(entity, 1, 32, 60, 85);
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(newLookPos));
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                newLookPos);
     }
 
     @Override

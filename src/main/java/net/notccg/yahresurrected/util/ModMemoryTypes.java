@@ -124,10 +124,6 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-    public static final RegistryObject<MemoryModuleType<Long>> HESITATION_COOLDOWN =
-            MEMORY_MODULE_TYPES.register("hesitation_cooldown",
-                    () -> new MemoryModuleType<>(Optional.empty())
-            );
 
     public static final RegistryObject<MemoryModuleType<Player>> HEARD_SOUND =
             MEMORY_MODULE_TYPES.register("heard_sound",
@@ -161,11 +157,6 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<HeardSoundType>> HEARD_SOUND_TYPE =
             MEMORY_MODULE_TYPES.register("heard_sound_type",
-                    () -> new MemoryModuleType<>(Optional.empty())
-            );
-
-    public static final RegistryObject<MemoryModuleType<BlockPos>> CONTAINER_BLOCK =
-            MEMORY_MODULE_TYPES.register("container_block",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 

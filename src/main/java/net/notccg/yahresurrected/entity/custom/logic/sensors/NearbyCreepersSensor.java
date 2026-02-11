@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -11,11 +12,14 @@ import net.minecraft.world.phys.AABB;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import org.slf4j.Logger;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.NEARBY_CREEPERS.get());
 
     private static final double SIGHT_RANGE = 16.0;
@@ -59,7 +63,10 @@ public class NearbyCreepersSensor<E extends PathfinderMob> extends ExtendedSenso
         }
 
         brain.setMemory(ModMemoryTypes.NEARBY_CREEPERS.get(), creeper);
-        System.out.println("[YAH:R STEVE-DEBUG] Steve senses a creeper nearby");
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] NEARBY_CREEPERS -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                creeper.getUUID());
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Creeper creeper, float totalFovDegrees) {

@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -15,11 +16,13 @@ import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import org.slf4j.Logger;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.SPOTTED_PLAYER.get(),
             ModMemoryTypes.PLAYER_IS_SPOTTED.get(),
             ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(),
@@ -78,9 +81,28 @@ public class SpotPlayerSensor<E extends PathfinderMob> extends ExtendedSensor<E>
 
         System.out.println("[YAH:R STEVE-DEBUG] Player spotted by Steve");
         brain.setMemoryWithExpiry(ModMemoryTypes.SPOTTED_PLAYER.get(), visibleNearest, 40L);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set SPOTTED_PLAYER -> [{} | Expires: {}] ",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                visibleNearest,
+                (level.getGameTime() + 40L));
         brain.setMemoryWithExpiry(ModMemoryTypes.LAST_PLAYER_SEEN.get(), visibleNearest.getUUID(), 200L);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set LAST_PLAYER_SEEN -> [{} | Expires: {}] ",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                visibleNearest.getUUID(),
+                (level.getGameTime() + 200L));
         brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 2400L);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set PLAYER_IS_SPOTTED -> [{} | Expires: {}] ",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                true,
+                (level.getGameTime() + 2400L));
         brain.setMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), now);
+        LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set LAST_SPOTTED_PLAYER_TIME -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                now);
     }
 
     private static boolean isInHeadFov(PathfinderMob mob, Player player, float totalFovDegrees) {

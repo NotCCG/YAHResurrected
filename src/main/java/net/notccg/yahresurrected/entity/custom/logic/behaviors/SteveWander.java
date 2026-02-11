@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,10 +14,13 @@ import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final int MIN_REPATH_TICKS = 10;
     private static final int MAX_REPATH_TICKS = 1200;
     private final float speed;
@@ -67,7 +71,15 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
         BlockPos lookPos = walkPos.above();
 
         brain.setMemory(MemoryModuleType.WALK_TARGET, walkTarget);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                walkTarget);
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}",
+                this.getClass().getSimpleName(),
+                entity.getUUID(),
+                lookPos);
     }
 
     @Override

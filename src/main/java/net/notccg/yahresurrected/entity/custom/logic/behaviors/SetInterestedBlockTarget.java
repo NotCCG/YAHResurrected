@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 
 public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E> {
+
+
     private final float speed;
     private final int arriveDistance;
     private final int repathInterval;

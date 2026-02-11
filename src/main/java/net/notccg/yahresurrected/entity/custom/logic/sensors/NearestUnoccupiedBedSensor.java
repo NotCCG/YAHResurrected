@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
@@ -9,11 +10,13 @@ import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
-import net.minecraft.world.level.block.Block;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class NearestUnoccupiedBedSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
 
     private static final int RADIUS = 16;
     private static final int Y_RADIUS = 4;
@@ -53,6 +56,12 @@ public class NearestUnoccupiedBedSensor<E extends PathfinderMob> extends Extende
 
             if (!SteveLogic.isUnoccupiedBed(level, immutablePos)) return;
             brain.setMemory(bedLoc, immutablePos);
+            LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set NEAREST_UNOCCUPIED_BED -> [bedLoc:{} | immutablePos:{}",
+                    this.getClass().getSimpleName(),
+                    entity.getUUID(),
+                    bedLoc,
+                    immutablePos
+                    );
         }
     }
 }

@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.sensors;
 
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -12,12 +13,15 @@ import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import org.slf4j.Logger;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class InterestedBlocksSensor<E extends PathfinderMob> extends ExtendedSensor<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final List<MemoryModuleType<?>> MEMORIES = ObjectArrayList.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), ModMemoryTypes.VISITED_BLOCKS.get());
     private static final int RADIUS = 16;
     private static final int Y_RADIUS = 4;

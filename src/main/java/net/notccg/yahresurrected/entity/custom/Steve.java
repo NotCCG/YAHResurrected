@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom;
 
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -27,6 +29,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import org.slf4j.Logger;
 
 
 import java.util.HashSet;
@@ -42,6 +45,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     @Override
     protected void registerGoals() {
@@ -92,7 +97,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
             long now = level().getGameTime();
 
-            if (brain.hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get())) {
+            if (brain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get())) {
                 SteveLogic.addFear(brain, now, 0.6);
                 SteveLogic.addParanoia(brain, now, 0.4);
             } else {
@@ -135,8 +140,8 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         new FleeOrApproachPlayer<>(1.0f, 1, 10, 1, 16, 20),
                         new LookAtHitFromDirection<>(),
                         new RunFromCreepers<>(10),
-                        // new FleeOrInvestigateSoundBehaviour<>(2, 20, 1),
                         new SetInterestedBlockTarget<>(1.0f, 3, 20)//,
+                        // new FleeOrInvestigateSoundBehaviour<>(2, 20, 1),
                         // new GoToSleepBehaviour<>(1)
                 ),
                 new OneRandomBehaviour<Steve>(
@@ -161,6 +166,11 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             pCompound.put("VisitedBlocks", listTag);
         });
 
+        brain.getMemory(ModMemoryTypes.FLEE_OR_APPROACH.get()).ifPresent(state -> {
+            pCompound.putString("FlightFightOrFreeze", state.name());
+        });
+
+        brain.getMemory(ModMemoryTypes.LAST_PLAYER_SEEN.get()).ifPresent(uuid -> pCompound.putUUID("RememberUUID", uuid));
         brain.getMemory(ModMemoryTypes.FEAR_LEVEL.get()).ifPresent(f -> pCompound.putDouble("FearLevel", f));
         brain.getMemory(ModMemoryTypes.FEAR_ANCHOR.get()).ifPresent(fa -> pCompound.putDouble("FearAnchor", fa));
         brain.getMemory(ModMemoryTypes.FEAR_CHANGE.get()).ifPresent(fc -> pCompound.putLong("FearChange", fc));
@@ -221,6 +231,21 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
         if (pCompound.contains("PlayerIsSpotted", Tag.TAG_BYTE)) {
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 1200L);
+        }
+
+        if (pCompound.contains("RememberUUID", Tag.TAG_INT_ARRAY)) {
+            brain.setMemoryWithExpiry(ModMemoryTypes.LAST_PLAYER_SEEN.get(), pCompound.getUUID("RememberUUID"), 200L);
+        }
+
+        if (pCompound.contains("FlightFightOrFreeze", Tag.TAG_STRING)) {
+            String name = pCompound.getString("FlightFightOrFreeze");
+            try {
+                FleeOrApproach state = FleeOrApproach.valueOf(name);
+                brain.setMemory(ModMemoryTypes.FLEE_OR_APPROACH.get(), state);
+            } catch (IllegalArgumentException e) {
+                LOGGER.warn("Invalid FleeOrApproach type '{}' - Setting FleeOrApproach to  FREEZE for '{}'", name, this.getUUID());
+                brain.setMemory(ModMemoryTypes.FLEE_OR_APPROACH.get(), FleeOrApproach.FREEZE);
+            }
         }
     }
 }
