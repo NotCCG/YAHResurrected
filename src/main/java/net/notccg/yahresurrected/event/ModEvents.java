@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.event;
 
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
@@ -27,9 +28,11 @@ import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
+import org.slf4j.Logger;
 
 
 public class ModEvents {
+    private static final Logger LOGGER = LogUtils.getLogger();
     @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID)
     public static class ForgeEvents {
         private static final int MAX_HEIGHT_ABOVE_PLAYER = 64;
@@ -52,6 +55,8 @@ public class ModEvents {
             if (player.isOnFire() || hasSpellBookII(player) || player.isCreative()) return;
             if (!level.canSeeSky(player.blockPosition())) return;
             player.setSecondsOnFire(3);
+            LOGGER.debug("[YAH:R [onPlayerTick][{}] Setting player on fire | Conditions: isDay[{}], isOnFire[{}], hasSpellBookII[{}], isCreative[{}], canSeeSky[{}]",
+                    player.getUUID(), level.isDay(), player.isOnFire(), hasSpellBookII(player), player.isCreative(), level.canSeeSky(player.blockPosition()));
             if (player instanceof ServerPlayer sp) {
                 ResourceLocation id = new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "sunburn"); // advancement id
                 Advancement adv = sp.server.getAdvancements().getAdvancement(id);

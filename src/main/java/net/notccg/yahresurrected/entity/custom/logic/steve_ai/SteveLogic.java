@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
@@ -14,12 +15,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 public class SteveLogic {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final Random RANDOM = new Random();
 
     private static final long fearHLTicks = 80L;

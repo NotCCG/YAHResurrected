@@ -2,6 +2,7 @@ package net.notccg.yahresurrected.item.custom;
 
 //Teleportation
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -19,12 +20,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.MovementUtils;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 import static net.notccg.yahresurrected.util.MovementUtils.getBlockPositionInDirection;
 
 public class SpellBookFourItem extends Item {
+    private static final Logger LOGGER = LogUtils.getLogger();
     public SpellBookFourItem(Properties pProperties) {
         super(pProperties);
     }
@@ -36,6 +39,8 @@ public class SpellBookFourItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        LOGGER.debug("[YAH:R] [ITEM:{}] use", this.getClass().getSimpleName());
+
         ItemStack $$3 = pPlayer.getItemInHand(pUsedHand);
         pPlayer.getCooldowns().addCooldown(this, 10);
         Direction playerDirection = pPlayer.getDirection();

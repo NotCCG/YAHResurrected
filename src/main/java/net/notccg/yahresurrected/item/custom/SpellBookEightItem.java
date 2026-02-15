@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.item.custom;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -18,10 +19,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class SpellBookEightItem extends Item {
+    private static final Logger LOGGER = LogUtils.getLogger();
     public SpellBookEightItem(Properties pProperties) {
         super(pProperties);
     }
@@ -65,10 +68,17 @@ public class SpellBookEightItem extends Item {
         BlockState clickedBlockState = level.getBlockState(clickedBlockPos);
         ItemStack stack = pContext.getItemInHand();
 
+        LOGGER.debug("[YAH:R] [ITEM:{}] useOn [BLOCK:{}][BLOCK STATE:{}][ITEM STACK:{}]",
+                this.getClass().getSimpleName(), clickedBlockPos, clickedBlockState, stack);
+
         boolean hasSilkTouch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0;
+        LOGGER.debug("[YAH:R] [ITEM:{}] boolean \"hasSilkTouch\" is {}",
+                this.getClass().getSimpleName(), hasSilkTouch);
 
         if (clickedBlockState.is(ModTags.Blocks.NECESSARY_BLOCKS)) {
             player.displayClientMessage(Component.literal("You need this to beat the game idiot."), true);
+            LOGGER.debug("[YAH:R] [ITEM:{}] variable \"clickedBlockState\" [BLOCK:{}][BLOCKSTATE:{}] matches one of ModTags.Blocks.NECESSARY_BLOCKS, interaction failed",
+                    this.getClass().getSimpleName(), clickedBlockPos, clickedBlockState);
             return InteractionResult.FAIL;
         }
 
@@ -95,6 +105,8 @@ public class SpellBookEightItem extends Item {
                 serverLevel.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 2);
                 return InteractionResult.SUCCESS;
             }
+            LOGGER.debug("[YAH:R] [ITEM:{}] setBlock [BLOCK:{}][BLOCK STATE:{}] to Blocks.AIR",
+                    this.getClass().getSimpleName(), clickedBlockPos, clickedBlockState);
             serverLevel.setBlock(clickedBlockPos, Blocks.AIR.defaultBlockState(), 2);
         }
         return InteractionResult.sidedSuccess(level.isClientSide());

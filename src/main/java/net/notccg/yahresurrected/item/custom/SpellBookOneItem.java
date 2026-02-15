@@ -2,6 +2,7 @@ package net.notccg.yahresurrected.item.custom;
 
 //Invisibility
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,10 +15,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class SpellBookOneItem extends Item {
+    private static final Logger LOGGER = LogUtils.getLogger();
     public SpellBookOneItem(Properties pProperties) {
         super(pProperties);
     }
@@ -37,6 +40,8 @@ public class SpellBookOneItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        LOGGER.debug("[YAH:R] [ITEM:{}] use", this.getClass().getSimpleName());
+
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
 
         if (!(pPlayer instanceof ServerPlayer serverPlayer)) {
@@ -52,6 +57,8 @@ public class SpellBookOneItem extends Item {
                 Component.literal("Player Cloak " + (newState ? "ON" : "OFF")),
                 true
         );
+
+        LOGGER.debug("[YAH:R] [ITEM:{}] {}", this.getClass().getSimpleName(), newState);
 
         return InteractionResultHolder.success(itemStack);
     }

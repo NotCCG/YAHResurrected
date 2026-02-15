@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -9,13 +10,14 @@ import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.*;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
+import org.slf4j.Logger;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E> {
-
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private final float speed;
     private final int arriveDistance;
@@ -60,13 +62,23 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
         MemoryModuleType<BlockPos> interestedType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
 
         BlockPos target = brain.getMemory(interestedType).orElse(null);
-        if (target == null) return;
+        if (target == null) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"target\" is null, return",
+                    this.getClass().getSimpleName(), entity.getUUID());
+            return;
+        }
 
         BlockPos walkPos = getWalkablePos(level, target);
-        if (walkPos == null) return;
+        if (walkPos == null) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"walkPos\" is null, return",
+                    this.getClass().getSimpleName(), entity.getUUID());
+            return;
+        }
 
         if (entity.blockPosition().closerThan(walkPos, arriveDistance)) {
-            System.out.println("[YAH:R STEVE-DEBUG] Steve visited his block");
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] arrived at {} and added {} -> VISITED_BLOCKS",
+                    this.getClass().getSimpleName(), entity.getUUID(), walkPos, target);
+
             Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
 
             visited.add(walkPos.immutable());
@@ -92,11 +104,18 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
         System.out.println("[YAH:R STEVE-DEBUG] Steve set his walk target to " + walkPos);
         brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, 1));
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}",
+                this.getClass().getSimpleName(), entity.getUUID(), walkPos);
+
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkPos));
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}",
+                this.getClass().getSimpleName(), entity.getUUID(), walkPos);
     }
 
     @Override
     protected void stop(E entity) {
         entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped",
+                this.getClass().getSimpleName(), entity.getUUID());
     }
 }

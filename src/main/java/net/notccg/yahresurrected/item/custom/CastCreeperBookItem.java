@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.item.custom;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -17,11 +18,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CastCreeperBookItem extends Item {
+    private static final Logger LOGGER = LogUtils.getLogger();
     public CastCreeperBookItem(Properties pProperties) {
         super(pProperties);
     }
@@ -63,7 +66,11 @@ public class CastCreeperBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         BlockPos playerPos = pPlayer.getOnPos();
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        pPlayer.getCooldowns().addCooldown(this, 600);
+        if (!pPlayer.isCreative()) {
+            pPlayer.getCooldowns().addCooldown(this, 300);
+        }
+
+        LOGGER.debug("[YAH:R] [ITEM:{}] use", this.getClass().getSimpleName());
 
         if (!pLevel.isClientSide) {
             ServerLevel serverLevel = (ServerLevel) pLevel;
@@ -113,6 +120,7 @@ public class CastCreeperBookItem extends Item {
                         0.25D, 0.25D, 0.25D,
                         0.01D
                 );
+                LOGGER.debug("[YAH:R] [ITEM:{}] addFreshEntity {} at BlockPos {}", this.getClass().getSimpleName(), mob, pos);
 
                 serverLevel.addFreshEntity(mob);
             }

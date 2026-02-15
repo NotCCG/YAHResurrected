@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.item.custom;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class SpellBookFiveItem extends Item {
     //Flight
 
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final UUID REACH_UUID = UUID.fromString("2f3a2b6e-3a91-4b2a-9f26-3c6a6e1b8c01");
     private static final double REACH_BONUS = 2.0D;
 
@@ -71,6 +74,8 @@ public class SpellBookFiveItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        LOGGER.debug("[YAH:R] [ITEM:{}] use", this.getClass().getSimpleName());
+
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
 
         if (!(pPlayer instanceof ServerPlayer serverPlayer)) {

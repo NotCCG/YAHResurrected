@@ -72,18 +72,18 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
 
         brain.setMemory(MemoryModuleType.WALK_TARGET, walkTarget);
         LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}",
-                this.getClass().getSimpleName(),
-                entity.getUUID(),
-                walkTarget);
+                this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
+
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
         LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}",
-                this.getClass().getSimpleName(),
-                entity.getUUID(),
-                lookPos);
+                this.getClass().getSimpleName(), entity.getUUID(), lookPos);
     }
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped",
+                this.getClass().getSimpleName(), entity.getUUID());
+
         entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
     }
 }

@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
@@ -12,11 +13,13 @@ import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
+import org.slf4j.Logger;
 
 import java.util.Comparator;
 import java.util.List;
 
 public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES =
             ObjectArrayList.of(
                     Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
@@ -84,6 +87,7 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
         boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
 
         if (brain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get())) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] memory PLAYER_IS_SPOTTED present, performing additional tasks", this.getClass().getSimpleName(), entity.getUUID());
             long spottedPlayerTime = brain.getMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get()).orElse(0L);
             long spottedPlayerTimeDelta = spottedPlayerTime - previousSpottedPlayerTime;
 
@@ -121,6 +125,7 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
 
         HeardSoundType heardSoundType = brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).orElse(null);
         if (heardSoundType != null) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"heardSoundType\" is not null performing additional tasks", this.getClass().getSimpleName(), entity.getUUID());
             long heardSoundTime = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(0L);
             long heardSoundTimeDelta = heardSoundTime - previousHeardSoundTime;
             if (heardSoundTimeDelta > 0) {

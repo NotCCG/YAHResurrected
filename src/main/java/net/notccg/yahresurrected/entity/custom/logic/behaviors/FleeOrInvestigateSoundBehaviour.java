@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -17,10 +18,12 @@ import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public class FleeOrInvestigateSoundBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private final float baseInvestigateSpeed;
     private final int arriveDistance;
     private final int repathInterval;

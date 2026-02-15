@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.entity.custom.logic.behaviors;
 
 import com.mojang.datafixers.util.Pair;
+import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,11 +14,13 @@ import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 // Much like with myself, this behaviour does not work yet
 public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
             ObjectArrayList.of(
                     Pair.of(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get(), MemoryStatus.VALUE_PRESENT),
@@ -52,18 +55,25 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] checking extra start conditions", this.getClass().getSimpleName(), entity.getUUID());
         return level.isNight();
     }
 
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
         Brain<?> brain = entity.getBrain();
-        if (SteveLogic.isUneasy(brain, gameTime) || SteveLogic.isScared(brain, gameTime) || SteveLogic.isTerrified(brain, gameTime)) return;
+        if (SteveLogic.isUneasy(brain, gameTime) || SteveLogic.isScared(brain, gameTime) || SteveLogic.isTerrified(brain, gameTime)) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] conditions not met, return", this.getClass().getSimpleName(), entity.getUUID());
+            return;
+        }
         if (gameTime > this.nextOkSleepTime) {
             MemoryModuleType<BlockPos> bedTarget = ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get();
             BlockPos bedPos = brain.getMemory(bedTarget).orElse(null);
+            if (bedPos == null) {
+                LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"bedPos\" is null, return", this.getClass().getSimpleName(), entity.getUUID());
+                return;
+            }
             BlockPos walkTarget = getWalkablePos(level, bedPos);
-            if (bedPos == null) return;
             if (entity.blockPosition().closerThan(bedPos, closeEnough)) {
                 entity.getNavigation().stop();
                 brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
@@ -72,14 +82,18 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
                 entity.startSleeping(bedPos);
             }
             brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkTarget, walkSpeed, closeEnough));
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
             brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(bedPos));
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), bedPos);
         }
 
     }
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped", this.getClass().getSimpleName(), entity.getUUID());
         if (entity.isSleeping()) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] forced Entity({}) to stop sleeping", this.getClass().getSimpleName(), entity.getUUID(), entity.getUUID());
             entity.stopSleeping();
             this.nextOkSleepTime = gameTime + COOLDOWN_AFTER_WAKING_UP;
         }
