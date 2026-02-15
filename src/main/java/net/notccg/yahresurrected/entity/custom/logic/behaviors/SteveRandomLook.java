@@ -32,6 +32,7 @@ public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<
                 Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
                 Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.VALUE_ABSENT),
                 Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_ABSENT),
+                Pair.of(ModMemoryTypes.INTERESTED_ITEM.get(), MemoryStatus.VALUE_ABSENT),
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT)
         );
     }
@@ -66,6 +67,7 @@ public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<
         int nextInterval = entity.getRandom().nextInt(
                 MAX_TICKS - MIN_TICKS + 1
         ) + MIN_TICKS;
+        nextLookAroundTick = gameTime + nextInterval;
 
         BlockPos newLookPos =  randomBlockPosInFov(entity, 1, 32, 60, 85);
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(newLookPos));
@@ -75,6 +77,6 @@ public class SteveRandomLook<E extends PathfinderMob> extends ExtendedBehaviour<
 
     @Override
     protected void stop(E entity) {
-        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] stopped", this.getClass().getSimpleName(), entity.getUUID());
     }
 }

@@ -28,16 +28,19 @@ public class FleeOrInvestigateSoundBehaviour<E extends PathfinderMob> extends Ex
     private final int arriveDistance;
     private final int repathInterval;
 
+    private final boolean isEnabled;
+
     private long nextTick = 0;
     private final int fleeVertical = 8;
     private final int fleeHorizontal = 24;
 
     private long lastProcessedSoundTime = Long.MIN_VALUE;
 
-    public FleeOrInvestigateSoundBehaviour(int arriveDistance, int repathInterval, float investigateSpeed) {
+    public FleeOrInvestigateSoundBehaviour(int arriveDistance, int repathInterval, float investigateSpeed, boolean isEnabled) {
         this.baseInvestigateSpeed = investigateSpeed;
         this.arriveDistance = arriveDistance;
         this.repathInterval = repathInterval;
+        this.isEnabled = isEnabled;
     }
 
     private static boolean shouldFlee(Brain<?> brain, long gameTime) {

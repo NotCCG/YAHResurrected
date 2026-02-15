@@ -18,6 +18,7 @@ import java.util.List;
 
 public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
+    private final boolean isEnabled;
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES = ObjectArrayList.of(
             Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
             Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
@@ -26,11 +27,17 @@ public class LookAtHitFromDirection<E extends PathfinderMob> extends ExtendedBeh
             Pair.of(ModMemoryTypes.PLAYER_HIT_POS.get(), MemoryStatus.VALUE_PRESENT)
     );
 
-    public LookAtHitFromDirection() {
+    public LookAtHitFromDirection(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return MEMORIES;
+    }
+
+    @Override
+    protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
+        return isEnabled;
     }
 
     @Override

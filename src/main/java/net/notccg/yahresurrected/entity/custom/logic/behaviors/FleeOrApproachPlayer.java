@@ -30,6 +30,7 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
     private final int baseApproachDist;
     private final int maxApproachDist;
     private final long decisionCoolDown;
+    private final boolean isEnabled;
 
     private long nextDecisionTick = 0;
 
@@ -38,13 +39,15 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                                 int maxFleeDist,
                                 int baseApproachDist,
                                 int maxApproachDist,
-                                long decisionCoolDown) {
+                                long decisionCoolDown,
+                                boolean isEnabled) {
         this.baseSpeed = baseSpeed;
         this.baseFleeDist = baseFleeDist;
         this.maxFleeDist = maxFleeDist;
         this.baseApproachDist = baseApproachDist;
         this.maxApproachDist = maxApproachDist;
         this.decisionCoolDown = decisionCoolDown;
+        this.isEnabled = isEnabled;
 
     }
 
@@ -65,9 +68,15 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected boolean shouldKeepRunning(E entity) {
-        return entity.getBrain().hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get()) ||
+        return (entity.getBrain().hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get()) ||
                 entity.getBrain().hasMemoryValue(ModMemoryTypes.LOOK_BACK_UNTIL.get()) ||
-                entity.getBrain().hasMemoryValue(ModMemoryTypes.LAST_PLAYER_SEEN.get());
+                entity.getBrain().hasMemoryValue(ModMemoryTypes.LAST_PLAYER_SEEN.get())) &&
+                isEnabled;
+    }
+
+    @Override
+    protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
+        return isEnabled;
     }
 
     @Override

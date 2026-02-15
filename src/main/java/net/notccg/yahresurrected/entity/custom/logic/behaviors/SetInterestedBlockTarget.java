@@ -22,13 +22,15 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
     private final float speed;
     private final int arriveDistance;
     private final int repathInterval;
+    private final boolean isEnabled;
 
     private long nextSetTick = 0;
 
-    public SetInterestedBlockTarget(float speed, int arriveDistance, int repathInterval) {
+    public SetInterestedBlockTarget(float speed, int arriveDistance, int repathInterval, boolean isEnabled) {
         this.speed = speed;
         this.arriveDistance = arriveDistance;
         this.repathInterval = repathInterval;
+        this.isEnabled = isEnabled;
     }
 
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
@@ -53,11 +55,16 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
     }
 
     @Override
-    protected void start(ServerLevel level, E entity, long gameTime) {
-        var brain = entity.getBrain();
-        if (gameTime < nextSetTick) return;
+    protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
+        return isEnabled;
+    }
 
+    @Override
+    protected void start(ServerLevel level, E entity, long gameTime) {
+        if (gameTime < nextSetTick) return;
         nextSetTick = gameTime + repathInterval;
+
+        var brain = entity.getBrain();
 
         MemoryModuleType<BlockPos> interestedType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
 

@@ -22,13 +22,15 @@ import java.util.List;
 public class RunFromCreepers<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
     private final long updateTicks;
+    private final boolean isEnabled;
 
     private long nextUpdateTick = 0;
 
     private final float speed = 1.3F;
 
-    public RunFromCreepers(long updateTicks) {
+    public RunFromCreepers(long updateTicks, boolean isEnabled) {
         this.updateTicks = updateTicks;
+        this.isEnabled = isEnabled;
     }
 
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES = ObjectArrayList.of(
@@ -41,6 +43,11 @@ public class RunFromCreepers<E extends PathfinderMob> extends ExtendedBehaviour<
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return MEMORIES;
+    }
+
+    @Override
+    protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
+        return isEnabled;
     }
 
     @Override

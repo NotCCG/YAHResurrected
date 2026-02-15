@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,6 +15,7 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -146,9 +148,21 @@ public class ModMemoryTypes {
             );
 
     public static final RegistryObject<MemoryModuleType<ItemEntity>> INTERESTED_ITEM =
-            MEMORY_MODULE_TYPES.register("interested_items_loc",
+            MEMORY_MODULE_TYPES.register("interested_items",
                     () -> new MemoryModuleType<>(Optional.empty())
             );
+
+    public static final RegistryObject<MemoryModuleType<Boolean>> PICKED_UP_LIKED_ITEM =
+            MEMORY_MODULE_TYPES.register("picked_up_liked_item",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
+    public static final RegistryObject<MemoryModuleType<Boolean>> HAS_ITEM_IN_HAND =
+            MEMORY_MODULE_TYPES.register("has_item_in_hand",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
+    public static final RegistryObject<MemoryModuleType<List<ItemStack>>> INVENTORY_ITEMS =
+            MEMORY_MODULE_TYPES.register("inventory_items",
+                    () -> new MemoryModuleType<>(Optional.empty()));
 
     public static final RegistryObject<MemoryModuleType<BlockPos>> NEAREST_UNOCCUPIED_BED =
             MEMORY_MODULE_TYPES.register("nearest_unoccupied_bed",

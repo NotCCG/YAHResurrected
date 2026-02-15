@@ -51,24 +51,21 @@ public class InterestedItemsSensor<E extends PathfinderMob> extends ExtendedSens
 
         var brain = entity.getBrain();
 
-        MemoryModuleType<ItemEntity> locType = ModMemoryTypes.INTERESTED_ITEM.get();
-
-        if (brain.hasMemoryValue(locType)) return;
+        if (brain.hasMemoryValue(ModMemoryTypes.INTERESTED_ITEM.get())) return;
 
         AABB box = entity.getBoundingBox().inflate(XY_RANGE, Y_RANGE, XY_RANGE);
 
         ItemEntity nearest = level.getEntitiesOfClass(ItemEntity.class, box, itemEntity ->
                 itemEntity.isAlive()
-                        && !itemEntity.getTags().isEmpty()
                         && itemEntity.getItem().is(ModTags.Items.STEVE_LOVED)
             ).stream().min(Comparator.comparingDouble(entity::distanceToSqr)).orElse(null);
 
         if (nearest == null) {
-            brain.eraseMemory(locType);
+            brain.eraseMemory(ModMemoryTypes.INTERESTED_ITEM.get());
             return;
         }
 
-        System.out.println("[YAH:R STEVE-DEBUG] Steve found item " + nearest);
-        brain.setMemory(locType, nearest);
+        LOGGER.debug("[YAH:R] [SENSORS:{}][{}] set INTERESTED_ITEM -> {}", this.getClass().getSimpleName(), entity.getUUID(), nearest.getItem().getItem());
+        brain.setMemory(ModMemoryTypes.INTERESTED_ITEM.get(), nearest);
     }
 }

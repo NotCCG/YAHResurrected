@@ -33,12 +33,14 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     private long nextOkSleepTime;
     private final float walkSpeed;
+    private final boolean isEnabled;
 
     private static final long COOLDOWN_AFTER_WAKING_UP = 100L;
     private static final int closeEnough = 1;
 
-    public GoToSleepBehaviour(float walkSpeed) {
+    public GoToSleepBehaviour(float walkSpeed, boolean isEnabled) {
         this.walkSpeed = walkSpeed;
+        this.isEnabled = isEnabled;
     }
 
     @Override

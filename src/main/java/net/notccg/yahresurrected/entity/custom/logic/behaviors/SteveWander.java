@@ -45,6 +45,7 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
         return ObjectArrayList.of(
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
                 Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_ABSENT),
+                Pair.of(ModMemoryTypes.INTERESTED_ITEM.get(), MemoryStatus.VALUE_ABSENT),
                 Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT),
                 Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED)
         );
@@ -83,7 +84,5 @@ public class SteveWander<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     protected void stop(ServerLevel level, E entity, long gameTime) {
         LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped",
                 this.getClass().getSimpleName(), entity.getUUID());
-
-        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
     }
 }

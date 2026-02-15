@@ -35,7 +35,8 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                     Pair.of(ModMemoryTypes.LAST_HEARD_TIME.get(), MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), MemoryStatus.REGISTERED),
-                    Pair.of(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), MemoryStatus.REGISTERED)
+                    Pair.of(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.PICKED_UP_LIKED_ITEM.get(), MemoryStatus.REGISTERED)
             );
 
     private final long updateInterval;
@@ -140,6 +141,10 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                 }
             }
             nextUpdateTick = gameTime + updateInterval;
+        }
+
+        if (brain.hasMemoryValue(ModMemoryTypes.PICKED_UP_LIKED_ITEM.get())) {
+            SteveLogic.reduceFear(brain, gameTime, 0.25);
         }
     }
 }

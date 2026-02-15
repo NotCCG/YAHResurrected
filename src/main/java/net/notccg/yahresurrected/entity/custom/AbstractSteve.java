@@ -18,6 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
+import net.notccg.yahresurrected.util.ModConfigServer;
+import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractSteve extends PathfinderMob {
@@ -27,10 +29,17 @@ public abstract class AbstractSteve extends PathfinderMob {
         this.setPathfindingMalus(BlockPathTypes.DOOR_OPEN, 0.0f);
         this.setPathfindingMalus(BlockPathTypes.DOOR_IRON_CLOSED, 0.0f);;
 
-        this.setCanPickUpLoot(true);
+        this.setCanPickUpLoot(ModConfigServer.STEVE_PICKS_UP_WANTED_ITEMS.get());
     }
 
     //Basic Steve Entity Setup
+
+
+    @Override
+    public boolean wantsToPickUp(ItemStack pStack) {
+        return pStack.is(ModTags.Items.STEVE_LOVED) && ModConfigServer.STEVE_PICKS_UP_WANTED_ITEMS.get() && this.canPickUpLoot();
+    }
+
     public static AttributeSupplier.Builder createAttribute() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)

@@ -14,11 +14,13 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
+import net.notccg.yahresurrected.util.ModConfigServer;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -32,6 +34,7 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import org.slf4j.Logger;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -110,6 +113,22 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
         return result;
     }
 
+    @Override
+    protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
+        super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
+
+        if (this.level().isClientSide) return;
+
+        var brain = this.getBrain();
+
+        brain.getMemory(ModMemoryTypes.INVENTORY_ITEMS.get()).ifPresent(inventory -> {
+            for (ItemStack itemStack : inventory) {
+                if (!itemStack.isEmpty())
+                    this.spawnAtLocation(itemStack);
+            }
+        });
+    }
+
     // Primary Steve AI behaviour
 
     @Override
@@ -119,7 +138,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 new PlayerWalkingNoiseSensor<>(),
                 new NearbyCreepersSensor<>(),
                 new InterestedBlocksSensor<>(),
-                // new InterestedItemsSensor<>(),
+                new InterestedItemsSensor<>(),
                 new NearestUnoccupiedBedSensor<>()
         );
     }
@@ -137,12 +156,14 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     public BrainActivityGroup<? extends Steve> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
                 new FirstApplicableBehaviour<Steve>(
-                        new FleeOrApproachPlayer<>(1.0f, 1, 10, 1, 16, 20),
-                        new LookAtHitFromDirection<>(),
-                        new RunFromCreepers<>(10),
-                        new SetInterestedBlockTarget<>(1.0f, 3, 20)//,
+                        new PutItemInInventory<>(),
+                        new FleeOrApproachPlayer<>(1.0f, 1, 10, 1, 16, 20, ModConfigServer.STEVE_FLEES_OR_APPROACHES_PLAYER.get()),
+                        new LookAtHitFromDirection<>(ModConfigServer.STEVE_LOOK_AT_HIT_DIRECTION.get()),
+                        new RunFromCreepers<>(10, ModConfigServer.STEVE_RUNS_FROM_CREEPERS.get()),
+                        new SetInterestedBlockTarget<>(1.0f, 3, 20, ModConfigServer.STEVE_BLOCK_INVESTIGATION.get()),
                         // new FleeOrInvestigateSoundBehaviour<>(2, 20, 1),
-                        // new GoToSleepBehaviour<>(1)
+                        new PickupInterestedItem<>(20, 1.0f, ModConfigServer.STEVE_PICKS_UP_WANTED_ITEMS.get()),
+                        new GoToSleepBehaviour<>(1, ModConfigServer.STEVE_INSOMNIA.get())
                 ),
                 new OneRandomBehaviour<Steve>(
                         new SteveWander<>(1.0f, 1, 32, 8),
@@ -165,6 +186,18 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 LOGGER.debug("[YAH:R] [ENTITIES:{}][{}] added {} to CompoundTag Hey \"VisitedBlocks\"", this.getClass().getSimpleName(), this.getUUID(), pos);
             }
             pCompound.put("VisitedBlocks", listTag);
+        });
+
+        brain.getMemory(ModMemoryTypes.INVENTORY_ITEMS.get()).ifPresent(inventory -> {
+            ListTag listTag = new ListTag();
+            for (ItemStack itemStack : inventory) {
+                if (itemStack.isEmpty()) continue;
+
+                CompoundTag itemTag = new CompoundTag();
+                itemStack.save(itemTag);
+                listTag.add(itemTag);
+            }
+            pCompound.put("InventoryItems", listTag);
         });
 
         brain.getMemory(ModMemoryTypes.FLEE_OR_APPROACH.get()).ifPresent(state -> {
@@ -198,6 +231,16 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 visitedSet.add(NbtUtils.readBlockPos(listTag.getCompound(i)));
             }
             brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), visitedSet);
+        }
+
+        if (pCompound.contains("InventoryItems", Tag.TAG_LIST)) {
+            ListTag listTag = pCompound.getList("InventoryItems", Tag.TAG_COMPOUND);
+            List<ItemStack> inventory = new ArrayList<>();
+            for (int i = 0; i < listTag.size(); i++) {
+                CompoundTag itemTag = listTag.getCompound(i);
+                inventory.add(ItemStack.of(itemTag));
+            }
+            this.getBrain().setMemory(ModMemoryTypes.INVENTORY_ITEMS.get(), inventory);
         }
 
         if (pCompound.contains("FearLevel", Tag.TAG_DOUBLE)) {
