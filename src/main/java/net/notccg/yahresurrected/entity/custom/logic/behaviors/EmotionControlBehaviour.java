@@ -88,7 +88,6 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
         boolean hasBeenHurtByPlayer = brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
 
         if (brain.hasMemoryValue(ModMemoryTypes.PLAYER_IS_SPOTTED.get())) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] memory PLAYER_IS_SPOTTED present, performing additional tasks", this.getClass().getSimpleName(), entity.getUUID());
             long spottedPlayerTime = brain.getMemory(ModMemoryTypes.LAST_SPOTTED_PLAYER_TIME.get()).orElse(0L);
             long spottedPlayerTimeDelta = spottedPlayerTime - previousSpottedPlayerTime;
 
@@ -119,25 +118,6 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                             System.out.println("[YAH:R STEVE-DEBUG] Steve saw the player and is curious");
                         }
                     }
-                }
-            }
-            nextUpdateTick = gameTime + updateInterval;
-        }
-
-        HeardSoundType heardSoundType = brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).orElse(null);
-        if (heardSoundType != null) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"heardSoundType\" is not null performing additional tasks", this.getClass().getSimpleName(), entity.getUUID());
-            long heardSoundTime = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(0L);
-            long heardSoundTimeDelta = heardSoundTime - previousHeardSoundTime;
-            if (heardSoundTimeDelta > 0) {
-                previousHeardSoundTime = heardSoundTime;
-
-                if (hasBeenHurtByPlayer || SteveLogic.isParanoid(brain, gameTime) || SteveLogic.isScared(brain, gameTime)) {
-                    System.out.println("[YAH:R STEVE-DEBUG] Steve heard " + heardSoundType + " and is curious about it");
-                    SteveLogic.addFear(brain, gameTime, paranoiaSqr);
-                } else {
-                    System.out.println("[YAH:R STEVE-DEBUG] Steve heard " + heardSoundType + " and is curious about it");
-                    SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
                 }
             }
             nextUpdateTick = gameTime + updateInterval;

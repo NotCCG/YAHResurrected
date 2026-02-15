@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-public class FleeOrInvestigateSoundBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
     private final float baseInvestigateSpeed;
     private final int arriveDistance;
@@ -36,7 +36,7 @@ public class FleeOrInvestigateSoundBehaviour<E extends PathfinderMob> extends Ex
 
     private long lastProcessedSoundTime = Long.MIN_VALUE;
 
-    public FleeOrInvestigateSoundBehaviour(int arriveDistance, int repathInterval, float investigateSpeed, boolean isEnabled) {
+    public ReactToSoundBehaviour(int arriveDistance, int repathInterval, float investigateSpeed, boolean isEnabled) {
         this.baseInvestigateSpeed = investigateSpeed;
         this.arriveDistance = arriveDistance;
         this.repathInterval = repathInterval;
@@ -142,7 +142,5 @@ public class FleeOrInvestigateSoundBehaviour<E extends PathfinderMob> extends Ex
         brain.eraseMemory(ModMemoryTypes.HEARD_SOUND_POS.get());
         brain.eraseMemory(ModMemoryTypes.INVESTIGATE_TARGET.get());
         brain.eraseMemory(ModMemoryTypes.LAST_HEARD_TIME.get());
-        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-        brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
     }
 }
