@@ -16,7 +16,7 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import java.util.List;
 
 public class ModPlacedFeatures {
-    public static final ResourceKey<PlacedFeature> ICE_RUBY_ORE_PLACED_KEY = registerKey("ice_ruby_ore_placed");
+    public static final ResourceKey<PlacedFeature> ICE_RUBY_ORE_PLACED_KEY = registerKey("iceruby_ore_placed");
     public static final ResourceKey<PlacedFeature> INVISIBLE_ORE_PLACED_KEY = registerKey("invisible_ore_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {

@@ -17,7 +17,7 @@ import net.notccg.yahresurrected.block.ModBlocks;
 import java.util.List;
 
 public class ModConfiguredFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_ICE_RUBY_ORE_KEY = registerKey("ice_ruby_ore");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_ICE_RUBY_ORE_KEY = registerKey("iceruby_ore");
     public static final ResourceKey<ConfiguredFeature<?, ?>> OVERWORLD_INVISIBLE_ORE_KEY = registerKey("invisible_ore");
 
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
