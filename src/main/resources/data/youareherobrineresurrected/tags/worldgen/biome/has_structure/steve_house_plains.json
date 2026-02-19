@@ -5,8 +5,6 @@
     "minecraft:plains",
     "minecraft:forest",
     "minecraft:windswept_hills",
-    "minecraft:meadow",
-    "minecraft:birch_forrest",
-    "minecraft:old_growth_birch_forrest"
+    "minecraft:meadow"
   ]
 }

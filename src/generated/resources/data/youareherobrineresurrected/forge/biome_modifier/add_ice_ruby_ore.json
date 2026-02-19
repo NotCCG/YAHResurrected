@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#youareherobrineresurrected:ice_ruby_biomes",
-  "features": "youareherobrineresurrected:iceruby_ore_placed",
+  "biomes": "#minecraft:is_overworld",
+  "features": "youareherobrineresurrected:ice_ruby_ore_placed",
   "step": "underground_ores"
 }
