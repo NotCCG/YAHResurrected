@@ -15,6 +15,8 @@ public class ModConfigServer {
     public static final ForgeConfigSpec.ConfigValue<Boolean> STEVE_RUNS_FROM_CREEPERS;
     public static final ForgeConfigSpec.ConfigValue<Boolean> STEVE_INSOMNIA;
     public static final ForgeConfigSpec.ConfigValue<Boolean> STEVE_LOOK_AT_HIT_DIRECTION;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> DISABLE_PHANTOMS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> JOIN_MESSAGE_ENABLE;
 
     static {
         BUILDER.push("YAH:R Sever Config");
@@ -38,7 +40,13 @@ public class ModConfigServer {
                 .define("Steve Insomnia", true); // Temporarily true for debugging.
 
         STEVE_LOOK_AT_HIT_DIRECTION = BUILDER.comment("Enable/Disable Steve looking at the direction he was hit from (Default: true)")
-                .define("Steve German main", true);
+                .define("Steve surroundings awareness", true);
+
+        DISABLE_PHANTOMS = BUILDER.comment("Enable/Disable phantoms spawning (Default: true)")
+                .define("Disable Phantoms", true);
+
+        JOIN_MESSAGE_ENABLE = BUILDER.comment("Enable/Disable a join message when you load the world (Default: true)")
+                .define("Join message enable", true);
 
 
         BUILDER.pop();

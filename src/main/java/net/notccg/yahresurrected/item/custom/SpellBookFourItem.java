@@ -9,22 +9,18 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.MovementUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.List;
-
-import static net.notccg.yahresurrected.util.MovementUtils.getBlockPositionInDirection;
 
 public class SpellBookFourItem extends Item {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -56,7 +52,7 @@ public class SpellBookFourItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.spell_book_iv.tooltip"));
+        pTooltipComponents.add(ModItems.createToolTip("spell_book_iv"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

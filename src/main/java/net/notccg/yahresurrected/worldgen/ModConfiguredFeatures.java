@@ -32,7 +32,7 @@ public class ModConfiguredFeatures {
                 ModBlocks.INVISIBLE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(deepslateReplaceable, ModBlocks.DEEPSLATE_INVISIBLE_ORE.get().defaultBlockState()));
 
-        register(context, OVERWORLD_ICE_GEM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIceRubyOres, 4));
+        register(context, OVERWORLD_ICE_GEM_ORE_KEY, Feature.ORE, new OreConfiguration(overworldIceRubyOres, 2));
         register(context, OVERWORLD_INVISIBLE_ORE_KEY, Feature.ORE, new OreConfiguration(overworldInvisibleOres, 3));
     }
 

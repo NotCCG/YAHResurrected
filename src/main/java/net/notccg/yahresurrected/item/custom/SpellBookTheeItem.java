@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.notccg.yahresurrected.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
@@ -62,7 +63,7 @@ public class SpellBookTheeItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("tooltip.youareherobrineresurrected.spell_book_iii.tooltip"));
+        pTooltipComponents.add(ModItems.createToolTip("spell_book_iii"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

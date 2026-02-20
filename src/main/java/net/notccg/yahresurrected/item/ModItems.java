@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.item;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,6 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.item.custom.*;
 import net.notccg.yahresurrected.item.custom.util.AdvancementRootIconItem;
+import net.notccg.yahresurrected.item.custom.util.SteveDebugStick;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -20,6 +22,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> ILLAGERHEART = ITEMS.register("illager_heart",
             () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
 
     public static final RegistryObject<Item> STEVESOUL = ITEMS.register("steve_soul",
             () -> new Item(new Item.Properties().rarity(Rarity.RARE)));
@@ -72,6 +75,9 @@ public class ModItems {
     public static final RegistryObject<Item> CASTZOMBIEBOOK = ITEMS.register("casting_book_zombie",
             () -> new CastZombieBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(64)));
 
+    public static final RegistryObject<Item> BROKEN_CLOCK =ITEMS.register("broken_clock",
+            () -> new BrokenClockItem(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> INVISIBLEDUST = ITEMS.register("invisible_dust",
             () -> new Item(new Item.Properties()));
 
@@ -109,9 +115,11 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntities.HUNTER, 0x454545, 0xD3A46F,
                     new Item.Properties()));
 
+
     public static final RegistryObject<Item> SLAYER_SPAWN_EGG = ITEMS.register("slayer_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.SLAYER, 0x454545, 0xABD36F,
                     new Item.Properties()));
+
 
 
     // Utility items, not for use in gameplay.
@@ -119,8 +127,15 @@ public class ModItems {
     public static final RegistryObject<Item> ADVANCEMENT_ROOT_ICON = ITEMS.register("advancement_root_icon",
             () -> new AdvancementRootIconItem(new Item.Properties()));
 
+    public static final RegistryObject<Item> STEVE_DEBUG_TOOL = ITEMS.register("steve_debug_tool",
+            () -> new SteveDebugStick(new Item.Properties().rarity(Rarity.EPIC)));
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
+    }
+
+    public static Component createToolTip(String item) {
+        return Component.translatable("tooltip." + YouAreHerobrineResurrected.MOD_ID + "." + item + ".tooltip");
     }
 
 }

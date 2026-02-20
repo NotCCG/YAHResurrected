@@ -25,6 +25,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EVILDIAMONDMATTER.get());
                         output.accept(ModItems.EVILDIAMOND.get());
                         output.accept(ModItems.SKINBOOK.get());
+                        output.accept(ModItems.BROKEN_CLOCK.get());
                         output.accept(ModItems.SPELLBOOKI.get());
                         output.accept(ModItems.SPELLBOOKII.get());
                         output.accept(ModItems.SPELLBOOKIII.get());
@@ -42,9 +43,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EVILDIAMONDHOE.get());
                         output.accept(ModItems.EVILDIAMONDSWORD.get());
                         output.accept(ModItems.ICERUBY.get());
+                        output.accept(ModItems.INVISIBLEDUST.get());
                         output.accept(ModBlocks.ICE_RUBY_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_ICE_RUBY_ORE.get());
-                        output.accept(ModItems.INVISIBLEDUST.get());
                         output.accept(ModBlocks.INVISIBLE_ORE.get());
                         output.accept(ModBlocks.DEEPSLATE_INVISIBLE_ORE.get());
                         output.accept(ModItems.HUNTER_SPAWN_EGG.get());

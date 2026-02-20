@@ -38,6 +38,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SPELLBOOKVIII);
         simpleItem(ModItems.STEVESOUL);
         simpleItem(ModItems.VILLAGERHEART);
+        simpleItem(ModItems.BROKEN_CLOCK);
+        simpleItem(ModItems.STEVE_DEBUG_TOOL);
 
         handheldItem(ModItems.BEDROCKPIXAXE);
         handheldItem(ModItems.EVILDIAMONDAXE);

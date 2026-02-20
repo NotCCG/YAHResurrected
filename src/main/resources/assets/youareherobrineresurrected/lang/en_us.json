@@ -78,6 +78,7 @@
   "item.youareherobrineresurrected.hunter_spawn_egg": "Spawn Hunter",
   "item.youareherobrineresurrected.slayer_spawn_egg": "Spawn Slayer",
   "item.youareherobrineresurrected.nether_portal_item": "item.minecraft.nether_portal",
+  "item.youareherobrineresurrected.broken_clock": "Broken Clock",
 
   "block.youareherobrineresurrected.ice_ruby_ore": "Ice Ruby Ore",
   "block.youareherobrineresurrected.deepslate_ice_ruby_ore": "Deepslate Ice Ruby Ore",
@@ -92,10 +93,14 @@
   "tooltip.youareherobrineresurrected.spell_book_v.tooltip": "Toggles the ability to fly when used.",
   "tooltip.youareherobrineresurrected.spell_book_vi.tooltip": "When in inventory, Creepers will now ignore you.",
   "tooltip.youareherobrineresurrected.spell_book_vii.tooltip": "When in inventory, Endermen will now ignore you.",
-  "tooltip.youareherobrineresurrected.cast_creeper_book.tooltip": "Right click to summon 1-3 creepers around you.",
   "tooltip.youareherobrineresurrected.spell_book_viii.tooltip": "Right click a block to DELETE it. W̶̜͆E̸̙͠ will not get the block back so be careful \n\nEnchanting with Silk Touch will give Ư̷̰S̷̤̿̌ illegal blocks ONLY.",
+  "tooltip.youareherobrineresurrected.cast_creeper_book.tooltip": "Right click to summon 1-3 creepers around you.",
   "tooltip.youareherobrineresurrected.cast_skeleton_book.tooltip": "Right click to summon 1-3 skeletons around you.",
   "tooltip.youareherobrineresurrected.cast_zombie_book.tooltip": "Right click to summon 1-3 zombies around you.",
+  "tooltip.youareherobrineresurrected.broken_clock.tooltip": "Right Click to skip the day",
+  "tooltip.youareherobrineresurrected..tooltip": "",
+
+  "item.youareherobrineresurrected.steve_debug_tool": "Steve Debug Tool",
 
   "tooltip.youareherobrineresurrected.advancent_root_icon.tooltip": "You shouldn't have this, stop cheating!",
 
