@@ -15,7 +15,7 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.util.ModTags;
 
 public class ModBiomeModifiers {
-    public static final ResourceKey<BiomeModifier> ADD_ICE_RUBY_ORE = registerKey("add_ice_ruby_ore");
+    public static final ResourceKey<BiomeModifier> ADD_ICE_RUBY_ORE = registerKey("add_ice_gem_ore");
     public static final ResourceKey<BiomeModifier> ADD_INVISIBLE_ORE = registerKey("add_invisible_ore");
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
@@ -24,7 +24,7 @@ public class ModBiomeModifiers {
 
         context.register(ADD_ICE_RUBY_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ICE_RUBY_ORE_PLACED_KEY)),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ICE_GEM_ORE_PLACED_KEY)),
                 GenerationStep.Decoration.UNDERGROUND_ORES));
 
         context.register(ADD_INVISIBLE_ORE, new ForgeBiomeModifiers.AddFeaturesBiomeModifier(

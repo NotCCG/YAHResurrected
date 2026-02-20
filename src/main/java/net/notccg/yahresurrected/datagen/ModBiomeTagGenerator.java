@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class ModBiomeTagGenerator extends BiomeTagsProvider {
+
     public ModBiomeTagGenerator(PackOutput p_255800_, CompletableFuture<HolderLookup.Provider> p_256205_, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(p_255800_, p_256205_, modId, existingFileHelper);
     }

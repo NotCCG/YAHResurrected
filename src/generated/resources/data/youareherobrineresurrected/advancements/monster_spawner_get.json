@@ -1,6 +1,19 @@
 {
   "parent": "youareherobrineresurrected:bedrock_get",
-  "criteria": {},
+  "criteria": {
+    "monster_spawner_obtained": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:spawner"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
   "display": {
     "announce_to_chat": true,
     "description": {
@@ -16,7 +29,11 @@
       "translate": "advancements.youareherobrineresurrected.illegal_item_spawner.title"
     }
   },
-  "requirements": [],
+  "requirements": [
+    [
+      "monster_spawner_obtained"
+    ]
+  ],
   "rewards": {
     "experience": 420
   },

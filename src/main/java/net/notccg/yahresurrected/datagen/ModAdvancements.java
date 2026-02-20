@@ -462,6 +462,8 @@ public class ModAdvancements implements ForgeAdvancementProvider.AdvancementGene
                         true,
                         true
                 )
+                .addCriterion("monster_spawner_obtained",
+                        hasItem(Items.SPAWNER))
                 .rewards(AdvancementRewards.Builder.experience(420))
                 .save(saver, id("monster_spawner_get"));
 

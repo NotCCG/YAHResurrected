@@ -30,11 +30,8 @@ public class DataGenerators {
 
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBlockTagGenerator(packOutput, lookupProvider, YouAreHerobrineResurrected.MOD_ID, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput,lookupProvider, blockTagGenerator.contentsGetter(), YouAreHerobrineResurrected.MOD_ID,
+        generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter(), YouAreHerobrineResurrected.MOD_ID,
                 existingFileHelper));
-
-        ModStructureTagGenerator structureTagGenerator = generator.addProvider(event.includeServer(),
-                new ModStructureTagGenerator(packOutput, lookupProvider, YouAreHerobrineResurrected.MOD_ID, existingFileHelper));
 
         ModBiomeTagGenerator biomeTagGenerator = generator.addProvider(event.includeServer(),
                 new ModBiomeTagGenerator(packOutput, lookupProvider, YouAreHerobrineResurrected.MOD_ID, existingFileHelper));
