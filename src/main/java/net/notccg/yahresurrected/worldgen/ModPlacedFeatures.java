@@ -16,15 +16,15 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import java.util.List;
 
 public class ModPlacedFeatures {
-    public static final ResourceKey<PlacedFeature> ICE_GEM_ORE_PLACED_KEY = registerKey("ice_gem_ore_placed");
+    public static final ResourceKey<PlacedFeature> ICE_GEM_ORE_PLACED_KEY = registerKey("ice_ruby_ore_placed");
     public static final ResourceKey<PlacedFeature> INVISIBLE_ORE_PLACED_KEY = registerKey("invisible_ore_placed");
 
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         register(context, ICE_GEM_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_ICE_GEM_ORE_KEY),
-                ModOrePlacement.commonOrePlacement(15,
-                        HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(75))));
+                ModOrePlacement.commonOrePlacement(10,
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(60))));
 
         register(context, INVISIBLE_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_INVISIBLE_ORE_KEY),
                 ModOrePlacement.commonOrePlacement(45,

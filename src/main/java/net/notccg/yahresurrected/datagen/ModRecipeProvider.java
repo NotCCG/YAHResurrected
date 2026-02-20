@@ -287,6 +287,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STONE)
                 .unlockedBy(getHasName(Items.BEDROCK), has(Items.BEDROCK))
                 .save(pWriter);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.BROKEN_CLOCK.get())
+                .pattern("III")
+                .pattern("RCR")
+                .pattern("GGG")
+                .define('I', ModItems.INVISIBLEDUST.get())
+                .define('R', Items.REDSTONE)
+                .define('C', Items.CLOCK)
+                .define('G', Items.GOLD_INGOT)
+                .unlockedBy(getHasName(Items.CLOCK), has(Items.CLOCK))
+                .save(pWriter);
     }
 
     protected static void oreSmelting(Consumer<FinishedRecipe> pFinishedRecipeConsumer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTIme, String pGroup) {
