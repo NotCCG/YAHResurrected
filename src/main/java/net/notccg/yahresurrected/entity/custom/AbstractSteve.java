@@ -3,6 +3,10 @@ package net.notccg.yahresurrected.entity.custom;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
@@ -23,6 +27,8 @@ import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractSteve extends PathfinderMob {
+    private static final EntityDataAccessor<Integer> TEXTURE_VARIANT =
+            SynchedEntityData.defineId(AbstractSteve.class, EntityDataSerializers.INT);
     protected AbstractSteve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0f);
@@ -34,6 +40,34 @@ public abstract class AbstractSteve extends PathfinderMob {
 
     //Basic Steve Entity Setup
 
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(TEXTURE_VARIANT, 0);
+    }
+
+    public int getTextureVariant() {
+        return this.entityData.get(TEXTURE_VARIANT);
+    }
+
+    public void setTextureVariant(int textureVariant) {
+        this.entityData.set(TEXTURE_VARIANT, textureVariant);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putInt("TextureVariant", getTextureVariant());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        if (pCompound.contains("TextureVariant", Tag.TAG_INT)) {
+            setTextureVariant(pCompound.getInt("TextureVariant"));
+        }
+    }
 
     @Override
     public boolean wantsToPickUp(ItemStack pStack) {

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:clock"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "item": "youareherobrineresurrected:invisible_dust"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "III",
+    "RCR",
+    "GGG"
+  ],
+  "result": {
+    "item": "youareherobrineresurrected:broken_clock"
+  },
+  "show_notification": true
+}

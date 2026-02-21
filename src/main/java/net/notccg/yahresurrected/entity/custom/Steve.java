@@ -8,14 +8,18 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
@@ -31,6 +35,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 
@@ -44,6 +49,18 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     // Base movement should always be 1.0f
     // Multiplier for sprinting should be 1.3f
     // Multiplier for sneaking should be 0.3f
+
+    private static final int TEXTURE_COUNT = 7;
+
+    @Override
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+        if (this.getTextureVariant() == 0) {
+            int textureVariant = this.getRandom().nextInt(TEXTURE_COUNT);
+            this.setTextureVariant(textureVariant);
+        }
+        return data;
+    }
 
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

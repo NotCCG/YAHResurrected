@@ -72,7 +72,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(pWriter);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SPELLBOOKII.get())
-                .pattern(" I ")
+                .pattern("III")
                 .pattern("SBD")
                 .pattern("   ")
                 .define('S', ModItems.STEVESOUL.get())

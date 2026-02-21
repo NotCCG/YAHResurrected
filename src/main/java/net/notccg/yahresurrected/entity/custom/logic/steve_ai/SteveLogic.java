@@ -220,7 +220,8 @@ public class SteveLogic {
             "Player",
             "Steve",
             "SlenderKinGamer",
-            "NotCCG"
+            "NotCCG",
+            "daffy1234"
     };
 
     public String getSteveName() {
