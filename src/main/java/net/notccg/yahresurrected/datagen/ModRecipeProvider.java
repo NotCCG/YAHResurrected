@@ -191,7 +191,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FLESHSTICK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FLESHSTICK.get(), 2)
                 .pattern(" V ")
                 .pattern(" V ")
                 .pattern(" V ")

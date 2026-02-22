@@ -10,7 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,15 +24,15 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CastSkeletonBookItem extends Item {
+public class CastSpiderBookItem extends Item {
     private static final Logger LOGGER = LogUtils.getLogger();
-    public CastSkeletonBookItem(Properties pProperties) {
+    public CastSpiderBookItem(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(ModItems.createToolTip("cast_skeleton_book"));
+        pTooltipComponents.add(ModItems.createToolTip("casting_book_spider"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 
@@ -87,7 +87,7 @@ public class CastSkeletonBookItem extends Item {
             List<BlockPos> spawnPositions = getRandomSpawnPosition(serverLevel, playerPos, 6);
 
             for (BlockPos pos : spawnPositions) {
-                Skeleton mob = EntityType.SKELETON.create(serverLevel);
+                Spider mob = EntityType.SPIDER.create(serverLevel);
                 if (mob == null) continue;
 
                 mob.moveTo(
@@ -116,9 +116,7 @@ public class CastSkeletonBookItem extends Item {
 
                 serverLevel.sendParticles(
                         ParticleTypes.SMOKE,
-                        pos.getX() + 0.5D,
-                        pos.getY() + 0.1D,
-                        pos.getZ() + 0.5D,
+                        pos.getX() + 0.5D, pos.getY() + 0.1D, pos.getZ() + 0.5D,
                         12,
                         0.25D, 0.25D, 0.25D,
                         0.01D
@@ -130,4 +128,5 @@ public class CastSkeletonBookItem extends Item {
         }
         return InteractionResultHolder.sidedSuccess(stack, pLevel.isClientSide);
     }
+
 }

@@ -40,7 +40,7 @@ public class CastZombieBookItem extends Item {
         RandomSource random = pLevel.getRandom();
         List<BlockPos> results =new ArrayList<>();
 
-        int count = 1 + random.nextInt(3);
+        int count = 1 + random.nextInt(5);
 
         for (int i = 0; i < count; i++) {
             double angle = random.nextDouble() * Math.PI * 2;

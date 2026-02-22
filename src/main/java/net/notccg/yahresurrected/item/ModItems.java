@@ -67,13 +67,16 @@ public class ModItems {
             () -> new SpellBookEightItem(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
     public static final RegistryObject<Item> CASTCREEPERBOOK = ITEMS.register("casting_book_creeper",
-            () -> new CastCreeperBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(32)));
+            () -> new CastCreeperBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> CASTSKELETONBOOK = ITEMS.register("casting_book_skeleton",
-            () -> new CastSkeletonBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(64)));
+            () -> new CastSkeletonBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
+
+    public static final RegistryObject<Item> CASTSPIDERBOOK = ITEMS.register("casting_book_spider",
+            () -> new CastSpiderBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> CASTZOMBIEBOOK = ITEMS.register("casting_book_zombie",
-            () -> new CastZombieBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1).durability(64)));
+            () -> new CastZombieBookItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 
     public static final RegistryObject<Item> BROKEN_CLOCK =ITEMS.register("broken_clock",
             () -> new BrokenClockItem(new Item.Properties().stacksTo(1)));

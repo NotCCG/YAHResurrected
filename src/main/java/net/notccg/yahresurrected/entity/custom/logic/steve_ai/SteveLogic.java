@@ -167,7 +167,6 @@ public class SteveLogic {
             Blocks.BIRCH_WALL_SIGN,
             Blocks.CHERRY_SIGN,
             Blocks.CHERRY_WALL_SIGN,
-            Blocks.CHEST,
             Blocks.CRIMSON_SIGN,
             Blocks.CRIMSON_WALL_SIGN,
             Blocks.DARK_OAK_SIGN,
@@ -222,7 +221,8 @@ public class SteveLogic {
             "Steve",
             "SlenderKinGamer",
             "NotCCG",
-            "daffy1234"
+            "daffy1234",
+            "VideoNations"
     };
 
     public static final ResourceLocation[] STEVE_TEXTURES_NORMAL = new ResourceLocation[] {
