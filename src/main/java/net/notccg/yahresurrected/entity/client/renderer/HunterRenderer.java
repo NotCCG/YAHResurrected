@@ -14,7 +14,7 @@ import net.notccg.yahresurrected.entity.client.models.HunterModel;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
 
 public class HunterRenderer extends MobRenderer<AbstractHunter, HunterModel<AbstractHunter>> {
-    private static final ResourceLocation STEVE_LOCATION =
+    private static final ResourceLocation HUNTER_LOCATION =
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/hunter_entity.png");
 
     public HunterRenderer(EntityRendererProvider.Context pContext) {
@@ -29,7 +29,7 @@ public class HunterRenderer extends MobRenderer<AbstractHunter, HunterModel<Abst
 
     @Override
     public ResourceLocation getTextureLocation(AbstractHunter hunterEntity) {
-        return STEVE_LOCATION;
+        return HUNTER_LOCATION;
     }
 
     @Override

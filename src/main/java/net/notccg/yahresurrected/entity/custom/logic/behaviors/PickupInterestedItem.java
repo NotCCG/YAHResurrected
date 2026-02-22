@@ -12,15 +12,12 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.UUID;
 
 public class PickupInterestedItem<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();

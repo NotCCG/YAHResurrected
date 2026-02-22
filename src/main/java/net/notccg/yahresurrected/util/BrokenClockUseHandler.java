@@ -1,7 +1,6 @@
 package net.notccg.yahresurrected.util;
 
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 
 public class BrokenClockUseHandler {
     private static Long overWorldTarget = null;

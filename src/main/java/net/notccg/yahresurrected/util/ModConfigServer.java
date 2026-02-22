@@ -2,8 +2,6 @@ package net.notccg.yahresurrected.util;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.security.PublicKey;
-
 public class ModConfigServer {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;

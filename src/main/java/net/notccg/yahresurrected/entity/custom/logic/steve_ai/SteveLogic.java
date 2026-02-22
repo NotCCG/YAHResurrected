@@ -3,6 +3,7 @@ package net.notccg.yahresurrected.entity.custom.logic.steve_ai;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -13,12 +14,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
 import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class SteveLogic {
@@ -222,6 +223,21 @@ public class SteveLogic {
             "SlenderKinGamer",
             "NotCCG",
             "daffy1234"
+    };
+
+    public static final ResourceLocation[] STEVE_TEXTURES_NORMAL = new ResourceLocation[] {
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_0.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_1.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_2.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_3.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_4.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_5.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_6.png")
+    };
+
+    public static final ResourceLocation[] STEVE_TEXTURES_SLIM = new ResourceLocation[] {
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/slim/steve_slim_0.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/slim/steve_slim_1.png")
     };
 
     public String getSteveName() {

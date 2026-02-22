@@ -6,7 +6,6 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;

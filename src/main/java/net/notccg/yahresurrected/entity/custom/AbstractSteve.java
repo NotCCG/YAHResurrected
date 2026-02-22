@@ -27,8 +27,13 @@ import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractSteve extends PathfinderMob {
+    //Basic Steve Entity Setup
     private static final EntityDataAccessor<Integer> TEXTURE_VARIANT =
             SynchedEntityData.defineId(AbstractSteve.class, EntityDataSerializers.INT);
+
+    private static final EntityDataAccessor<Boolean> SLIM_ARMS =
+            SynchedEntityData.defineId(AbstractSteve.class, EntityDataSerializers.BOOLEAN);
+
     protected AbstractSteve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.DOOR_WOOD_CLOSED, 0.0f);
@@ -38,27 +43,31 @@ public abstract class AbstractSteve extends PathfinderMob {
         this.setCanPickUpLoot(ModConfigServer.STEVE_PICKS_UP_WANTED_ITEMS.get());
     }
 
-    //Basic Steve Entity Setup
-
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(TEXTURE_VARIANT, 0);
+        this.entityData.define(TEXTURE_VARIANT, -1);
+        this.entityData.define(SLIM_ARMS, false);
     }
 
     public int getTextureVariant() {
         return this.entityData.get(TEXTURE_VARIANT);
     }
-
     public void setTextureVariant(int textureVariant) {
         this.entityData.set(TEXTURE_VARIANT, textureVariant);
+    }
+
+    public boolean hasSlimArms() {
+        return this.entityData.get(SLIM_ARMS);}
+    public void setSlimArms(boolean slimArms) {
+        this.entityData.set(SLIM_ARMS, slimArms);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("TextureVariant", getTextureVariant());
+        pCompound.putBoolean("SlimArms", hasSlimArms());
     }
 
     @Override
@@ -66,6 +75,9 @@ public abstract class AbstractSteve extends PathfinderMob {
         super.readAdditionalSaveData(pCompound);
         if (pCompound.contains("TextureVariant", Tag.TAG_INT)) {
             setTextureVariant(pCompound.getInt("TextureVariant"));
+        }
+        if (pCompound.contains("SlimArms", Tag.TAG_BYTE)) {
+            setSlimArms(pCompound.getBoolean("SlimArms"));
         }
     }
 

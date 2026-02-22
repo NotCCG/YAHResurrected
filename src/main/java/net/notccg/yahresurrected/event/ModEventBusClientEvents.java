@@ -8,16 +8,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.client.ModModelLayers;
 import net.notccg.yahresurrected.entity.client.models.HunterModel;
-import net.notccg.yahresurrected.entity.client.models.SteveModel;
+import net.notccg.yahresurrected.util.ModConfigCommon;
 import net.notccg.yahresurrected.util.OverrideSkinLayer;
-
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModEventBusClientEvents {
 
     @SubscribeEvent
     public static void addPlayerLayers(EntityRenderersEvent.AddLayers event) {
+        if (!ModConfigCommon.OVERRIDE_SKIN_CONFIG.get()) return;
         PlayerRenderer defaultRenderer = event.getSkin("default");
         if (defaultRenderer != null) {
             defaultRenderer.addLayer(new OverrideSkinLayer(defaultRenderer));
@@ -28,9 +27,6 @@ public class ModEventBusClientEvents {
 
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ModModelLayers.STEVE_MAIN, SteveModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.STEVE_INNER, SteveModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.STEVE_OUTER, SteveModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_MAIN, HunterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_INNER, HunterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HUNTER_OUTER, HunterModel::createBodyLayer);

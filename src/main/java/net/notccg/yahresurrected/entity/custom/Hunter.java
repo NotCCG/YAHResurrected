@@ -1,6 +1,5 @@
 package net.notccg.yahresurrected.entity.custom;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;

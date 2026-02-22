@@ -38,7 +38,6 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -55,11 +54,19 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     @Override
     public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        if (this.getTextureVariant() == 0) {
+        if (this.getTextureVariant() == -1) {
             int textureVariant = this.getRandom().nextInt(TEXTURE_COUNT);
             this.setTextureVariant(textureVariant);
         }
+        if (!tagContainsSlimFlag(pDataTag)) {
+            this.setSlimArms(this.getRandom().nextBoolean());
+        }
+
         return data;
+    }
+
+    private boolean tagContainsSlimFlag(@Nullable CompoundTag pCompound) {
+        return pCompound != null && (pCompound.contains("SlimArms", Tag.TAG_BYTE));
     }
 
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
