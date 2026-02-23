@@ -229,7 +229,9 @@ public class SteveLogic {
             "Lunertic_",
             "Armoured_Contempt",
             "jschlatt",
-            "_TomSka_"
+            "_TomSka_",
+            "MelficeSilesius",
+            "PatTheTurtler"
     };
 
 
