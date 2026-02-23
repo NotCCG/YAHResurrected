@@ -94,9 +94,9 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
                 }
 
                 this.bowGoal.setMinAttackInterval(i);
-                this.goalSelector.addGoal(4, this.bowGoal);
+                this.goalSelector.addGoal(2, this.bowGoal);
             } else {
-                this.goalSelector.addGoal(4, this.meleeGoal);
+                this.goalSelector.addGoal(2, this.meleeGoal);
             }
         }
 
@@ -104,9 +104,7 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
 
     @Override
     public void performRangedAttack(LivingEntity livingEntity, float pDistanceFactor) {
-        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, (item) -> {
-            return item instanceof BowItem;
-        })));
+        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileUtil.getWeaponHoldingHand(this, (item) -> item instanceof BowItem)));
         AbstractArrow abstractarrow = this.getArrow(itemstack, pDistanceFactor);
         if (this.getMainHandItem().getItem() instanceof BowItem) {
             abstractarrow = ((BowItem)this.getMainHandItem().getItem()).customArrow(abstractarrow);
