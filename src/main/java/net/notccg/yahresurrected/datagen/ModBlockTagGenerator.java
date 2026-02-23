@@ -62,6 +62,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(Blocks.REDSTONE_WALL_TORCH)
                 .add(Blocks.REDSTONE_WIRE);
 
+        this.tag(ModTags.Blocks.INVALID_TELEPORT_BLOCKS)
+                .add(Blocks.MAGMA_BLOCK)
+                .add(Blocks.SCAFFOLDING)
+                .add(Blocks.END_PORTAL)
+                .add(Blocks.END_ROD)
+                .add(Blocks.IRON_BARS)
+                .add(Blocks.CHAIN);
+
         this.tag(ModTags.Blocks.NEEDS_BEDROCK_TOOL);
 
         this.tag(ModTags.Blocks.NEEDS_EVIL_DIAMOND_TOOL);

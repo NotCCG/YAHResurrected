@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.item.custom;
+package net.notccg.yahresurrected.item.custom.spell_books;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;

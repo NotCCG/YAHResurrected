@@ -24,6 +24,8 @@ public class ModTags {
         public static final TagKey<Block> STRANGE_BLOCKS = tag("strange_blocks");
         public static final TagKey<Block> HEROBRINE_TELLTALE_SIGNS = tag("herobrine_telltale_signs");
 
+        public static final TagKey<Block> INVALID_TELEPORT_BLOCKS = tag("invalid_teleport_blocks");
+
         private static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, name));
         }

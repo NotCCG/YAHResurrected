@@ -1,6 +1,4 @@
-package net.notccg.yahresurrected.item.custom;
-
-//Invisibility
+package net.notccg.yahresurrected.item.custom.spell_books;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -12,8 +10,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SpellBookSevenItem extends Item {
-    public SpellBookSevenItem(Properties pProperties) {
+public class SpellBookSixItem extends Item {
+    public SpellBookSixItem(Properties pProperties) {
         super(pProperties);
     }
 
@@ -24,7 +22,7 @@ public class SpellBookSevenItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(ModItems.createToolTip("spell_book_vii"));
+        pTooltipComponents.add(ModItems.createToolTip("spell_book_vi"));
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }
 }

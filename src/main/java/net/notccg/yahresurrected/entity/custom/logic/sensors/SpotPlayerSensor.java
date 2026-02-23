@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
-import net.notccg.yahresurrected.item.custom.SpellBookOneItem;
+import net.notccg.yahresurrected.item.custom.spell_books.SpellBookOneItem;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModSensorTypes;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;

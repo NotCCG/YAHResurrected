@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.item.custom.*;
+import net.notccg.yahresurrected.item.custom.spell_books.*;
 import net.notccg.yahresurrected.item.custom.util.AdvancementRootIconItem;
 import net.notccg.yahresurrected.item.custom.util.SteveDebugStick;
 

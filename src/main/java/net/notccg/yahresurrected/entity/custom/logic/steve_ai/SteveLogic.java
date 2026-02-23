@@ -221,6 +221,7 @@ public class SteveLogic {
     public static final String[] STEVE_NAMES = {
             "Player",
             "Steve",
+            "Alex",
             "SlenderKinGamer",
             "NotCCG",
             "Zach",
@@ -266,7 +267,9 @@ public class SteveLogic {
             "jschlatt", new SpecialSkin(false,
                     new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/schlatt.png")),
             "_TomSka_", new SpecialSkin(false,
-                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/tomska.png"))
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/tomska.png")),
+            "Alex", new SpecialSkin(true,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/mojang_alex.png"))
     );
 
     public static boolean isUnoccupiedBed(Level level, BlockPos pos) {
