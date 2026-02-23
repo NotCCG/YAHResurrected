@@ -29,14 +29,17 @@ public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<
         this.rightArmPose = ArmPose.EMPTY;
         this.leftArmPose = ArmPose.EMPTY;
         ItemStack mainHand = pEntity.getItemInHand(InteractionHand.MAIN_HAND);
-        if (mainHand.is(Items.BOW) && pEntity.isAggressive()) {
+
+        boolean usingBow = pEntity.isUsingItem() && pEntity.getUseItem().is(Items.BOW);
+        boolean aimingBow = mainHand.is(Items.BOW) && pEntity.getTarget() != null;
+
+        if (usingBow || aimingBow) {
             if (pEntity.getMainArm() == HumanoidArm.RIGHT) {
                 this.rightArmPose = ArmPose.BOW_AND_ARROW;
             } else {
                 this.leftArmPose = ArmPose.BOW_AND_ARROW;
             }
-        }
-        if (mainHand.is(ItemTags.SWORDS)) {
+        } else if (mainHand.is(ItemTags.SWORDS)) {
             if (pEntity.getMainArm() == HumanoidArm.RIGHT) {
                 this.rightArmPose = ArmPose.ITEM;
             } else {
@@ -49,20 +52,9 @@ public class HunterModel<T extends Mob & RangedAttackMob> extends HumanoidModel<
 
     @Override
     public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        this.leftArmPose = ArmPose.EMPTY;
-        this.rightArmPose = ArmPose.EMPTY;
+        super.setupAnim(pEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
 
         ItemStack mainHand = pEntity.getMainHandItem();
-
-        if (pEntity.isUsingItem() && pEntity.getUseItem().is(Items.BONE)) {
-            if (pEntity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
-                this.rightArmPose = ArmPose.BOW_AND_ARROW;
-            } else {
-                this.leftArmPose = ArmPose.BOW_AND_ARROW;
-            }
-        }
-
-        super.setupAnim(pEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
 
         boolean inBowPose = (this.rightArmPose == ArmPose.BOW_AND_ARROW) || (this.leftArmPose == ArmPose.BOW_AND_ARROW);
 

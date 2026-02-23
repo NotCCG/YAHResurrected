@@ -49,26 +49,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
     // Multiplier for sprinting should be 1.3f
     // Multiplier for sneaking should be 0.3f
 
-    private static final int TEXTURE_COUNT = 7;
-
-    @Override
-    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
-        SpawnGroupData data = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
-        if (this.getTextureVariant() == -1) {
-            int textureVariant = this.getRandom().nextInt(TEXTURE_COUNT);
-            this.setTextureVariant(textureVariant);
-        }
-        if (!tagContainsSlimFlag(pDataTag)) {
-            this.setSlimArms(this.getRandom().nextBoolean());
-        }
-
-        return data;
-    }
-
-    private boolean tagContainsSlimFlag(@Nullable CompoundTag pCompound) {
-        return pCompound != null && (pCompound.contains("SlimArms", Tag.TAG_BYTE));
-    }
-
     public Steve(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -207,7 +187,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             ListTag listTag = new ListTag();
             for (BlockPos pos : visitedSet) {
                 listTag.add(NbtUtils.writeBlockPos(pos));
-                LOGGER.debug("[YAH:R] [ENTITIES:{}][{}] added {} to CompoundTag Hey \"VisitedBlocks\"", this.getClass().getSimpleName(), this.getUUID(), pos);
+                LOGGER.debug("[YAH:R] [ENTITIES:{}][{}] added {} to CompoundTag Key \"VisitedBlocks\"", this.getClass().getSimpleName(), this.getUUID(), pos);
             }
             pCompound.put("VisitedBlocks", listTag);
         });

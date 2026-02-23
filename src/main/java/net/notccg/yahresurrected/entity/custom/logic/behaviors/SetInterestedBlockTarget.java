@@ -10,13 +10,14 @@ import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.pathfinder.Target;
+import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import org.slf4j.Logger;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -26,7 +27,17 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
     private final int repathInterval;
     private final boolean isEnabled;
 
-    private long nextSetTick = 0;
+    private long nextTick = 0;
+
+    private final Map<E, StuckState> stuckState = new WeakHashMap<>();
+    private static final int MAX_STUCK_TICKS = 60;
+    private static final double MIN_MOV_SQR = 0.01;
+    private static class StuckState {
+        Vec3 lastPos;
+        int stuckTicks;
+        long nextRepathTick;
+        BlockPos lastTarget;
+    }
 
     public SetInterestedBlockTarget(float speed, int arriveDistance, int repathInterval, boolean isEnabled) {
         this.speed = speed;
@@ -62,68 +73,173 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
     }
 
     @Override
+    protected boolean shouldKeepRunning(E entity) {
+        return isEnabled &&
+                (entity.getBrain().hasMemoryValue(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get())) &&
+                !(entity.getBrain().hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get()));
+    }
+
+    @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
-        if (gameTime < nextSetTick) return;
-        nextSetTick = gameTime + repathInterval;
+        nextTick = gameTime;
+    }
+
+    @Override
+    protected void tick(ServerLevel level, E entity, long gameTime) {
+        if (gameTime < nextTick) return;
+        nextTick = gameTime + repathInterval;
+
+        StuckState state = new StuckState();
+        state.lastPos = entity.position();
+        state.stuckTicks = 0;
+        state.nextRepathTick = gameTime;
+        state.lastTarget = null;
+        stuckState.put(entity, state);
 
         var brain = entity.getBrain();
-
-        MemoryModuleType<BlockPos> interestedType = ModMemoryTypes.INTERESTED_BLOCK_TARGET.get();
-
-        BlockPos target = brain.getMemory(interestedType).orElse(null);
+        BlockPos target = brain.getMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get()).orElse(null);
         if (target == null) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"target\" is null, return",
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"target\" null, return",
                     this.getClass().getSimpleName(), entity.getUUID());
             return;
         }
 
         BlockPos walkPos = getWalkablePos(level, target);
         if (walkPos == null) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"walkPos\" is null, return",
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"walkPos\" null, return",
                     this.getClass().getSimpleName(), entity.getUUID());
             return;
         }
 
         if (entity.blockPosition().closerThan(walkPos, arriveDistance)) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] arrived at {} and added {} -> VISITED_BLOCKS",
-                    this.getClass().getSimpleName(), entity.getUUID(), walkPos, target);
-
-            Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
-
-            visited.add(walkPos.immutable());
-            visited.add(target.immutable());
-
-
-            if (visited.size() > 1024) {
-                int excess = visited.size() - 1024;
-                var it = visited.iterator();
-                while (excess-- > 0 && it.hasNext()) {
-                    it.next();
-                    it.remove();
-                }
-            }
-
-            brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
-
-            brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
-            brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-            brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+            onArrive(entity, walkPos, target);
             return;
         }
 
-        System.out.println("[YAH:R STEVE-DEBUG] Steve set his walk target to " + walkPos);
-        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, 1));
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}",
-                this.getClass().getSimpleName(), entity.getUUID(), walkPos);
+        if (state.lastTarget == null || !state.lastTarget.equals(target)) {
+            state.lastTarget = target.immutable();
+            state.stuckTicks = 0;
+            state.lastPos = entity.position();
+        } else {
+            Vec3 currentPos = entity.position();
+            double movedSqr = currentPos.distanceToSqr(state.lastPos);
 
+            if (brain.hasMemoryValue(MemoryModuleType.WALK_TARGET) && (movedSqr < MIN_MOV_SQR)) {
+                state.stuckTicks++;
+            } else {
+                state.stuckTicks = 0;
+            }
+
+            state.lastPos = currentPos;
+
+            if (state.stuckTicks >= MAX_STUCK_TICKS) {
+                abandonTarget(entity, walkPos, target, "entity_stuck");
+                return;
+            }
+        }
+
+        if (gameTime >+ state.nextRepathTick) {
+            repath(level, entity, gameTime);
+        }
+    }
+
+    private void repath(ServerLevel level, E entity, long gameTime) {
+        var brain = entity.getBrain();
+        BlockPos target = brain.getMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get()).orElse(null);
+        if (target == null) return;
+
+        BlockPos walkPos =  getWalkablePos(level, target);
+
+        StuckState state = stuckState.get(entity);
+        if (state != null) state.nextRepathTick = gameTime + repathInterval;
+
+        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, speed, 1));
         brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkPos));
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}",
+
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET/LOOK_TARGET -> {}",
                 this.getClass().getSimpleName(), entity.getUUID(), walkPos);
+    }
+
+    private void onArrive(E entity, BlockPos walkPos, BlockPos target) {
+        var brain = entity.getBrain();
+
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] arrived at {} and added {} -> VISITED_BLOCKS",
+                this.getClass().getSimpleName(), entity.getUUID(), walkPos, target);
+
+        Set<BlockPos> visited = brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
+        visited.add(target.immutable());
+
+        if (visited.size() > 1024) {
+            int excess = visited.size() - 1024;
+            var it = visited.iterator();
+            while (excess-- > 0 && it.hasNext()) {
+                it.next();
+                it.remove();
+            }
+        }
+
+        brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
+
+        brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased INTERESTED_BLOCK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased WALK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased LOOK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+    }
+
+    private void abandonTarget(E entity, BlockPos walkPos, BlockPos target, String reason) {
+        var brain = entity.getBrain();
+
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] abondoning [TARGET: {}]|[WALKPOS: {}] [REASON:\"{}\"]",
+                this.getClass().getSimpleName(), entity.getUUID(), target, walkPos, reason);
+
+        Set<BlockPos> visited =  brain.getMemory(ModMemoryTypes.VISITED_BLOCKS.get()).orElseGet(HashSet::new);
+        visited.add(target.immutable());
+
+        if (visited.size() > 1024) {
+            int excess = visited.size() - 1024;
+            var it = visited.iterator();
+            while ((excess-- > 0) && it.hasNext()) {
+                it.next();
+                it.remove();
+            }
+        }
+
+        brain.setMemory(ModMemoryTypes.VISITED_BLOCKS.get(), new HashSet<>(visited));
+
+        brain.eraseMemory(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get());
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased INTERESTED_BLOCK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased WALK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased LOOK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        stuckState.remove(entity);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] removed StuckState",
+                this.getClass().getSimpleName(), entity.getUUID());
     }
 
     @Override
     protected void stop(E entity) {
         entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased LOOK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        stuckState.remove(entity);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] removed StuckState",
+                this.getClass().getSimpleName(), entity.getUUID());
+
         LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped",
                 this.getClass().getSimpleName(), entity.getUUID());
     }

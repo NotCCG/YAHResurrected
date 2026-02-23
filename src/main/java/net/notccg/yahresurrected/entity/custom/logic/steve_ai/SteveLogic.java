@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.ItemStack;
@@ -19,13 +20,12 @@ import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.notccg.yahresurrected.util.ModTags;
 import org.slf4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 public class SteveLogic {
     private static final Logger LOGGER = LogUtils.getLogger();
-
-    private static final Random RANDOM = new Random();
 
     private static final long fearHLTicks = 80L;
     private static final long curiosityHLTicks = 500L;
@@ -216,14 +216,26 @@ public class SteveLogic {
     }
 
     // Other Logic And Definitions
-    String[] STEVE_NAMES = {
+    public record SpecialSkin(boolean slim, ResourceLocation resourceLocation) {}
+
+    public static final String[] STEVE_NAMES = {
             "Player",
             "Steve",
             "SlenderKinGamer",
             "NotCCG",
+            "Zach",
             "daffy1234",
-            "VideoNations"
+            "VideoNations",
+            "Lunertic_",
+            "Armoured_Contempt",
+            "jschlatt",
+            "_TomSka_"
     };
+
+
+    public static String getRandomSteveName(RandomSource random) {
+        return STEVE_NAMES[random.nextInt(STEVE_NAMES.length)];
+    }
 
     public static final ResourceLocation[] STEVE_TEXTURES_NORMAL = new ResourceLocation[] {
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_0.png"),
@@ -232,18 +244,28 @@ public class SteveLogic {
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_3.png"),
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_4.png"),
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_5.png"),
-            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_6.png")
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_6.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/normal/steve_normal_7.png")
     };
 
     public static final ResourceLocation[] STEVE_TEXTURES_SLIM = new ResourceLocation[] {
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/slim/steve_slim_0.png"),
-            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/slim/steve_slim_1.png")
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/slim/steve_slim_1.png"),
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/slim/steve_slim_2.png")
     };
 
-    public String getSteveName() {
-        int index = RANDOM.nextInt(STEVE_NAMES.length);
-        return STEVE_NAMES[index];
-    }
+    public static final Map<String, SpecialSkin> SPECIAL_SKINS = Map.of(
+            "NotCCG", new SpecialSkin(true,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/notccg.png")),
+            "Zach", new SpecialSkin(true,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/zach.png")),
+            "Steve", new SpecialSkin(false,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/steve.png")),
+            "jschlatt", new SpecialSkin(false,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/schlatt.png")),
+            "_TomSka_", new SpecialSkin(false,
+                    new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "textures/entity/steve/special/tomska.png"))
+    );
 
     public static boolean isUnoccupiedBed(Level level, BlockPos pos) {
         BlockState pBlockstate = level.getBlockState(pos);

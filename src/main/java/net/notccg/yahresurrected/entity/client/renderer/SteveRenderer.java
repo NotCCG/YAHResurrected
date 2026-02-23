@@ -47,12 +47,15 @@ public class SteveRenderer extends HumanoidMobRenderer<Steve, PlayerModel<Steve>
 
     @Override
     public ResourceLocation getTextureLocation(Steve steve) {
-        ResourceLocation[] textureSet = steve.hasSlimArms() ? SteveLogic.STEVE_TEXTURES_SLIM : SteveLogic.STEVE_TEXTURES_NORMAL;
+        ResourceLocation forced = steve.getForcedTexture();
+        if (forced != null) return forced;
 
-        int textureVariant = steve.getTextureVariant();
-        if (textureVariant < 0 || textureVariant >= textureSet.length) {
-            textureVariant = 0;
-        }
-        return textureSet[textureVariant];
+        ResourceLocation[] textureSet = steve.hasSlimArms()
+                ? SteveLogic.STEVE_TEXTURES_SLIM
+                : SteveLogic.STEVE_TEXTURES_NORMAL;
+
+        int variant = steve.getTextureVariant();
+        if (variant < 0 || variant >= textureSet.length) variant = 0;
+        return textureSet[variant];
     }
 }

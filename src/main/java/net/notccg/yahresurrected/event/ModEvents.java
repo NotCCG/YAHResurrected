@@ -12,8 +12,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +24,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -31,6 +35,8 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.AbstractHunter;
+import net.notccg.yahresurrected.entity.custom.Hunter;
+import net.notccg.yahresurrected.entity.custom.Slayer;
 import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.item.ModItems;
@@ -144,12 +150,6 @@ public class ModEvents {
         @SubscribeEvent
         public static void onLivingDeath(LivingDeathEvent event) {
             Entity entity = event.getEntity();
-            if (entity instanceof Steve) {
-                if (event.getSource().getEntity() instanceof Player player) {
-                    player.sendSystemMessage(Component.literal(new SteveLogic().getSteveName() + " was slain by Herobrine"));
-                }
-            }
-
             if (!(entity instanceof ServerPlayer serverPlayer)) return;
             long until = serverPlayer.level().getGameTime() + 5L;
             serverPlayer.getPersistentData().putLong(DEATH_NAME_OVERRIDE, until);
@@ -184,6 +184,19 @@ public class ModEvents {
                 return;
             }
             event.setDisplayname(Component.literal("Herobrine"));
+        }
+
+        @SubscribeEvent
+        public static void onEntityJoin(EntityJoinLevelEvent event) {
+            if (!(event.getEntity() instanceof Mob mob)) return;
+            if (mob instanceof Enemy) {
+                mob.targetSelector.addGoal(2,
+                        new NearestAttackableTargetGoal<>(mob, Steve.class, true));
+                mob.targetSelector.addGoal(2,
+                        new NearestAttackableTargetGoal<>(mob, Hunter.class, true));
+                mob.targetSelector.addGoal(2,
+                        new NearestAttackableTargetGoal<>(mob, Slayer.class, true));
+            }
         }
     }
 

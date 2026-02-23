@@ -46,16 +46,18 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
         this.reassessWeaponGoal();
     }
 
-
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, true));
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(
+                this,
+                Monster.class,
+                true,
+                (living) -> (living != null) && (living.getClass() != Hunter.class) && (living.getClass() != Slayer.class)));
     }
-
-
 
     public static AttributeSupplier.Builder createAttribute() {
         return Monster.createMonsterAttributes()
