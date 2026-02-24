@@ -25,6 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.notccg.yahresurrected.item.ModItems;
+import net.notccg.yahresurrected.util.ModDebugUtils;
 import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -55,26 +56,32 @@ public class SpellBookFourItem extends Item {
         boolean shiftMode = serverPlayer.isShiftKeyDown();
         AimRay ray = getAimRay(serverPlayer);
 
-        LOGGER.debug("[YAH:R] [ITEM:{}] use() PARAMETERS:[shiftMode={}, player={}, origin={}, dir={}]",
-                this.getClass().getSimpleName(),
-                (shiftMode ? "ACTIVE" : "INACTIVE"),
-                serverPlayer.getGameProfile().getName(),
-                ray.origin(),
-                ray.direction());
+        ModDebugUtils.debugItem(this, "use()",
+                "shiftMode", shiftMode ? "ACTIVE" : "INACTIVE",
+                "player", serverPlayer.getGameProfile().getName(),
+                "origin", ray.origin(),
+                "dir", ray.direction());
 
         Optional<Vec3> destOpt = shiftMode
                 ? findPhaseTeleportPos(serverLevel, serverPlayer, ray, 32, 0.25, 3)
                 : findFarthestTeleportPosition(serverLevel, serverPlayer, ray, 32, 0.25);
 
         if (destOpt.isEmpty()) {
-            LOGGER.debug("[YAH:R] [ITEM:{}] NO VALID DESTINATION | PARAMETERS:[shiftMode={}, pos={}]",
-                    this.getClass().getSimpleName(),
-                    (shiftMode ? "ACTIVE" : "INACTIVE"),
-                    serverPlayer.position());
+            ModDebugUtils.debugItemFail(this, "use()", "NO VALID DESTINATION",
+                    "playerPos", serverPlayer.position());
             return InteractionResultHolder.fail(stack);
         }
 
         Vec3 dest = destOpt.get();
+
+        debugTeleportationValidation(this, serverLevel, dest, serverPlayer);
+
+        if (!isValidTeleportPos(serverLevel, dest, serverPlayer)) {
+            InteractionResultHolder.fail(stack);
+        }
+
+        serverPlayer.teleportTo(serverLevel, dest.x, dest.y, dest.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+        serverPlayer.fallDistance = 0.0F;
 
         return InteractionResultHolder.success(stack);
     }
@@ -275,5 +282,115 @@ public class SpellBookFourItem extends Item {
             }
         }
         return Optional.empty();
+    }
+
+    // Debug specific to this class
+
+    private static void debugTeleportationValidation(Item item,
+                                                     ServerLevel level,
+                                                     Vec3 candidatePos,
+                                                     ServerPlayer player) {
+        BlockPos candidateBlockPos = BlockPos.containing(candidatePos);
+
+        if (candidateBlockPos.getY() < level.getMinBuildHeight()) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos",
+                    "result", "FAIL",
+                    "reason", "below_minimum_build_limit",
+                    "candidatePos", candidatePos,
+                    "candidateBlockPos", candidateBlockPos,
+                    "minY", level.getMinBuildHeight());
+            return;
+        }
+        if ((candidateBlockPos.getY() + 1) >= level.getMaxBuildHeight()) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos",
+                    "result", "FAIL",
+                    "reason", "above_build_limit",
+                    "candidatePos", candidatePos,
+                    "candidateBlockPos", candidateBlockPos,
+                    "maxY", level.getMaxBuildHeight());
+        }
+        var moveBox = player.getBoundingBox().move(
+                candidatePos.x - player.getX(),
+                candidatePos.y - player.getY(),
+                candidatePos.z - player.getZ()
+        );
+
+        if (!level.noCollision(player, moveBox)) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos",
+                    "result", "FAIL",
+                    "reason", "above_build_limit",
+                    "candidatePos", candidatePos,
+                    "aabb", moveBox);
+            return;
+        }
+
+        var feetState = level.getBlockState(candidateBlockPos);
+        var headState = level.getBlockState(candidateBlockPos.above());
+
+        if (!feetState.getFluidState().isEmpty()) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos()",
+                    "result", "FAIL",
+                    "reason", "feet_in_fluid",
+                    "candidatePos", candidatePos,
+                    "feetBlock", candidateBlockPos,
+                    "feetState", feetState
+            );
+            return;
+        }
+
+        if (!headState.getFluidState().isEmpty()) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos()",
+                    "result", "FAIL",
+                    "reason", "head_in_fluid",
+                    "candidatePos", candidatePos,
+                    "headBlock", candidateBlockPos.above(),
+                    "headState", headState
+            );
+            return;
+        }
+
+        BlockPos below = candidateBlockPos.below();
+        var belowState = level.getBlockState(below);
+
+        if (belowState.is(ModTags.Blocks.INVALID_TELEPORT_BLOCKS)) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos()",
+                    "result", "FAIL",
+                    "reason", "ground_block_invalid (blacklisted_blocks)",
+                    "candidatePos", candidatePos,
+                    "belowBlock", below,
+                    "belowState", belowState);
+            return;
+        }
+
+        if (!belowState.getFluidState().isEmpty()) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos()",
+                    "result", "FAIL",
+                    "reason", "ground_block_invalid (fluid)",
+                    "candidatePos", candidatePos,
+                    "belowBlock", below,
+                    "belowState", belowState);
+            return;
+        }
+
+        if (!belowState.isFaceSturdy(level, below, Direction.UP)) {
+            ModDebugUtils.debugItem(item,
+                    "validateTeleportPos()",
+                    "result", "FAIL",
+                    "reason", "ground_block_invalid (not_solid)",
+                    "candidatePos", candidatePos,
+                    "belowBlock", below,
+                    "belowState", belowState);
+            return;
+        }
+        ModDebugUtils.debugItem(item, "validateTeleportPos()",
+                "result", "PASS",
+                "candidatePos", candidatePos);
     }
 }
