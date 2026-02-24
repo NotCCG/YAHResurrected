@@ -5,6 +5,7 @@ package net.notccg.yahresurrected.item.custom.spell_books;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,8 +64,8 @@ public class SpellBookFourItem extends Item {
                 "dir", ray.direction());
 
         Optional<Vec3> destOpt = shiftMode
-                ? findPhaseTeleportPos(serverLevel, serverPlayer, ray, 32, 0.25, 3)
-                : findFarthestTeleportPosition(serverLevel, serverPlayer, ray, 32, 0.25);
+                ? findPhaseTeleportPos(serverLevel, serverPlayer, ray)
+                : findFarthestTeleportPosition(serverLevel, serverPlayer, ray);
 
         if (destOpt.isEmpty()) {
             ModDebugUtils.debugItemFail(this, "use()", "NO VALID DESTINATION",
@@ -80,8 +81,24 @@ public class SpellBookFourItem extends Item {
             InteractionResultHolder.fail(stack);
         }
 
+        serverLevel.sendParticles(ParticleTypes.PORTAL,
+                serverPlayer.getX() + 0.5,
+                serverPlayer.getY() + 1.0,
+                serverPlayer.getZ() + 0.5,
+                20,
+                0.25D, 0.25D, 0.25D,
+                0.01D);
+
         serverPlayer.teleportTo(serverLevel, dest.x, dest.y, dest.z, serverPlayer.getYRot(), serverPlayer.getXRot());
         serverPlayer.fallDistance = 0.0F;
+
+        serverLevel.sendParticles(ParticleTypes.PORTAL,
+                dest.x + 0.5,
+                dest.y + 1.0,
+                dest.z + 0.5,
+                20,
+                0.25D, 0.25D, 0.25D,
+                0.01D);
 
         return InteractionResultHolder.success(stack);
     }
@@ -137,15 +154,13 @@ public class SpellBookFourItem extends Item {
 
     private static Optional<Vec3> findFarthestTeleportPosition(ServerLevel level,
                                                                ServerPlayer player,
-                                                               AimRay ray,
-                                                               double maxBlockDist,
-                                                               double stepBlocks) {
+                                                               AimRay ray) {
         Vec3 dir = ray.direction().normalize();
         Vec3 origin = ray.origin();
 
         Vec3 bestTeleportPos = null;
 
-        for (double d = 1.0; d <= maxBlockDist; d += stepBlocks) {
+        for (double d = 1.0; d <= (double) 32; d += 0.25) {
             Vec3 sampleEyePos = origin.add(dir.scale(d));
             Vec3 candidatePos = eyeSampleTeleportCandidate(player, sampleEyePos);
 
@@ -228,13 +243,10 @@ public class SpellBookFourItem extends Item {
 
     private static Optional<Vec3> findPhaseTeleportPos(ServerLevel level,
                                                        ServerPlayer player,
-                                                       AimRay aimRay,
-                                                       double maxBlockDist,
-                                                       double stepBlocks,
-                                                       double maxWallThickness) {
+                                                       AimRay aimRay) {
         Vec3 origin = aimRay.origin();
         Vec3 dir = aimRay.direction().normalize();
-        Vec3 end = origin.add(dir.scale(maxBlockDist));
+        Vec3 end = origin.add(dir.scale(32));
 
         BlockHitResult hit = level.clip(new ClipContext(
                 origin, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player
@@ -247,7 +259,7 @@ public class SpellBookFourItem extends Item {
         boolean insideWall = false;
         double wallEntryDist = hitDist;
 
-        for (double d = Math.max(1.0, hitDist - stepBlocks); d <= maxBlockDist; d += stepBlocks) {
+        for (double d = Math.max(1.0, hitDist - 0.25); d <= (double) 32; d += 0.25) {
             Vec3 sampleEyePos = origin.add(dir.scale(d));
             Vec3 approxFeetPos = eyeSampleTeleportCandidate(player, sampleEyePos);
 
@@ -262,14 +274,14 @@ public class SpellBookFourItem extends Item {
             }
 
             double thickness = d - wallEntryDist;
-            if (thickness > maxWallThickness) {
+            if (thickness > (double) 3) {
                 return Optional.empty();
             }
 
             if (!colliding) {
                 double maxBehindSearch = 2.0;
 
-                for (double d2 = d; d2 <= d + maxBehindSearch; d2 += stepBlocks) {
+                for (double d2 = d; d2 <= d + maxBehindSearch; d2 += 0.25) {
                     Vec3 sampleEyePos2 = origin.add(dir.scale(d2));
                     Vec3 approxFeetPos2 = eyeSampleTeleportCandidate(player, sampleEyePos2);
 
