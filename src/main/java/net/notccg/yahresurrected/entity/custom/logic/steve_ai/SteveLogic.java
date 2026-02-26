@@ -232,7 +232,8 @@ public class SteveLogic {
             "jschlatt",
             "_TomSka_",
             "MelficeSilesius",
-            "PatTheTurtler"
+            "PatTheTurtler",
+            "NOOBonboPRO"
     };
 
 
