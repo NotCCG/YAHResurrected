@@ -8,13 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.Brain;
-import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.minecraft.world.entity.ai.util.DefaultRandomPos;
-import net.minecraft.world.phys.Vec3;
-import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
@@ -24,22 +19,23 @@ import java.util.List;
 
 public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private final float baseInvestigateSpeed;
-    private final int arriveDistance;
-    private final int repathInterval;
 
     private final boolean isEnabled;
 
-    private long nextTick = 0;
-    private final int fleeVertical = 8;
-    private final int fleeHorizontal = 24;
+    private static final long MAX_SOUND_AGE = 180;
+    private static final double CLOSE_ENOUGH = 2;
+    private static final int FLEE_HORIZONTAL = 16;
 
-    private long lastProcessedSoundTime = Long.MIN_VALUE;
+    private static final float INVESTIGATE_SPEED = 1.0f;
+    private static final float CAUTIOUS_SPEED = 0.75f;
+    private static final float FLEE_SPEED = 1.25f;
 
-    public ReactToSoundBehaviour(int arriveDistance, int repathInterval, float investigateSpeed, boolean isEnabled) {
-        this.baseInvestigateSpeed = investigateSpeed;
-        this.arriveDistance = arriveDistance;
-        this.repathInterval = repathInterval;
+    private enum InvestigateMode {FLEE, CAUTIOUSLY_INVESTIGATE, INVESTIGATE}
+
+    private InvestigateMode investigateMode = InvestigateMode.INVESTIGATE;
+    private BlockPos soundPos = null;
+
+    public ReactToSoundBehaviour(boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
 
@@ -57,7 +53,7 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
-                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
                 Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.HEARD_SOUND_POS.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.LAST_HEARD_TIME.get(), MemoryStatus.VALUE_PRESENT),
@@ -70,68 +66,13 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
     }
 
     @Override
+    protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
+        return isEnabled;
+    }
+
+    @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
-        nextTick = 0;
-
-        if (gameTime < nextTick) return;
-
-        nextTick = gameTime + repathInterval;
-
-        var brain = entity.getBrain();
-
-        Long heardTime = brain.getMemory(ModMemoryTypes.LAST_HEARD_TIME.get()).orElse(null);
-        Vec3 heardPos = brain.getMemory(ModMemoryTypes.HEARD_SOUND_POS.get()).orElse(null);
-
-        // A catch for any wackiness
-        if (heardTime == null || heardPos == null)
-            return;
-
-        if (heardTime > lastProcessedSoundTime) {
-            lastProcessedSoundTime = heardTime;
-            entity.setPose(Pose.STANDING);
-            BlockPos targetPos = BlockPos.containing(heardPos);
-
-            HeardSoundType heardSoundType = brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).orElse(null);
-            if (heardSoundType != null) {
-                if (heardSoundType == HeardSoundType.CONTAINER_OPEN || heardSoundType == HeardSoundType.CONTAINER_CLOSE) {
-                    SteveLogic.addCuriosity(brain, gameTime, 0.1f);
-                }
-                if (heardSoundType == HeardSoundType.FOOTSTEPS) {
-                    SteveLogic.addCuriosity(brain, gameTime, 0.25f);
-                    SteveLogic.addFear(brain, gameTime, .1f);
-                }
-                if (heardSoundType == HeardSoundType.BLOCK_PLACE || heardSoundType == HeardSoundType.BLOCK_BREAK) {
-                    SteveLogic.addCuriosity(brain, gameTime, 0.1f);
-                    SteveLogic.addFear(brain, gameTime, .01f);
-                }
-            };
-
-            if (shouldFlee(brain, gameTime)) {
-                float fleeSpeed = baseInvestigateSpeed * 1.3f;
-                Vec3 fleePos = DefaultRandomPos.getPosAway(
-                        entity,
-                        fleeHorizontal,
-                        fleeVertical,
-                        heardPos
-                );
-                if (fleePos == null) return;
-                BlockPos fleeLookPos = BlockPos.containing(fleePos).above();
-                brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(fleePos, fleeSpeed, arriveDistance));
-                brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(fleeLookPos));
-            } else {
-                BlockPos lookPos = targetPos.above();
-
-                float investigateSpeed = baseInvestigateSpeed;
-
-                if (shouldCautiouslyInvestigate(brain, gameTime)) {
-                    entity.setPose(Pose.CROUCHING);
-                    investigateSpeed = baseInvestigateSpeed * 1.3f;
-                }
-                brain.setMemory(ModMemoryTypes.INVESTIGATE_TARGET.get(), targetPos);
-                brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, investigateSpeed, arriveDistance));
-                brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(lookPos));
-            }
-        }
+        super.start(level, entity, gameTime);
     }
 
     @Override
