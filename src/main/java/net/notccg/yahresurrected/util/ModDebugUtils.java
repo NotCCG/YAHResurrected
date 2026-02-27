@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.util;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.item.Item;
 import org.slf4j.Logger;
 
