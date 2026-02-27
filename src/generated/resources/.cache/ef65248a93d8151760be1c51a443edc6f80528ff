@@ -1,4 +1,4 @@
-// 1.20.1	2026-02-20T13:52:08.6030468	Tags for minecraft:block mod id youareherobrineresurrected
+// 1.20.1	2026-02-27T14:08:30.8780138	Tags for minecraft:block mod id youareherobrineresurrected
 acf6af7d0c69c144e328df520f56d394b24313ae data/minecraft/tags/blocks/mineable/pickaxe.json
 5528511fdf74589ebd8e3064c03924ba5ba83f3f data/minecraft/tags/blocks/needs_diamond_tool.json
 81309296dd3bfeb3f3b86c48916a821403dcd1fb data/minecraft/tags/blocks/needs_iron_tool.json
@@ -6,6 +6,7 @@ acf6af7d0c69c144e328df520f56d394b24313ae data/minecraft/tags/blocks/mineable/pic
 8a4489bc43b38dc0a7b5bd174f5f20d5efd4a205 data/youareherobrineresurrected/tags/blocks/container_block.json
 669aa80a572454a1d6c6cc6fa05489f9b0e57984 data/youareherobrineresurrected/tags/blocks/herobrine_telltale_signs.json
 c52f2715360124953b184c2f90c87dc2a20aa5e4 data/youareherobrineresurrected/tags/blocks/illegal_block_items.json
+910a8c5ddca198c33c5b3799634465280301b020 data/youareherobrineresurrected/tags/blocks/invalid_teleport_blocks.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/youareherobrineresurrected/tags/blocks/needs_bedrock_tool.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/youareherobrineresurrected/tags/blocks/needs_evil_diamond_tool.json
 32bf835865dacbd80851b85345dd36bcf8f9a1d8 data/youareherobrineresurrected/tags/blocks/strange_blocks.json

@@ -76,6 +76,11 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
     }
 
     @Override
+    protected void tick(ServerLevel level, E entity, long gameTime) {
+        super.tick(level, entity, gameTime);
+    }
+
+    @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
         Brain<?> brain = entity.getBrain();
         entity.setPose(Pose.STANDING);

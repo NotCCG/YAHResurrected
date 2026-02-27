@@ -1,6 +1,8 @@
-// 1.20.1	2026-02-20T15:25:21.0715485	Registries
+// 1.20.1	2026-02-27T14:08:30.8814938	Registries
 8d92fd2908090c5b6c9b193d4b5bbf89f3b1c20f data/youareherobrineresurrected/forge/biome_modifier/add_ice_ruby_ore.json
 a0feec63bf2f86f3b959322066ba277c1492fafb data/youareherobrineresurrected/forge/biome_modifier/add_invisible_ore.json
+b395023d4079e8d78beaba5fbaea412670616e2f data/youareherobrineresurrected/forge/biome_modifier/spawn_hunter.json
+b4fb0b1bcb1c2cfba472316b63c3965690588463 data/youareherobrineresurrected/forge/biome_modifier/spawn_slayer.json
 841a47c3f87b1b470850c8b932c43781495a99ec data/youareherobrineresurrected/worldgen/configured_feature/ice_ruby_ore.json
 5e118d3ef5ff112669d2e1dc8e77fa1a5fe45d80 data/youareherobrineresurrected/worldgen/configured_feature/invisible_ore.json
 67df50b618dcfc8d5a99cf5db912421393286288 data/youareherobrineresurrected/worldgen/placed_feature/ice_ruby_ore_placed.json
