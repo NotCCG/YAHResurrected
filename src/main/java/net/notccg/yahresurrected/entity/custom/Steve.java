@@ -165,7 +165,6 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                         new LookAtHitFromDirection<>(ModConfigServer.STEVE_LOOK_AT_HIT_DIRECTION.get()),
                         new RunFromCreepers<>(10, ModConfigServer.STEVE_RUNS_FROM_CREEPERS.get()),
                         new SetInterestedBlockTarget<>(1.0f, 3, 20, ModConfigServer.STEVE_BLOCK_INVESTIGATION.get()),
-                        // new FleeOrInvestigateSoundBehaviour<>(2, 20, 1),
                         new PickupInterestedItem<>(20, 1.0f, ModConfigServer.STEVE_PICKS_UP_WANTED_ITEMS.get()),
                         new GoToSleepBehaviour<>(1, ModConfigServer.STEVE_INSOMNIA.get())
                 ),

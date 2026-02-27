@@ -101,11 +101,11 @@ public class ModEvents {
             if (!level.isDay()) return;
             if (level.dimension() != Level.OVERWORLD) return;
             if (level.isRaining() || level.isThundering()) return;
-            if (player.isOnFire() || hasSpellBookII(player) || player.isCreative()) return;
+            if (player.isOnFire() || hasSpellBookII(player) || player.isCreative() || player.isSpectator()) return;
             if (!level.canSeeSky(player.blockPosition())) return;
             player.setSecondsOnFire(3);
-            LOGGER.debug("[YAH:R [onPlayerTick][{}] Setting player on fire | Conditions: isDay[{}], isOnFire[{}], hasSpellBookII[{}], isCreative[{}], canSeeSky[{}]",
-                    player.getUUID(), level.isDay(), player.isOnFire(), hasSpellBookII(player), player.isCreative(), level.canSeeSky(player.blockPosition()));
+            LOGGER.debug("[YAH:R [onPlayerTick][{}] Setting player on fire | Conditions: isDay[{}], isOnFire[{}], hasSpellBookII[{}], isCreative[{}], isSpectator[{}], canSeeSky[{}]",
+                    player.getUUID(), level.isDay(), player.isOnFire(), hasSpellBookII(player), player.isCreative(), player.isSpectator(), level.canSeeSky(player.blockPosition()));
             if (player instanceof ServerPlayer sp) {
                 ResourceLocation id = new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "sunburn"); // advancement id
                 Advancement adv = sp.server.getAdvancements().getAdvancement(id);
