@@ -1,12 +1,9 @@
 package net.notccg.yahresurrected.util;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.item.Item;
 import org.slf4j.Logger;
-
-import java.util.UUID;
 
 public class ModDebugUtils {
     private static final Logger LOGGER = LogUtils.getLogger();
