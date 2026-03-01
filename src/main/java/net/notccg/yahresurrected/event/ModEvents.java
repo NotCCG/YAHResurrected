@@ -188,7 +188,7 @@ public class ModEvents {
         @SubscribeEvent
         public static void onEntityJoin(EntityJoinLevelEvent event) {
             if (!(event.getEntity() instanceof Mob mob)) return;
-            if (mob instanceof Enemy) {
+            if ((mob instanceof Enemy) && !(mob instanceof AbstractHunter)) {
                 mob.targetSelector.addGoal(2,
                         new NearestAttackableTargetGoal<>(mob, Steve.class, true));
                 mob.targetSelector.addGoal(2,

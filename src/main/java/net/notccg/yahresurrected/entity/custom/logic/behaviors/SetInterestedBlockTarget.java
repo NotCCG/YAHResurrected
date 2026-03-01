@@ -138,7 +138,7 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
             }
         }
 
-        if (gameTime >+ state.nextRepathTick) {
+        if (gameTime >= state.nextRepathTick) {
             repath(level, entity, gameTime);
         }
     }

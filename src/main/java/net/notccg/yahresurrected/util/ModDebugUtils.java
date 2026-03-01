@@ -1,8 +1,12 @@
 package net.notccg.yahresurrected.util;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.item.Item;
 import org.slf4j.Logger;
+
+import java.util.UUID;
 
 public class ModDebugUtils {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -49,4 +53,33 @@ public class ModDebugUtils {
         }
         debugItem(pItem, pContext, withReason);
     }
+
+    public static void debugBehaviour(Behavior<?> pBehavior, String pContext, Object... kvPairs) {
+        String clazz = pBehavior.getClass().getSimpleName();
+
+        StringBuilder paramsFmt = new StringBuilder();
+        int pairCount = (kvPairs == null) ? 0 : kvPairs.length;
+
+        if (pairCount % 2 != 0) pairCount -= 1;
+        int numPairs = pairCount / 2;
+
+        for (int i = 0; i < numPairs; i++) {
+            if (i > 0) paramsFmt.append(' ');
+            Object keyObj = kvPairs[i * 2];
+            String key = (keyObj == null) ? "null" : keyObj.toString();
+            paramsFmt.append(key).append("={}");
+        }
+
+        String msg = (numPairs == 0)
+                ? ("YAH:R [BEHAVIOUR:{}][{}] " + pContext)
+                : ("YAH:R [BEHAVIOUR:{}] " + pContext + " | PARAMETERS:[" + paramsFmt + "]");
+
+        Object[] args = new Object[numPairs + 1];
+        args[0] = clazz;
+        for (int i = 0; i < numPairs; i++) {
+            args[i + 1] = kvPairs[i * 2 + 1];
+        }
+        LOGGER.debug(msg, args);
+    }
+
 }
