@@ -85,7 +85,7 @@ public class SteveLogic {
         return getFear(brain, gameTime) >= 1.0 && getFear(brain, gameTime) < 1.5;
     }
     public static boolean isScared(Brain<?> brain, long gameTime) {
-        return getFear(brain, gameTime) >= 1.5 && getFear(brain, gameTime) < 2.0;
+        return (getFear(brain, gameTime) >= 1.5) && (getFear(brain, gameTime) < 2.0);
     }
     public static boolean isTerrified(Brain<?> brain, long gameTime) {
         return getFear(brain, gameTime) >= 2.0;
@@ -118,7 +118,7 @@ public class SteveLogic {
     // Paranoia Logic
     public static double getParanoia(Brain<?> brain, long gameTime) {
         double anchor = getDoubleMemory(brain, ModMemoryTypes.PARANOIA_ANCHOR.get());
-        long changedAt= getLongMemory(brain, ModMemoryTypes.PARANOIA_CHANGE.get());
+        long changedAt = getLongMemory(brain, ModMemoryTypes.PARANOIA_CHANGE.get());
 
         return emotionalDecay(anchor, paranoiaBaseline, gameTime - changedAt, paranoiaHLTicks);
     }
@@ -141,19 +141,12 @@ public class SteveLogic {
 
 
     public static boolean isParanoid(Brain<?> brain, long gameTime) {
-        return getParanoia(brain, gameTime) >= 0.5 && getParanoia(brain, gameTime) < 0.75;
+        return (getParanoia(brain, gameTime) >= 1.0) && (getParanoia(brain, gameTime) < 1.5);
     }
 
     public static boolean isVeryParanoid(Brain<?> brain, long gameTime) {
-        return getParanoia(brain, gameTime) >= 0.75;
+        return getParanoia(brain, gameTime) >= 1.5;
     }
-
-    // Mixed Emotion Logic
-
-    public static boolean isCautious(Brain<?> brain, long gameTime) {
-        return  getFear(brain, gameTime) > 0.0 && getCuriosity(brain, gameTime) > 0.0;
-    }
-
 
     // Interests Logic
     public static List<Block> INTERESTED_BLOCKS = ObjectArrayList.of(

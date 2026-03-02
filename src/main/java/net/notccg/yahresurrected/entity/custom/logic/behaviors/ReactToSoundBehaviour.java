@@ -10,6 +10,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.phys.Vec3;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrInvestigate;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
@@ -30,31 +32,20 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
     private static final float CAUTIOUS_SPEED = 0.75f;
     private static final float FLEE_SPEED = 1.25f;
 
-    private enum InvestigateMode {FLEE, CAUTIOUSLY_INVESTIGATE, INVESTIGATE}
-
-    private InvestigateMode investigateMode = InvestigateMode.INVESTIGATE;
+    private FleeOrInvestigate fleeOrInvestigate = FleeOrInvestigate.NONE;
     private BlockPos soundPos = null;
 
     public ReactToSoundBehaviour(boolean isEnabled) {
         this.isEnabled = isEnabled;
     }
 
-    private static boolean shouldFlee(Brain<?> brain, long gameTime) {
-        return SteveLogic.isTerrified(brain, gameTime) ||
-                SteveLogic.isParanoid(brain, gameTime) ||
-                SteveLogic.isVeryParanoid(brain, gameTime) ||
-                brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
-    };
-
-    private static boolean shouldCautiouslyInvestigate(Brain<?> brain, long gameTime) {
-        return SteveLogic.isCautious(brain, gameTime);
-    };
-
     @Override
     protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
         return ObjectArrayList.of(
                 Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT),
+                Pair.of(ModMemoryTypes.PLAYER_HURT.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.REGISTERED),
+                Pair.of(ModMemoryTypes.FLEE_OR_INVESTIGATE.get(), MemoryStatus.REGISTERED),
                 Pair.of(ModMemoryTypes.HEARD_SOUND_POS.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.LAST_HEARD_TIME.get(), MemoryStatus.VALUE_PRESENT),
                 Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
@@ -65,6 +56,31 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
         );
     }
 
+    private static boolean shouldFlee(Brain<?> brain, long gameTime) {
+        return SteveLogic.isTerrified(brain, gameTime) ||
+                SteveLogic.isVeryParanoid(brain, gameTime) ||
+                brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
+    };
+
+    private static boolean isMostlyCurious(Brain<?> brain, long gameTime) {
+        double curiosity = SteveLogic.getCuriosity(brain, gameTime);
+        double fear = SteveLogic.getFear(brain, gameTime);
+        double paranoia = SteveLogic.getParanoia(brain, gameTime);
+
+        return true;
+    }
+
+    private static boolean shouldCautiouslyInvestigate(Brain<?> brain, long gameTime) {
+        if (shouldFlee(brain, gameTime)) return false;
+        double curiosity = SteveLogic.getCuriosity(brain, gameTime);
+        double fear = SteveLogic.getFear(brain, gameTime);
+        double paranoia = SteveLogic.getParanoia(brain, gameTime);
+
+        boolean moreCuriousThanFear = curiosity > fear;
+        boolean moreParanoidThanCurious = paranoia > curiosity;
+        return true;
+    };
+
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
         return isEnabled;
@@ -72,7 +88,18 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
 
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
-        super.start(level, entity, gameTime);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] start()",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        var brain = entity.getBrain();
+
+        Vec3 heardPos = brain.getMemory(ModMemoryTypes.HEARD_SOUND_POS.get()).orElse(null);
+        Vec3 lastHeardPos = brain.getMemory(ModMemoryTypes.LAST_HEARD_POS.get()).orElse(null);
+        if ((heardPos == null) && (lastHeardPos == null)) return;
+        if (heardPos == null) heardPos = lastHeardPos;
+        if (lastHeardPos == null) lastHeardPos = heardPos;
+
+
     }
 
     @Override

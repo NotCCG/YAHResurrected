@@ -240,10 +240,15 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected void stop(E entity) {
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped",
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stop()",
                 this.getClass().getSimpleName(), entity.getUUID());
 
         entity.setShiftKeyDown(false);
         entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased LOOK_TARGET",
+                this.getClass().getSimpleName(), entity.getUUID());
+        entity.getBrain().eraseMemory(ModMemoryTypes.LOOK_BACK_UNTIL.get());
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased LOOK_BACK_UNTIL",
+                this.getClass().getSimpleName(), entity.getUUID());
     }
 }

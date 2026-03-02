@@ -12,6 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrInvestigate;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 
 import java.util.List;
@@ -136,6 +137,10 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<Vec3>> LAST_HEARD_POS =
+            MEMORY_MODULE_TYPES.register("last_heard_pos",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
     public static final RegistryObject<MemoryModuleType<Long>> LAST_HEARD_TIME =
             MEMORY_MODULE_TYPES.register("last_heard_time",
                     () -> new MemoryModuleType<>(Optional.empty())
@@ -193,5 +198,9 @@ public class ModMemoryTypes {
 
     public static final RegistryObject<MemoryModuleType<Long>> LOOK_BACK_UNTIL =
             MEMORY_MODULE_TYPES.register("look_back_until",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
+    public static final RegistryObject<MemoryModuleType<FleeOrInvestigate>> FLEE_OR_INVESTIGATE =
+            MEMORY_MODULE_TYPES.register("flee_or_investigate",
                     () -> new MemoryModuleType<>(Optional.empty()));
 }

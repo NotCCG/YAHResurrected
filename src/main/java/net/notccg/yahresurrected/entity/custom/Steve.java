@@ -16,9 +16,12 @@ import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
 import net.notccg.yahresurrected.entity.custom.logic.sensors.*;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrInvestigate;
+import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModConfigServer;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
@@ -198,8 +201,35 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             pCompound.put("InventoryItems", listTag);
         });
 
+        brain.getMemory(ModMemoryTypes.HEARD_SOUND_POS.get()).ifPresent(heardSoundPos -> {
+            CompoundTag posTag = new CompoundTag();
+            posTag.putDouble("PosX", heardSoundPos.x);
+            posTag.putDouble("PosY", heardSoundPos.y);
+            posTag.putDouble("PosZ", heardSoundPos.z);
+
+            pCompound.put("HeardSoundPos", posTag);
+        });
+
+        brain.getMemory(ModMemoryTypes.LAST_HEARD_POS.get()).ifPresent(lastHeardPos ->{
+            CompoundTag posTag = new CompoundTag();
+            posTag.putDouble("PosX", lastHeardPos.x);
+            posTag.putDouble("PosY", lastHeardPos.y);
+            posTag.putDouble("PosZ", lastHeardPos.z);
+
+            pCompound.put("LastHeardPos", posTag);
+        });
+
+
         brain.getMemory(ModMemoryTypes.FLEE_OR_APPROACH.get()).ifPresent(state -> {
             pCompound.putString("FlightFightOrFreeze", state.name());
+        });
+
+        brain.getMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get()).ifPresent(type -> {
+            pCompound.putString("HeardSoundType", type.name());
+        });
+
+        brain.getMemory(ModMemoryTypes.FLEE_OR_INVESTIGATE.get()).ifPresent(state -> {
+            pCompound.putString("FleeOrInvestigate", state.name());
         });
 
         brain.getMemory(ModMemoryTypes.LAST_PLAYER_SEEN.get()).ifPresent(uuid -> pCompound.putUUID("RememberUUID", uuid));
@@ -241,64 +271,105 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
             this.getBrain().setMemory(ModMemoryTypes.INVENTORY_ITEMS.get(), inventory);
         }
 
+        if (pCompound.contains("HeardSoundPos", Tag.TAG_COMPOUND)) {
+            CompoundTag posTag = pCompound.getCompound("HeardSoundPos");
+            Vec3 pos = new Vec3(
+                    posTag.getDouble("PosX"),
+                    posTag.getDouble("Posy"),
+                    posTag.getDouble("PosZ")
+            );
+            brain.setMemory(ModMemoryTypes.HEARD_SOUND_POS.get(), pos);
+        }
+
+        if (pCompound.contains("LastHeardPos", Tag.TAG_COMPOUND)) {
+            CompoundTag posTag = pCompound.getCompound("LastHeardPos");
+            Vec3 pos = new Vec3(
+                    posTag.getDouble("PosX"),
+                    posTag.getDouble("PosY"),
+                    posTag.getDouble("PosZ")
+            );
+            brain.setMemory(ModMemoryTypes.LAST_HEARD_POS.get(), pos);
+        }
+
         if (pCompound.contains("FearLevel", Tag.TAG_DOUBLE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"FearLevel\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.FEAR_LEVEL.get(), pCompound.getDouble("FearLevel"));
         }
         if (pCompound.contains("FearAnchor", Tag.TAG_DOUBLE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"FearAnchor\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.FEAR_ANCHOR.get(), pCompound.getDouble("FearAnchor"));
         }
         if (pCompound.contains("FearChange", Tag.TAG_LONG)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"FearChange\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.FEAR_CHANGE.get(), pCompound.getLong("FearChange"));
         }
 
         if (pCompound.contains("CuriosityLevel", Tag.TAG_DOUBLE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"CuriosityLevel\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.CURIOSITY_LEVEL.get(), pCompound.getDouble("CuriosityLevel"));
         }
         if (pCompound.contains("CuriosityAnchor", Tag.TAG_DOUBLE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"CuriosityAnchor\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.CURIOSITY_ANCHOR.get(), pCompound.getDouble("CuriosityAnchor"));
         }
         if (pCompound.contains("CuriosityChange", Tag.TAG_LONG)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"CuriosityChange\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.CURIOSITY_CHANGE.get(), pCompound.getLong("CuriosityChange"));
         }
 
         if (pCompound.contains("ParanoiaLevel", Tag.TAG_DOUBLE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"ParanoiaLevel\" present, reading", this.getClass().getSimpleName(), this.getUUID());
+
             brain.setMemory(ModMemoryTypes.PARANOIA_LEVEL.get(), pCompound.getDouble("ParanoiaLevel"));
         }
         if (pCompound.contains("ParanoiaAnchor", Tag.TAG_DOUBLE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"ParanoiaAnchor\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.PARANOIA_ANCHOR.get(), pCompound.getDouble("ParanoiaAnchor"));
         }
         if (pCompound.contains("ParanoiaChange", Tag.TAG_LONG)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"ParanoiaChange\" present, reading", this.getClass().getSimpleName(), this.getUUID());
+            LOGGER.debug("[YAH:R] [ENTITIES:{}][{}] CompoundTag: \"ParanoiaChange\" present, reading",
+                    this.getClass().getSimpleName(), this.getUUID());
             brain.setMemory(ModMemoryTypes.PARANOIA_CHANGE.get(), pCompound.getLong("ParanoiaChange"));
         }
 
         if (pCompound.contains("PlayerIsSpotted", Tag.TAG_BYTE)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"PlayerSpotted\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemoryWithExpiry(ModMemoryTypes.PLAYER_IS_SPOTTED.get(), true, 1200L);
         }
 
         if (pCompound.contains("RememberUUID", Tag.TAG_INT_ARRAY)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"RememberUUID\" present, reading", this.getClass().getSimpleName(), this.getUUID());
             brain.setMemoryWithExpiry(ModMemoryTypes.LAST_PLAYER_SEEN.get(), pCompound.getUUID("RememberUUID"), 200L);
         }
 
         if (pCompound.contains("FlightFightOrFreeze", Tag.TAG_STRING)) {
-            LOGGER.debug("[YAG:R] [ENTITIES:{}][{}] CompoundTag: \"FlightFlightOrFreeze\" present, reading", this.getClass().getSimpleName(), this.getUUID());
+            LOGGER.debug("[YAH:R] [ENTITIES:{}][{}] CompoundTag: \"FlightFlightOrFreeze\" present, reading",
+                    this.getClass().getSimpleName(), this.getUUID());
             String name = pCompound.getString("FlightFightOrFreeze");
             try {
                 FleeOrApproach state = FleeOrApproach.valueOf(name);
                 brain.setMemory(ModMemoryTypes.FLEE_OR_APPROACH.get(), state);
             } catch (IllegalArgumentException e) {
-                LOGGER.warn("Invalid FleeOrApproach type '{}' - Setting FleeOrApproach to  FREEZE for '{}'", name, this.getUUID());
+                LOGGER.warn("[YAH:R][ENTITIES:{}][{}] Invalid FleeOrApproach type \"{}\" Setting FLEE_OR_APPROACH -> FleeOrApproach.NONE",
+                        this.getClass().getSimpleName(), this.getUUID(), name);
                 brain.setMemory(ModMemoryTypes.FLEE_OR_APPROACH.get(), FleeOrApproach.FREEZE);
+            }
+        }
+
+        if (pCompound.contains("HeardSoundType", Tag.TAG_STRING)) {
+            LOGGER.debug("[YAH:R][ENTITIES:{}][{}] CompoundTag: \"HeardSoundType\" present, reading",
+                    this.getClass().getSimpleName(), this.getUUID());
+            String name = pCompound.getString("HeardSoundType");
+            try {
+                HeardSoundType type = HeardSoundType.valueOf(name);
+                brain.setMemory(ModMemoryTypes.HEARD_SOUND_TYPE.get(), type);
+            } catch (IllegalArgumentException e) {
+                LOGGER.warn("[YAH:R][ENTITIES:{}] Invalid HeardSoundType \"{}\", resetting sound memories for \"{}\"",
+                        this.getClass().getSimpleName(), name, this.getUUID());
+            }
+        }
+
+        if (pCompound.contains("FleeOrInvestigate", Tag.TAG_STRING)) {
+            LOGGER.debug("[YAH:R][ENTITIES:{}][{}] CompoundTag \"FleeOrInvestigate\" present, reading",
+                    this.getClass().getSimpleName(), this.getUUID());
+            String name = pCompound.getString("FleeOrInvestigate");
+            try {
+                FleeOrInvestigate state = FleeOrInvestigate.valueOf(name);
+                brain.setMemory(ModMemoryTypes.FLEE_OR_INVESTIGATE.get(), state);
+            } catch (IllegalArgumentException e) {
+                LOGGER.warn("[YAH:R][ENTITIES:{}][{}] Invalid FleeOrInvestigate, setting FLEE_OR_INVESTIGATE -> FleeOrInvestigate.NONE",
+                        this.getClass().getSimpleName(), this.getUUID());
+                brain.setMemory(ModMemoryTypes.FLEE_OR_INVESTIGATE.get(), FleeOrInvestigate.NONE);
             }
         }
     }
