@@ -62,23 +62,16 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
                 brain.hasMemoryValue(ModMemoryTypes.PLAYER_HURT.get());
     };
 
-    private static boolean isMostlyCurious(Brain<?> brain, long gameTime) {
-        double curiosity = SteveLogic.getCuriosity(brain, gameTime);
-        double fear = SteveLogic.getFear(brain, gameTime);
-        double paranoia = SteveLogic.getParanoia(brain, gameTime);
-
-        return true;
-    }
-
     private static boolean shouldCautiouslyInvestigate(Brain<?> brain, long gameTime) {
         if (shouldFlee(brain, gameTime)) return false;
         double curiosity = SteveLogic.getCuriosity(brain, gameTime);
         double fear = SteveLogic.getFear(brain, gameTime);
         double paranoia = SteveLogic.getParanoia(brain, gameTime);
-
-        boolean moreCuriousThanFear = curiosity > fear;
-        boolean moreParanoidThanCurious = paranoia > curiosity;
-        return true;
+        double paraFearAvg = (fear + paranoia) / 2;
+        if (curiosity > paraFearAvg) {
+            return true;
+        } else
+            return (SteveLogic.isUneasy(brain, gameTime) && (curiosity > 1.0));
     };
 
     @Override
@@ -99,7 +92,9 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
         if (heardPos == null) heardPos = lastHeardPos;
         if (lastHeardPos == null) lastHeardPos = heardPos;
 
-
+        double fear = SteveLogic.getFear(brain, gameTime);
+        double curiosity = SteveLogic.getCuriosity(brain, gameTime);
+        double paranoia = SteveLogic.getParanoia(brain, gameTime);
     }
 
     @Override
