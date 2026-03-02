@@ -25,7 +25,10 @@ public class HunterRenderer extends HumanoidMobRenderer<AbstractHunter, HunterMo
 
     public HunterRenderer(EntityRendererProvider.Context pContext, ModelLayerLocation hunterMain, ModelLayerLocation hunterInner, ModelLayerLocation hunterOuter) {
         super(pContext, new HunterModel<>(pContext.bakeLayer(hunterMain)), 0.5f);
-        this.addLayer(new HumanoidArmorLayer<>(this, new HunterModel<>(pContext.bakeLayer(hunterInner)), new HunterModel<>(pContext.bakeLayer(hunterOuter)), pContext.getModelManager()));
+        this.addLayer(new HumanoidArmorLayer<>(this,
+                new HunterModel<>(pContext.bakeLayer(hunterInner)),
+                new HunterModel<>(pContext.bakeLayer(hunterOuter)),
+                pContext.getModelManager()));
         this.addLayer(new HumanoidArmorLayer<>(this,
                 new HumanoidModel<>(pContext.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
                 new HumanoidModel<>(pContext.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)),

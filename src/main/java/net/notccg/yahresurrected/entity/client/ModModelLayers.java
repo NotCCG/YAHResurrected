@@ -20,4 +20,12 @@ public class ModModelLayers {
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "slayer_inner_layer"), "inner");
     public static final ModelLayerLocation SLAYER_OUTER = new ModelLayerLocation(
             new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "slayer_outer_layer"), "outer");
+
+    // Jeb
+    public static final ModelLayerLocation JEB_MAIN = new ModelLayerLocation(
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "jeb_main_layer"), "main");
+    public static final ModelLayerLocation JEB_INNER = new ModelLayerLocation(
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "jeb_inner_layer"), "inner");
+    public static final ModelLayerLocation JEB_OUTER = new ModelLayerLocation(
+            new ResourceLocation(YouAreHerobrineResurrected.MOD_ID, "jeb_outer_layer"), "outer");
 }
