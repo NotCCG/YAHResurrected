@@ -10,6 +10,7 @@ import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.custom.Hunter;
 import net.notccg.yahresurrected.entity.custom.Slayer;
 import net.notccg.yahresurrected.entity.custom.Steve;
+import net.notccg.yahresurrected.entity.custom.boss.JebEntity;
 
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -25,6 +26,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<Slayer>> SLAYER =
             ENTITY_TYPES.register("slayer", () -> EntityType.Builder.of(Slayer::new, MobCategory.MONSTER)
                     .sized(0.8f, 1.8f).build("slayer"));
+
+    public static final RegistryObject<EntityType<JebEntity>> JEB_ =
+            ENTITY_TYPES.register("jeb", () -> EntityType.Builder.of(JebEntity::new, MobCategory.MONSTER)
+                    .sized(0.8f, 1.8f).build("jeb"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

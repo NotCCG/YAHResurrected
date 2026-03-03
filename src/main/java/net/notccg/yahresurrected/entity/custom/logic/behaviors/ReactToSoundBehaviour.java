@@ -92,9 +92,13 @@ public class ReactToSoundBehaviour<E extends PathfinderMob> extends ExtendedBeha
         if (heardPos == null) heardPos = lastHeardPos;
         if (lastHeardPos == null) lastHeardPos = heardPos;
 
-        double fear = SteveLogic.getFear(brain, gameTime);
-        double curiosity = SteveLogic.getCuriosity(brain, gameTime);
-        double paranoia = SteveLogic.getParanoia(brain, gameTime);
+        if (shouldFlee(brain, gameTime)) {
+            fleeOrInvestigate = FleeOrInvestigate.FLEE;
+        } else if (shouldCautiouslyInvestigate(brain, gameTime)) {
+            fleeOrInvestigate = FleeOrInvestigate.INVESTIGATE_CAUTIOUSLY;
+        } else {
+            fleeOrInvestigate = FleeOrInvestigate.INVESTIGATE;
+        }
     }
 
     @Override
