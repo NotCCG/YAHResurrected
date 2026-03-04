@@ -8,17 +8,20 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
+import net.minecraft.world.entity.ai.behavior.PositionTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import org.slf4j.Logger;
 
 import java.util.List;
 
+@SuppressWarnings("LoggingSimilarMessage")
 public class PickupInterestedItem<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
 
@@ -53,7 +56,21 @@ public class PickupInterestedItem<E extends PathfinderMob> extends ExtendedBehav
     }
 
     @Override
+    protected boolean shouldKeepRunning(E entity) {
+        var brain = entity.getBrain();
+        boolean hasInterestedItemMemory = brain.hasMemoryValue(ModMemoryTypes.INTERESTED_ITEM.get());
+        boolean playerNotSpotted = !brain.hasMemoryValue(ModMemoryTypes.SPOTTED_PLAYER.get());
+
+        return isEnabled && hasInterestedItemMemory && playerNotSpotted;
+    }
+
+    @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
+        nextRepathTick = gameTime;
+    }
+
+    @Override
+    protected void tick(ServerLevel level, E entity, long gameTime) {
         if (gameTime < nextRepathTick) return;
         nextRepathTick = gameTime + repathInterval;
 
@@ -101,7 +118,31 @@ public class PickupInterestedItem<E extends PathfinderMob> extends ExtendedBehav
 
     @Override
     protected void stop(E entity) {
-        entity.getBrain().eraseMemory(ModMemoryTypes.INTERESTED_ITEM.get());
-        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] erased INTERESTED_ITEM", this.getClass().getSimpleName(), entity.getUUID());
+        var brain = entity.getBrain();
+        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] stop()",
+                this.getClass().getSimpleName(), entity.getUUID());
+        brain.eraseMemory(ModMemoryTypes.INTERESTED_ITEM.get());
+        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] erased INTERESTED_ITEM",
+                this.getClass().getSimpleName(), entity.getUUID());
+
+        Vec3 eyePos = entity.getEyePosition();
+        Vec3 forward = entity.getLookAngle();
+
+        double distance = 3 + entity.getRandom().nextDouble() * 3;
+
+        Vec3 forwardPoint = eyePos.add(forward.scale(distance));
+
+        Vec3 sideways = new Vec3(
+                (entity.getRandom().nextDouble() - 0.5) * 2,
+                0,
+                (entity.getRandom().nextDouble() - 0.5) * 2
+        );
+
+        Vec3 finalLookPos = forwardPoint.add(sideways);
+        BlockPos targetPos  = BlockPos.containing(finalLookPos);
+
+        brain.setMemoryWithExpiry(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(targetPos), 40L);
+        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] set LOOK_TARGET -> {}",
+                this.getClass().getSimpleName(), entity.getUUID(), targetPos);
     }
 }

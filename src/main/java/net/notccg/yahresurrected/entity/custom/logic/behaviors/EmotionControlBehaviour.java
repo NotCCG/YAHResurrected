@@ -19,6 +19,7 @@ import java.util.List;
 
 public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBehaviour<E> {
     private static final Logger LOGGER = LogUtils.getLogger();
+
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORIES =
             ObjectArrayList.of(
                     Pair.of(ModMemoryTypes.CURIOSITY_LEVEL.get(), MemoryStatus.REGISTERED),
@@ -111,10 +112,12 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
                     if (overThreshold != null) {
                         if (SteveLogic.isTerrified(brain, gameTime) || hasBeenHurtByPlayer) {
                             SteveLogic.addFear(brain, gameTime, paranoiaSqr);
-                            System.out.println("[YAH:R STEVE-DEBUG] Steve saw the player and is scared");
+                            LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] added fear",
+                                    this.getClass().getSimpleName(), entity.getUUID());
                         } else {
                             SteveLogic.addCuriosity(brain, gameTime, baseCuriosityIncrease);
-                            System.out.println("[YAH:R STEVE-DEBUG] Steve saw the player and is curious");
+                            LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] added curiosity",
+                                    this.getClass().getSimpleName(), entity.getUUID());
                         }
                     }
                 }
@@ -124,6 +127,8 @@ public class EmotionControlBehaviour<E extends PathfinderMob> extends ExtendedBe
 
         if (brain.hasMemoryValue(ModMemoryTypes.PICKED_UP_LIKED_ITEM.get())) {
             SteveLogic.reduceFear(brain, gameTime, 0.25);
+            LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] reduced fear",
+                    this.getClass().getSimpleName(), entity.getUUID());
         }
     }
 }

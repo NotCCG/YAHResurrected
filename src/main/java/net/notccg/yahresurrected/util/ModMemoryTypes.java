@@ -173,6 +173,10 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
+    public static final RegistryObject<MemoryModuleType<BlockPos>> SPAWN_POINT =
+            MEMORY_MODULE_TYPES.register("spawn_point",
+                    () -> new MemoryModuleType<>(Optional.empty()));
+
     public static final RegistryObject<MemoryModuleType<HeardSoundType>> HEARD_SOUND_TYPE =
             MEMORY_MODULE_TYPES.register("heard_sound_type",
                     () -> new MemoryModuleType<>(Optional.empty())

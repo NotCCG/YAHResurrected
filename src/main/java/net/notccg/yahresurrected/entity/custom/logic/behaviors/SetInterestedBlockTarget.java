@@ -230,8 +230,7 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
     @Override
     protected void stop(E entity) {
-        entity.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased LOOK_TARGET",
+        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] stop()",
                 this.getClass().getSimpleName(), entity.getUUID());
 
         stuckState.remove(entity);
@@ -240,5 +239,27 @@ public class SetInterestedBlockTarget<E extends Mob> extends ExtendedBehaviour<E
 
         LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped",
                 this.getClass().getSimpleName(), entity.getUUID());
+
+        var brain = entity.getBrain();
+
+        Vec3 eyePos = entity.getEyePosition();
+        Vec3 forward = entity.getLookAngle();
+
+        double distance = 3 + entity.getRandom().nextDouble() * 3;
+
+        Vec3 forwardPoint = eyePos.add(forward.scale(distance));
+
+        Vec3 sideways = new Vec3(
+                (entity.getRandom().nextDouble() - 0.5) * 2,
+                0,
+                (entity.getRandom().nextDouble() - 0.5) * 2
+        );
+
+        Vec3 finalLookPos = forwardPoint.add(sideways);
+        BlockPos targetPos  = BlockPos.containing(finalLookPos);
+
+        brain.setMemoryWithExpiry(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(targetPos), 40L);
+        LOGGER.debug("[YAH:R] [BEHAVIORS:{}][{}] set LOOK_TARGET -> {}",
+                this.getClass().getSimpleName(), entity.getUUID(), targetPos);
     }
 }

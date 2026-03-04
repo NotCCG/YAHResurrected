@@ -1,6 +1,8 @@
 package net.notccg.yahresurrected.event;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -32,5 +34,11 @@ public class ForgeEventBusEvents {
         BlockPos firePos = clickedPos.above();
         if (!level.getBlockState(firePos).canBeReplaced()) return;
 
+        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+        if (bolt != null) {
+            bolt.moveTo(clickedPos.getX() + 0.5, clickedPos.getY() + 1, clickedPos.getZ() + 0.5);
+            bolt.setVisualOnly(true);
+            level.addFreshEntity(bolt);
+        }
     }
 }
