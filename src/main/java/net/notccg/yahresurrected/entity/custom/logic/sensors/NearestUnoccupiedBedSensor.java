@@ -26,7 +26,8 @@ public class NearestUnoccupiedBedSensor<E extends PathfinderMob> extends Extende
 
     @Override
     public List<MemoryModuleType<?>> memoriesUsed() {
-        return List.of(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get());
+        return List.of(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get(),
+                ModMemoryTypes.SPAWN_POINT.get());
     }
 
     @Override
@@ -37,6 +38,7 @@ public class NearestUnoccupiedBedSensor<E extends PathfinderMob> extends Extende
     @Override
     protected void doTick(ServerLevel level, E entity) {
         if (level.isDay()) return;
+        if (entity.getBrain().hasMemoryValue(ModMemoryTypes.SPAWN_POINT.get())) return;
 
         long gameTime = level.getGameTime();
         if (gameTime < nextScanTick) return;
@@ -56,12 +58,11 @@ public class NearestUnoccupiedBedSensor<E extends PathfinderMob> extends Extende
 
             if (!SteveLogic.isUnoccupiedBed(level, immutablePos)) return;
             brain.setMemory(bedLoc, immutablePos);
-            LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set NEAREST_UNOCCUPIED_BED -> [bedLoc:{} | immutablePos:{}",
+            LOGGER.debug("[YAH:R] [SENSOR:{}][{}] set NEAREST_UNOCCUPIED_BED -> {}",
                     this.getClass().getSimpleName(),
                     entity.getUUID(),
-                    bedLoc,
                     immutablePos
-                    );
+            );
         }
     }
 }

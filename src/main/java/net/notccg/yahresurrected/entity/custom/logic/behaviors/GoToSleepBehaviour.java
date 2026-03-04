@@ -11,6 +11,8 @@ import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
@@ -23,10 +25,13 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS =
             ObjectArrayList.of(
-                    Pair.of(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get(), MemoryStatus.VALUE_PRESENT),
+                    Pair.of(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.SPAWN_POINT.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.IS_SLEEPING.get(), MemoryStatus.REGISTERED),
                     Pair.of(MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED),
                     Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED),
                     Pair.of(ModMemoryTypes.FEAR_LEVEL.get(), MemoryStatus.REGISTERED),
+                    Pair.of(ModMemoryTypes.INTERESTED_BLOCK_TARGET.get(), MemoryStatus.VALUE_ABSENT),
                     Pair.of(ModMemoryTypes.INVESTIGATE_TARGET.get(), MemoryStatus.VALUE_ABSENT),
                     Pair.of(ModMemoryTypes.SPOTTED_PLAYER.get(), MemoryStatus.VALUE_ABSENT)
             );
@@ -37,6 +42,7 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     private static final long COOLDOWN_AFTER_WAKING_UP = 100L;
     private static final int closeEnough = 1;
+    private BlockPos walkTarget = null;
 
     public GoToSleepBehaviour(float walkSpeed, boolean isEnabled) {
         this.walkSpeed = walkSpeed;
@@ -48,17 +54,17 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
         return MEMORY_REQUIREMENTS;
     }
 
-    private static BlockPos getWalkablePos(ServerLevel level, BlockPos target) {
-        if (!level.getBlockState(target).getCollisionShape(level, target).isEmpty()) {
-            return target.above();
-        }
-        return target;
+    @Override
+    protected boolean shouldKeepRunning(E entity) {
+        boolean correctTime = entity.level().isNight();
+        return correctTime && isEnabled;
     }
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] checking extra start conditions", this.getClass().getSimpleName(), entity.getUUID());
-        return level.isNight();
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] checking extra start conditions",
+                this.getClass().getSimpleName(), entity.getUUID());
+        return level.isNight() && isEnabled;
     }
 
     @Override
@@ -68,35 +74,58 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
             LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] conditions not met, return", this.getClass().getSimpleName(), entity.getUUID());
             return;
         }
+        nextOkSleepTime = gameTime;
+    }
+
+    @Override
+    protected void tick(ServerLevel level, E entity, long gameTime) {
+        var brain = entity.getBrain();
         if (gameTime > this.nextOkSleepTime) {
-            MemoryModuleType<BlockPos> bedTarget = ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get();
-            BlockPos bedPos = brain.getMemory(bedTarget).orElse(null);
-            if (bedPos == null) {
-                LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"bedPos\" is null, return", this.getClass().getSimpleName(), entity.getUUID());
-                return;
+            BlockPos bedPos = brain.getMemory(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get()).orElse(null);
+            BlockPos spawnPos = brain.getMemory(ModMemoryTypes.SPAWN_POINT.get()).orElse(null);
+            if (spawnPos != null) {
+                walkTarget = spawnPos;
+            } else {
+                if (bedPos != null) {
+                    walkTarget = bedPos;
+                }
             }
-            BlockPos walkTarget = getWalkablePos(level, bedPos);
-            if (entity.blockPosition().closerThan(bedPos, closeEnough)) {
-                entity.getNavigation().stop();
-                brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
-                brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-
-                entity.startSleeping(bedPos);
-            }
-            brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkTarget, walkSpeed, closeEnough));
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
-            brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(bedPos));
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), bedPos);
         }
+        if (walkTarget == null) {
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"walkTarget\" null, return",
+                this.getClass().getSimpleName(), entity.getUUID());
+        }
+        if (entity.blockPosition().closerThan(walkTarget, closeEnough)) {
+            entity.getNavigation().stop();
+            brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+            brain.eraseMemory(MemoryModuleType.WALK_TARGET);
 
+            if (!brain.hasMemoryValue(ModMemoryTypes.SPAWN_POINT.get())) {
+                brain.setMemory(ModMemoryTypes.SPAWN_POINT.get(), walkTarget);
+            }
+            brain.setMemory(ModMemoryTypes.IS_SLEEPING.get(), true);
+            entity.startSleeping(walkTarget);
+            return;
+        }
+        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkTarget, walkSpeed, closeEnough));
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
+        brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkTarget));
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
     }
 
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stopped", this.getClass().getSimpleName(), entity.getUUID());
+        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] stop()",
+                this.getClass().getSimpleName(), entity.getUUID());
         if (entity.isSleeping()) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] forced Entity({}) to stop sleeping", this.getClass().getSimpleName(), entity.getUUID(), entity.getUUID());
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] forced Entity({}) to stop sleeping",
+                    this.getClass().getSimpleName(), entity.getUUID(), entity.getUUID());
             entity.stopSleeping();
+
+            entity.getBrain().eraseMemory(ModMemoryTypes.IS_SLEEPING.get());
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] erased IS_SLEEPING",
+                    this.getClass().getSimpleName(), entity.getUUID());
+
             this.nextOkSleepTime = gameTime + COOLDOWN_AFTER_WAKING_UP;
         }
     }
