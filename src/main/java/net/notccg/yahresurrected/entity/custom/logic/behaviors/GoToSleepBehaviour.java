@@ -40,11 +40,18 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     private static final long COOLDOWN_AFTER_WAKING_UP = 100L;
     private static final int closeEnough = 1;
-    private BlockPos walkTarget = null;
+    private BlockPos bedTarget = null;
 
     public GoToSleepBehaviour(float walkSpeed, boolean isEnabled) {
         this.walkSpeed = walkSpeed;
         this.isEnabled = isEnabled;
+    }
+
+    private static BlockPos getWalkablePos(ServerLevel level, BlockPos target) {
+        if (!level.getBlockState(target).getCollisionShape(level, target).isEmpty()) {
+            return target.above();
+        }
+        return target;
     }
 
     @Override
@@ -82,33 +89,35 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
             BlockPos bedPos = brain.getMemory(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get()).orElse(null);
             BlockPos spawnPos = brain.getMemory(ModMemoryTypes.SPAWN_POINT.get()).orElse(null);
             if (spawnPos != null) {
-                walkTarget = spawnPos;
+                bedTarget = spawnPos;
             } else {
                 if (bedPos != null) {
-                    walkTarget = bedPos;
+                    bedTarget = bedPos;
                 }
             }
-        }
-        if (walkTarget == null) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"walkTarget\" null, return",
-                this.getClass().getSimpleName(), entity.getUUID());
-        }
-        if (entity.blockPosition().closerThan(walkTarget, closeEnough)) {
-            entity.getNavigation().stop();
-            brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
-            brain.eraseMemory(MemoryModuleType.WALK_TARGET);
-
-            if (!brain.hasMemoryValue(ModMemoryTypes.SPAWN_POINT.get())) {
-                brain.setMemory(ModMemoryTypes.SPAWN_POINT.get(), walkTarget);
+            if (bedTarget == null) {
+                LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] variable \"bedTarget\" null, return",
+                        this.getClass().getSimpleName(), entity.getUUID());
+                return;
             }
-            brain.setMemory(ModMemoryTypes.IS_SLEEPING.get(), true);
-            entity.startSleeping(walkTarget);
-            return;
+
+            if (entity.blockPosition().closerThan(bedTarget, closeEnough)) {
+                brain.eraseMemory(MemoryModuleType.LOOK_TARGET);
+                brain.eraseMemory(MemoryModuleType.WALK_TARGET);
+
+                if (!brain.hasMemoryValue(ModMemoryTypes.SPAWN_POINT.get())) {
+                    brain.setMemory(ModMemoryTypes.SPAWN_POINT.get(), bedTarget);
+                }
+                brain.setMemory(ModMemoryTypes.IS_SLEEPING.get(), true);
+                entity.startSleeping(bedTarget);
+                return;
+            }
+            BlockPos walkPos = getWalkablePos(level, bedTarget);
+            brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkPos, walkSpeed, closeEnough));
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), bedTarget);
+            brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(bedTarget));
+            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), bedTarget);
         }
-        brain.setMemory(MemoryModuleType.WALK_TARGET, new WalkTarget(walkTarget, walkSpeed, closeEnough));
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set WALK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
-        brain.setMemory(MemoryModuleType.LOOK_TARGET, new BlockPosTracker(walkTarget));
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set LOOK_TARGET -> {}", this.getClass().getSimpleName(), entity.getUUID(), walkTarget);
     }
 
     @Override

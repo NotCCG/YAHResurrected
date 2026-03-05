@@ -126,7 +126,6 @@ public class ModMemoryTypes {
                     () -> new MemoryModuleType<>(Optional.empty())
             );
 
-
     public static final RegistryObject<MemoryModuleType<Player>> HEARD_SOUND =
             MEMORY_MODULE_TYPES.register("heard_sound",
                     () -> new MemoryModuleType<>(Optional.empty())
