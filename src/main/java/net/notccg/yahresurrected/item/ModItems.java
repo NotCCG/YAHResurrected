@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.entity.ModEntities;
+import net.notccg.yahresurrected.fluids.ModFluids;
 import net.notccg.yahresurrected.item.custom.*;
 import net.notccg.yahresurrected.item.custom.spell_books.*;
 import net.notccg.yahresurrected.item.custom.util.AdvancementRootIconItem;
@@ -125,6 +126,9 @@ public class ModItems {
                     new Item.Properties()));
 
 
+    // Unimplemented
+    public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket",
+            () -> new BucketItem(ModFluids.SOURCE_BLOOD, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     // Utility items, not for use in gameplay.
 

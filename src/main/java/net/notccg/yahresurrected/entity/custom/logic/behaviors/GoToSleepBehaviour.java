@@ -44,7 +44,7 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     public GoToSleepBehaviour(float walkSpeed, boolean isEnabled) {
         this.walkSpeed = walkSpeed;
-        this.isEnabled = isEnabled;
+        this.isEnabled = !isEnabled;
     }
 
     private static BlockPos getWalkablePos(ServerLevel level, BlockPos target) {
@@ -67,18 +67,24 @@ public class GoToSleepBehaviour<E extends PathfinderMob> extends ExtendedBehavio
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
-        LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] checking extra start conditions",
-                this.getClass().getSimpleName(), entity.getUUID());
-        return level.isNight() && isEnabled;
+        if (!level.isNight() || !isEnabled) return false;
+        var brain = entity.getBrain();
+        long gameTime = level.getGameTime();
+        if (SteveLogic.isScared(brain, gameTime) || SteveLogic.isTerrified(brain, gameTime)) {
+            return false;
+        }
+
+        boolean hasSpawn = brain.hasMemoryValue(ModMemoryTypes.SPAWN_POINT.get());
+        boolean hasBed = brain.hasMemoryValue(ModMemoryTypes.NEAREST_UNOCCUPIED_BED.get());
+
+        LOGGER.debug("[YAH:R] [BEHAVIOUR:{}][{}] [hasSpawn={}] [hasBed={}]",
+                this.getClass().getSimpleName(), entity.getUUID(), hasSpawn, hasBed);
+
+        return hasSpawn || hasBed;
     }
 
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
-        Brain<?> brain = entity.getBrain();
-        if (SteveLogic.isUneasy(brain, gameTime) || SteveLogic.isScared(brain, gameTime) || SteveLogic.isTerrified(brain, gameTime)) {
-            LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] conditions not met, return", this.getClass().getSimpleName(), entity.getUUID());
-            return;
-        }
         nextOkSleepTime = gameTime;
     }
 
