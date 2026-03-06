@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.entity.custom.logic.behaviors.*;
@@ -109,8 +110,16 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
                 SteveLogic.addFear(brain, now, 0.05);
                 SteveLogic.addParanoia(brain, now, 0.1);
             }
+            LOGGER.debug("[YAH:R STEVE-DEBUG][{}] PLAYER[{}] hurt me from BLOCKPOS[{}]",
+                    this.getUUID(), player.getUUID(), playerPos);
 
-            System.out.println("[YAH:R STEVE-DEBUG] The player hurt me!");
+            ItemStack playerStack = player.getMainHandItem();
+            if (!playerStack.isEmpty()) {
+                if (playerStack.is(Items.GLASS_BOTTLE)) {
+
+                }
+            }
+
         }
         return result;
     }

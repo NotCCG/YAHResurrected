@@ -8,6 +8,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.block.ModBlocks;
+import net.notccg.yahresurrected.item.ModItems;
 
 public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
@@ -20,7 +22,9 @@ public class ModFluids {
             () -> new ForgeFlowingFluid.Flowing(ModFluids.BLOOD_FLUID_PROPERTIES));
 
     public static final ForgeFlowingFluid.Properties BLOOD_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-            ModFluidTypes.BLOOD_FLUID_TYPE, SOURCE_BLOOD, FLOWING_BLOOD);
+            ModFluidTypes.BLOOD_FLUID_TYPE, SOURCE_BLOOD, FLOWING_BLOOD)
+            .slopeFindDistance(2).levelDecreasePerBlock(1).block(ModBlocks.BLOOD_LIQUID_BLOCK)
+            .bucket(ModItems.BLOOD_BUCKET);
 
     public static void register(IEventBus eventBus) {
         FLUIDS.register(eventBus);

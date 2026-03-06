@@ -1,6 +1,7 @@
 package net.notccg.yahresurrected.item;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -128,7 +129,8 @@ public class ModItems {
 
     // Unimplemented
     public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket",
-            () -> new BucketItem(ModFluids.SOURCE_BLOOD, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
+            () -> new BucketItem(ModFluids.SOURCE_BLOOD,
+                    new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
     // Utility items, not for use in gameplay.
 

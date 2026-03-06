@@ -52,6 +52,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(ModItems.STEVE_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.SLAYER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
+        // Unimplemented item
+        simpleItem(ModItems.BLOOD_BUCKET);
+
         // Utility items, not for gameplay
 
         simpleItem(ModItems.ADVANCEMENT_ROOT_ICON);
