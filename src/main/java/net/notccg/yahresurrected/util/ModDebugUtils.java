@@ -29,8 +29,8 @@ public class ModDebugUtils {
         }
 
         String msg = (numPairs == 0)
-                ? ("YAH:R [ITEM:{}] " + pContext)
-                : ("YAH:R [ITEM:{}] " + pContext + " | PARAMETERS:[" + paramsFmt + "]");
+                ? ("[YAH:R][ITEM:{}] " + pContext)
+                : ("[YAH:R][ITEM:{}] " + pContext + " | PARAMETERS:[" + paramsFmt + "]");
 
         Object[] args = new Object[numPairs + 1];
         args[0] = clazz;
@@ -68,8 +68,8 @@ public class ModDebugUtils {
         }
 
         String msg = (numPairs == 0)
-                ? ("YAH:R [BEHAVIOUR:{}][{}] " + pContext)
-                : ("YAH:R [BEHAVIOUR:{}] " + pContext + " | PARAMETERS:[" + paramsFmt + "]");
+                ? ("[YAH:R][BEHAVIOUR:{}][{}] " + pContext)
+                : ("[YAH:R][BEHAVIOUR:{}] " + pContext + " | PARAMETERS:[" + paramsFmt + "]");
 
         Object[] args = new Object[numPairs + 1];
         args[0] = clazz;
@@ -79,4 +79,28 @@ public class ModDebugUtils {
         LOGGER.debug(msg, args);
     }
 
+    public static void debugConditions(String pContext, Object... kvPairs) {
+        StringBuilder paramsFmt = new StringBuilder();
+        int pairCount = (kvPairs == null) ? 0 : kvPairs.length;
+
+        if (pairCount % 2 != 0) pairCount -= 1;
+        int numPairs = pairCount / 2;
+
+        for (int i = 0; i < numPairs; i++) {
+            if (i > 0) paramsFmt.append(' ');
+            Object keyObj = kvPairs[i * 2];
+            String key = (keyObj == null) ? "null" : keyObj.toString();
+            paramsFmt.append(key).append("={}");
+        }
+
+        String msg = (numPairs == 0)
+                ? ("[YAH:R][CONDITIONALS] " + pContext)
+                : ("[YAH:R][CONDITIONALS] " + pContext + " | PARAMETERS:[" + paramsFmt + "]");
+
+        Object[] args = new Object[numPairs + 1];
+        for (int i = 0; i < numPairs; i++) {
+            args[i + 1] = kvPairs[i * 2 + 1];
+        }
+        LOGGER.debug(msg, args);
+    }
 }

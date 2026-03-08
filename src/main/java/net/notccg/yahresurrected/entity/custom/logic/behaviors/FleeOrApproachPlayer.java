@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
+import net.notccg.yahresurrected.util.ModDebugUtils;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import org.slf4j.Logger;
@@ -158,6 +159,12 @@ public class FleeOrApproachPlayer<E extends PathfinderMob> extends ExtendedBehav
                 fleeOrApproach = FleeOrApproach.FREEZE;
                 LOGGER.debug("[YAH:R] [BEHAVIOR:{}][{}] set variable \"fleeOrApproach\" to {} as conditions were met", this.getClass().getSimpleName(), entity.getUUID(), fleeOrApproach);
             }
+            ModDebugUtils.debugConditions("fleeOrApproach",
+                    "playerDistSqr", playerDistSqr,
+                    "fleeDistSqr", fleeDistSqr,
+                    "maxApproachDistSqr", maxApproachDistSqr,
+                    "closeEnough", closeEnough,
+                    "approach", approach);
 
             long cooldown = decisionCoolDown;
             if (fleeOrApproach == FleeOrApproach.APPROACH || fleeOrApproach == FleeOrApproach.FLEE) {
