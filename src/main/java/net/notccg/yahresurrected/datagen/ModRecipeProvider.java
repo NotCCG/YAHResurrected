@@ -180,6 +180,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
                 .save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CASTSPIDERBOOK.get())
+                .pattern("EsE")
+                .pattern("WSW")
+                .pattern("IWI")
+                .define('E', Items.SPIDER_EYE)
+                .define('s', Items.STRING)
+                .define('W', Items.COBWEB)
+                .define('S', ModItems.SKINBOOK.get())
+                .define('I', ModItems.INVISIBLEDUST.get())
+                .unlockedBy(getHasName(ModItems.SKINBOOK.get()), has(ModItems.SKINBOOK.get()))
+                .save(pWriter);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CASTZOMBIEBOOK.get())
                 .pattern("RZR")
                 .pattern("DSD")

@@ -18,6 +18,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.entity.client.renderer.HunterRenderer;
+import net.notccg.yahresurrected.entity.client.renderer.JebRenderer;
 import net.notccg.yahresurrected.entity.client.renderer.SlayerRenderer;
 import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.fluids.ModFluidTypes;
@@ -25,6 +26,7 @@ import net.notccg.yahresurrected.fluids.ModFluids;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
+import net.notccg.yahresurrected.sound.ModSounds;
 import net.notccg.yahresurrected.util.*;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
@@ -48,6 +50,7 @@ public class YouAreHerobrineResurrected {
         ModSensorTypes.SENSOR_TYPES.register(modEventBus);
 
         ModLootModifiers.register(modEventBus);
+        ModSounds.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::commonSetup);
@@ -114,9 +117,6 @@ public class YouAreHerobrineResurrected {
             event.accept(ModItems.STEVESOUL);
             event.accept(ModItems.VILLAGERHEART);
         }
-        if (event.getTabKey() == CreativeModeTabs.OP_BLOCKS) {
-            event.accept(ModItems.STEVE_DEBUG_TOOL);
-        }
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModItems.NETHERPORTALITEM);
         }
@@ -131,6 +131,7 @@ public class YouAreHerobrineResurrected {
             EntityRenderers.register(ModEntities.STEVE.get(), SteveRenderer::new);
             EntityRenderers.register(ModEntities.HUNTER.get(), HunterRenderer::new);
             EntityRenderers.register(ModEntities.SLAYER.get(), SlayerRenderer::new);
+            EntityRenderers.register(ModEntities.JEB_.get(), JebRenderer::new);
         }
     }
 }
