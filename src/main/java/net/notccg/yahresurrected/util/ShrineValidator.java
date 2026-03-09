@@ -1,12 +1,16 @@
 package net.notccg.yahresurrected.util;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
+import org.slf4j.Logger;
 
 public class ShrineValidator {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private ShrineValidator() {}
 
     private static final BlockPos[] TORCH_OFFSETS = {
@@ -25,6 +29,8 @@ public class ShrineValidator {
 
     public static boolean isValidUnlit(Level level, BlockPos center) {
         if (!level.getBlockState(center).is(Tags.Blocks.NETHERRACK)) return false;
+        LOGGER.debug("[YAH:R][DEBUG:ShrineValidator] checkCross={} checkBase={}",
+                checkCross(level, center), checkBase(level, center));
         return checkCross(level, center) && checkBase(level, center);
     }
 
@@ -56,7 +62,7 @@ public class ShrineValidator {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dz = -1; dz <= 1; dz++) {
                 if (dx == 0 && dz == 0) continue;
-                if (level.getBlockState(below.offset(dx, 0, dz)).is(Blocks.GOLD_BLOCK)) return false;
+                if (!level.getBlockState(below.offset(dx, 0, dz)).is(Blocks.GOLD_BLOCK)) return false;
             }
         }
         return true;

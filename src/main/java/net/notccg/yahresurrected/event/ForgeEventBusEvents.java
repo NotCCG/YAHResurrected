@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.event;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -7,21 +8,24 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.util.ShrineValidator;
+import org.slf4j.Logger;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventBusEvents {
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Level level = event.getLevel();
         if (level.isClientSide()) return;
 
-        Player player = event.getEntity();
         BlockPos clickedPos = event.getPos();
         ItemStack held = event.getItemStack();
 
@@ -32,7 +36,9 @@ public class ForgeEventBusEvents {
         if (!level.getBlockState(clickedPos).is(Tags.Blocks.NETHERRACK)) return;
 
         BlockPos firePos = clickedPos.above();
+
         if (!level.getBlockState(firePos).canBeReplaced()) return;
+        if (!ShrineValidator.isValidUnlit(level, clickedPos)) return;
 
         LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
         if (bolt != null) {
