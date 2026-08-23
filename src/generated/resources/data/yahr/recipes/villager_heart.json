@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:ghast_tear"
+    },
+    "H": {
+      "item": "yahr:illager_heart"
+    },
+    "I": {
+      "item": "yahr:invisible_dust"
+    },
+    "M": {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    "N": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "pattern": [
+    "IHI",
+    "HGH",
+    "MHN"
+  ],
+  "result": {
+    "item": "yahr:villager_heart"
+  },
+  "show_notification": true
+}

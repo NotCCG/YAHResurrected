@@ -1,0 +1,55 @@
+{
+  "parent": "yahr:root",
+  "criteria": {
+    "Killed_steve": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "yahr:steve"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "got_steve_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "yahr:steve_soul"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.yahr.soul_harvest.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "yahr:steve_soul"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.yahr.soul_harvest.title"
+    }
+  },
+  "requirements": [
+    [
+      "Killed_steve"
+    ],
+    [
+      "got_steve_soul"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

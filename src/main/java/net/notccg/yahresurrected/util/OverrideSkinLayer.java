@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class OverrideSkinLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     private static final ResourceLocation SKIN_OVERRIDE =
-            new ResourceLocation("youareherobrineresurrected", "textures/entity/player_skin_override.png");
+            new ResourceLocation("yahr", "textures/entity/player_skin_override.png");
 
     private final PlayerModel<AbstractClientPlayer> steveModel;
 

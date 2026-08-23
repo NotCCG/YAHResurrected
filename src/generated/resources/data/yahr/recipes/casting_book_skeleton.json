@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "D": {
+      "item": "yahr:invisible_dust"
+    },
+    "H": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "S": {
+      "item": "yahr:skin_book"
+    }
+  },
+  "pattern": [
+    "BHB",
+    "DSD",
+    "BBB"
+  ],
+  "result": {
+    "item": "yahr:casting_book_skeleton"
+  },
+  "show_notification": true
+}

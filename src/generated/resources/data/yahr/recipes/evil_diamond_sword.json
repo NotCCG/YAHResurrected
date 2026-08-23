@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "E": {
+      "item": "yahr:evil_diamond"
+    },
+    "F": {
+      "item": "yahr:flesh_stick"
+    }
+  },
+  "pattern": [
+    " E ",
+    " E ",
+    " F "
+  ],
+  "result": {
+    "item": "yahr:evil_diamond_sword"
+  },
+  "show_notification": true
+}

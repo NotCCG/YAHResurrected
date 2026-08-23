@@ -1,0 +1,41 @@
+{
+  "parent": "yahr:bedrock_get",
+  "criteria": {
+    "monster_spawner_obtained": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:spawner"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.yahr.illegal_item_spawner.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:spawner"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.yahr.illegal_item_spawner.title"
+    }
+  },
+  "requirements": [
+    [
+      "monster_spawner_obtained"
+    ]
+  ],
+  "rewards": {
+    "experience": 420
+  },
+  "sends_telemetry_event": true
+}

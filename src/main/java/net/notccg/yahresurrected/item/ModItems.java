@@ -132,6 +132,9 @@ public class ModItems {
             () -> new BucketItem(ModFluids.SOURCE_BLOOD,
                     new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
+    public static final RegistryObject<Item> BLOOD_BOTTLE = ITEMS.register("blood_bottle",
+            () -> new Item(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
+
     // Utility items, not for use in gameplay.
 
     public static final RegistryObject<Item> ADVANCEMENT_ROOT_ICON = ITEMS.register("advancement_root_icon",

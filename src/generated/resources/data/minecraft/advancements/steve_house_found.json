@@ -1,5 +1,5 @@
 {
-  "parent": "youareherobrineresurrected:root",
+  "parent": "yahr:root",
   "criteria": {
     "steve_house_cold_found": {
       "conditions": {
@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_cold"
+                "structure": "yahr:steve_house_cold"
               }
             }
           }
@@ -25,7 +25,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_desert"
+                "structure": "yahr:steve_house_desert"
               }
             }
           }
@@ -41,7 +41,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_jungle"
+                "structure": "yahr:steve_house_jungle"
               }
             }
           }
@@ -57,7 +57,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_mountains"
+                "structure": "yahr:steve_house_mountains"
               }
             }
           }
@@ -73,7 +73,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_plains"
+                "structure": "yahr:steve_house_plains"
               }
             }
           }
@@ -89,7 +89,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_red_desert"
+                "structure": "yahr:steve_house_red_desert"
               }
             }
           }
@@ -105,7 +105,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "youareherobrineresurrected:steve_house_spruce"
+                "structure": "yahr:steve_house_spruce"
               }
             }
           }
@@ -117,7 +117,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.youareherobrineresurrected.home_invader.description"
+      "translate": "advancements.yahr.home_invader.description"
     },
     "frame": "task",
     "hidden": false,
@@ -126,7 +126,7 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.youareherobrineresurrected.home_invader.title"
+      "translate": "advancements.yahr.home_invader.title"
     }
   },
   "requirements": [

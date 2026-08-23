@@ -1,0 +1,41 @@
+{
+  "parent": "yahr:sunburn",
+  "criteria": {
+    "has_spellbook_ii": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "yahr:spell_book_ii"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.yahr.sparkle.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "yahr:spell_book_ii"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.yahr.sparkle.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_spellbook_ii"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": true
+}

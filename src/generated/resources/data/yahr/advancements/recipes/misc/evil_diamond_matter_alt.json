@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_a_heart": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "yahr:hearts_from_villager_like"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "yahr:evil_diamond_matter_alt"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_a_heart",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "yahr:evil_diamond_matter_alt"
+    ]
+  },
+  "sends_telemetry_event": false
+}

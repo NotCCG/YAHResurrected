@@ -61,7 +61,7 @@ public class Steve extends AbstractSteve implements SmartBrainOwner<Steve> {
 
     @Override
     protected ResourceLocation getDefaultLootTable() {
-        return new ResourceLocation("youareherobrineresurrected", "entities/steve_entity");
+        return new ResourceLocation("yahr", "entities/steve_entity");
     }
 
     @Override

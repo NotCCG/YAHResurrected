@@ -1,8 +1,8 @@
 {
   "values": [
-    "youareherobrineresurrected:invisible_ore",
-    "youareherobrineresurrected:deepslate_invisible_ore",
-    "youareherobrineresurrected:ice_ruby_ore",
-    "youareherobrineresurrected:deepslate_ice_ruby_ore"
+    "yahr:invisible_ore",
+    "yahr:deepslate_invisible_ore",
+    "yahr:ice_ruby_ore",
+    "yahr:deepslate_ice_ruby_ore"
   ]
 }

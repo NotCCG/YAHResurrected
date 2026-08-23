@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:ancient_debris"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "V": {
+      "tag": "yahr:hearts_from_villager_like"
+    }
+  },
+  "pattern": [
+    "AVA",
+    "VDV",
+    "AVA"
+  ],
+  "result": {
+    "item": "yahr:evil_diamond_matter"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "yahr:invisible_ore_placed",
+  "step": "underground_ores"
+}

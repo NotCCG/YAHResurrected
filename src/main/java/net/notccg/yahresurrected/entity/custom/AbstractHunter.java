@@ -158,7 +158,7 @@ public class AbstractHunter extends Monster implements RangedAttackMob {
 
     @Override
     protected ResourceLocation getDefaultLootTable() {
-        return new ResourceLocation("youareherobrineresurrected", "entities/hunter_entity");
+        return new ResourceLocation("yahr", "entities/hunter_entity");
     }
 
     @Override

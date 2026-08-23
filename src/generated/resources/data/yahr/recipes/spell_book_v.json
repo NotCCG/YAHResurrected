@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "minecraft:ancient_debris"
+    },
+    "B": {
+      "item": "yahr:skin_book"
+    },
+    "D": {
+      "item": "yahr:invisible_dust"
+    },
+    "E": {
+      "item": "yahr:evil_diamond_matter"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "S": {
+      "item": "yahr:steve_soul"
+    }
+  },
+  "pattern": [
+    "EFE",
+    "SBD",
+    "NAN"
+  ],
+  "result": {
+    "item": "yahr:spell_book_v"
+  },
+  "show_notification": true
+}

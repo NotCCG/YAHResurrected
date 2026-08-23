@@ -219,7 +219,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('D', Items.DIAMOND)
                 .define('A', Items.ANCIENT_DEBRIS)
                 .unlockedBy(getHasName(ModItems.VILLAGERHEART.get()), has(ModItems.VILLAGERHEART.get()))
-                .save(pWriter, new ResourceLocation("youareherobrineresurrected", "evil_diamond_matter"));
+                .save(pWriter, new ResourceLocation("yahr", "evil_diamond_matter"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EVILDIAMONDMATTER.get())
                 .pattern("VAV")
@@ -234,7 +234,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                         .of(ModTags.Items.HEARTS)
                                         .build()
                         ))
-                .save(pWriter, new ResourceLocation("youareherobrineresurrected", "evil_diamond_matter_alt"));
+                .save(pWriter, new ResourceLocation("yahr", "evil_diamond_matter_alt"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.EVILDIAMONDSWORD.get())
                 .pattern(" E ")

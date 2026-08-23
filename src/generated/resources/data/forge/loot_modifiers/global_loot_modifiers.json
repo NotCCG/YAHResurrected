@@ -1,10 +1,10 @@
 {
   "entries": [
-    "youareherobrineresurrected:villager_heart_from_villager",
-    "youareherobrineresurrected:illager_heart_from_evoker",
-    "youareherobrineresurrected:illager_heart_from_witch",
-    "youareherobrineresurrected:illager_heart_from_vindicator",
-    "youareherobrineresurrected:illager_heart_from_pillager"
+    "yahr:villager_heart_from_villager",
+    "yahr:illager_heart_from_evoker",
+    "yahr:illager_heart_from_witch",
+    "yahr:illager_heart_from_vindicator",
+    "yahr:illager_heart_from_pillager"
   ],
   "replace": false
 }

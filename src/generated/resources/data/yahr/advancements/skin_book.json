@@ -1,0 +1,41 @@
+{
+  "parent": "yahr:root",
+  "criteria": {
+    "has_skin_book": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "yahr:skin_book"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.yahr.squishy.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "yahr:skin_book"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.yahr.squishy.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_skin_book"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

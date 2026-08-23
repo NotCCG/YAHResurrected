@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "V": {
+      "tag": "yahr:hearts_from_villager_like"
+    }
+  },
+  "pattern": [
+    " V ",
+    " V ",
+    " V "
+  ],
+  "result": {
+    "count": 2,
+    "item": "yahr:flesh_stick"
+  },
+  "show_notification": true
+}

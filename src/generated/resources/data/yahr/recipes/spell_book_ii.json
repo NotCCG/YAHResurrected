@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "yahr:skin_book"
+    },
+    "D": {
+      "item": "yahr:invisible_dust"
+    },
+    "I": {
+      "item": "yahr:ice_ruby"
+    },
+    "S": {
+      "item": "yahr:steve_soul"
+    }
+  },
+  "pattern": [
+    "III",
+    "SBD",
+    "   "
+  ],
+  "result": {
+    "item": "yahr:spell_book_ii"
+  },
+  "show_notification": true
+}

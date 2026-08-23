@@ -1,0 +1,41 @@
+{
+  "parent": "yahr:villager_heart",
+  "criteria": {
+    "crafted_flesh_stick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "yahr:flesh_stick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.yahr.pulsates.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "yahr:flesh_stick"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.yahr.pulsates.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_flesh_stick"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  },
+  "sends_telemetry_event": true
+}

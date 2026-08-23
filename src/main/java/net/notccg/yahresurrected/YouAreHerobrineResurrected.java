@@ -3,9 +3,12 @@ package net.notccg.yahresurrected;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,12 +29,14 @@ import net.notccg.yahresurrected.fluids.ModFluids;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
+import net.notccg.yahresurrected.potion.BetterBrewingRecipe;
+import net.notccg.yahresurrected.potion.ModPotions;
 import net.notccg.yahresurrected.sound.ModSounds;
 import net.notccg.yahresurrected.util.*;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
 public class YouAreHerobrineResurrected {
-    public static final String MOD_ID = "youareherobrineresurrected";
+    public static final String MOD_ID = "yahr";
 
     public YouAreHerobrineResurrected() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -45,6 +50,8 @@ public class YouAreHerobrineResurrected {
 
         ModFluidTypes.register(modEventBus);
         ModFluids.register(modEventBus);
+
+        ModPotions.register(modEventBus);
 
         ModMemoryTypes.MEMORY_MODULE_TYPES.register(modEventBus);
         ModSensorTypes.SENSOR_TYPES.register(modEventBus);
@@ -72,6 +79,9 @@ public class YouAreHerobrineResurrected {
                     SpawnPlacements.Type.ON_GROUND,
                     Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     ModSpawnRules::canSpawnMostlyInDay);
+
+            BrewingRecipeRegistry.addRecipe(new BetterBrewingRecipe(Potions.AWKWARD, Items.EXPERIENCE_BOTTLE, ModPotions.DILUTED_ENCHANTING.get()));
+            BrewingRecipeRegistry.addRecipe(new BetterBrewingRecipe(ModPotions.DILUTED_ENCHANTING.get(), ModItems.BLOOD_BOTTLE.get(), ModPotions.DEMONIC_POTION.get()));
         });
     }
 

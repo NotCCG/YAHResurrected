@@ -1,0 +1,42 @@
+{
+  "parent": "yahr:root",
+  "criteria": {
+    "shrine_located": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "yahr:shrine"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.yahr.where_it_starts.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:soul_campfire"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.yahr.where_it_starts.title"
+    }
+  },
+  "requirements": [
+    [
+      "shrine_located"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
