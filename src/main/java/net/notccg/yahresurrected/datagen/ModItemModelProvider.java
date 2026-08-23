@@ -12,7 +12,7 @@ import net.notccg.yahresurrected.item.ModItems;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, String modid, ExistingFileHelper existingFileHelper) {
-        super(output, YouAreHerobrineResurrected.MOD_ID, existingFileHelper);
+        super(output, modid, existingFileHelper);
     }
 
     @Override
@@ -40,6 +40,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.VILLAGERHEART);
         simpleItem(ModItems.BROKEN_CLOCK);
         simpleItem(ModItems.STEVE_DEBUG_TOOL);
+        simpleItem(ModItems.BLOOD_BOTTLE);
 
         handheldItem(ModItems.BEDROCKPIXAXE);
         handheldItem(ModItems.EVILDIAMONDAXE);
