@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:spider_eye"
+    },
+    "I": {
+      "item": "yahr:invisible_dust"
+    },
+    "S": {
+      "item": "yahr:skin_book"
+    },
+    "W": {
+      "item": "minecraft:cobweb"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "EsE",
+    "WSW",
+    "IWI"
+  ],
+  "result": {
+    "item": "yahr:casting_book_spider"
+  },
+  "show_notification": true
+}
