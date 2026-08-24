@@ -14,15 +14,15 @@ public class ModPotions {
             DeferredRegister.create(ForgeRegistries.POTIONS, YouAreHerobrineResurrected.MOD_ID);
 
     public static final RegistryObject<Potion> DILUTED_ENCHANTING = POTIONS.register("diluted_xp_potion",
-            () -> new Potion(new MobEffectInstance(MobEffects.GLOWING, 720)));
+            () -> new Potion(new MobEffectInstance(MobEffects.GLOWING, 10000)));
     public static final RegistryObject<Potion> DEMONIC_POTION = POTIONS.register("demonic_potion",
             () -> new Potion(
-                    new MobEffectInstance(MobEffects.ABSORPTION, 720, 3),
-                    new MobEffectInstance(MobEffects.DAMAGE_BOOST, 720, 3),
-                    new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 720, 3),
-                    new MobEffectInstance(MobEffects.REGENERATION, 900, 3),
-                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 900, 3),
-                    new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 900, 3)
+                    new MobEffectInstance(MobEffects.ABSORPTION, 12000, 3),
+                    new MobEffectInstance(MobEffects.DAMAGE_BOOST, 12000, 3),
+                    new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 12000, 3),
+                    new MobEffectInstance(MobEffects.REGENERATION, 18000, 3),
+                    new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 18000, 3),
+                    new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 18000, 3)
             )
     );
 

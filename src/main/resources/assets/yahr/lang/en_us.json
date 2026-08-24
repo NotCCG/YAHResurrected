@@ -39,7 +39,7 @@
   "advancements.yahr.keen_eye.description": "Mine some invisible dust",
   "advancements.yahr.my_first_spell.description": "Craft a spell book",
   "advancements.yahr.absolute_zero.description": "Mine an ice ruby",
-  "advancements.yahr.redstone_fascination.description": "Craft a redstone torch. \n What's with you and redstone torches?",
+  "advancements.yahr.redstone_fascination.description": "Craft a redstone torch. \nWhat's with you and redstone torches?",
   "advancements.yahr.illegal_item_hell_portal.description": "Remember what they did to Y̵̺͆ơ̸͈ū̵̖?",
   "advancements.yahr.home_invader.description": "Find a Steve's house",
   "advancements.yahr..description": "",
@@ -47,6 +47,14 @@
   "entity.yahr.hunter": "Hunter",
   "entity.yahr.slayer": "Slayer",
   "entity.yahr.steve": "Steve",
+
+  "item.minecraft.potion.effect.diluted_xp_potion": "Bottle of Diluted Experience",
+  "item.minecraft.splash_potion.effect.diluted_xp_potion": "Splash Bottle of Diluted Experience",
+  "item.minecraft.lingering_potion.effect.diluted_xp_potion": "Lingering Bottle of Diluted Experience",
+
+  "item.minecraft.potion.effect.demonic_potion": "Demonic Potion",
+  "item.minecraft.splash_potion.demonic_potion": "Splash Demonic Potion",
+  "item.minecraft.lingering_potion.demonic_potion": "Lingering Demonic Potion",
 
   "item.yahr.villager_heart": "Villager Heart",
   "item.yahr.illager_heart": "Illager Heart",

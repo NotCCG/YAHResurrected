@@ -6,14 +6,21 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
+import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.multiblock.ShrineValidator;
 import org.slf4j.Logger;
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventBusEvents {
@@ -43,6 +50,32 @@ public class ForgeEventBusEvents {
             bolt.moveTo(clickedPos.getX() + 0.5, clickedPos.getY() + 1, clickedPos.getZ() + 0.5);
             bolt.setVisualOnly(true);
             level.addFreshEntity(bolt);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onAnvilUpdate(AnvilUpdateEvent event) {
+        ItemStack leftItem = event.getLeft();
+        ItemStack rightItem = event.getRight();
+
+        if (leftItem.is(ModItems.SPELLBOOKVIII.get()) && rightItem.is(Items.ENCHANTED_BOOK)) {
+            Map<Enchantment, Integer> bookEnchantments = EnchantmentHelper.getEnchantments(rightItem);
+            Enchantment targetEnchant = Enchantments.SILK_TOUCH;
+
+            if (bookEnchantments.containsKey(targetEnchant)) {
+                int levelInBook = bookEnchantments.get(targetEnchant);
+
+                ItemStack result = leftItem.copy();
+                Map<Enchantment, Integer> itemEnchantments = EnchantmentHelper.getEnchantments(result);
+
+                itemEnchantments.put(targetEnchant, levelInBook);
+
+                EnchantmentHelper.setEnchantments(itemEnchantments, result);
+
+                event.setOutput(result);
+                event.setCost(5 * levelInBook);
+                event.setMaterialCost(1);
+            }
         }
     }
 }
