@@ -1,6 +1,5 @@
 package net.notccg.yahresurrected;
 
-import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.ints.IntObjectImmutablePair;
 import it.unimi.dsi.fastutil.ints.IntObjectPair;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -37,15 +36,17 @@ import net.notccg.yahresurrected.entity.client.renderer.SlayerRenderer;
 import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.fluids.ModFluidTypes;
 import net.notccg.yahresurrected.fluids.ModFluids;
-import net.notccg.yahresurrected.init.ModMenus;
+import net.notccg.yahresurrected.util.config.ModConfigClent;
+import net.notccg.yahresurrected.util.config.ModConfigCommon;
+import net.notccg.yahresurrected.util.config.ModConfigServer;
+import net.notccg.yahresurrected.util.init.ModMenus;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
 import net.notccg.yahresurrected.potion.BetterBrewingRecipe;
 import net.notccg.yahresurrected.potion.ModPotions;
-import net.notccg.yahresurrected.sound.ModSounds;
+import net.notccg.yahresurrected.world.sound.ModSounds;
 import net.notccg.yahresurrected.util.*;
-import org.slf4j.Logger;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

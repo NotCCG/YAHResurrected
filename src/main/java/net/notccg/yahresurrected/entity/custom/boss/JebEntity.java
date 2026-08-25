@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
-import net.notccg.yahresurrected.sound.ModSounds;
+import net.notccg.yahresurrected.world.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
 
 public class JebEntity extends PathfinderMob implements Enemy {

@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.sound;
+package net.notccg.yahresurrected.world.sound;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

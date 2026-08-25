@@ -8,8 +8,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.client.Minecraft;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
-import net.notccg.yahresurrected.init.ModMenus;
-import net.notccg.yahresurrected.init.ModScreens;
+import net.notccg.yahresurrected.util.init.ModMenus;
+import net.notccg.yahresurrected.util.init.ModScreens;
 
 import java.util.function.Supplier;
 

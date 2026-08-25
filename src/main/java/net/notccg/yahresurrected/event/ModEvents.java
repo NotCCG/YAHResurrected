@@ -41,7 +41,7 @@ import net.notccg.yahresurrected.entity.custom.Steve;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.item.custom.spell_books.SpellBookOneItem;
 import net.notccg.yahresurrected.util.BrokenClockUseHandler;
-import net.notccg.yahresurrected.util.ModConfigServer;
+import net.notccg.yahresurrected.util.config.ModConfigServer;
 import org.slf4j.Logger;
 
 

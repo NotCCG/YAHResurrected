@@ -7,7 +7,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -22,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.item.ModItems;
-import net.notccg.yahresurrected.multiblock.ShrineValidator;
+import net.notccg.yahresurrected.world.multiblock.ShrineValidator;
 import net.notccg.yahresurrected.world.inventory.ShrineGUIMenu;
 import org.slf4j.Logger;
 

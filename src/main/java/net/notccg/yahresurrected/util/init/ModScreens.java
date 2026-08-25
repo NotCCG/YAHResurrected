@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.init;
+package net.notccg.yahresurrected.util.init;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;

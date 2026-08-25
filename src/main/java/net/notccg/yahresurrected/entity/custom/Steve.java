@@ -24,7 +24,7 @@ import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrApproach;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.FleeOrInvestigate;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.HeardSoundType;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
-import net.notccg.yahresurrected.util.ModConfigServer;
+import net.notccg.yahresurrected.util.config.ModConfigServer;
 import net.notccg.yahresurrected.util.ModMemoryTypes;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;

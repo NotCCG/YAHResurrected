@@ -29,7 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.notccg.yahresurrected.entity.custom.logic.steve_ai.SteveLogic;
-import net.notccg.yahresurrected.util.ModConfigServer;
+import net.notccg.yahresurrected.util.config.ModConfigServer;
 import net.notccg.yahresurrected.util.ModTags;
 import org.jetbrains.annotations.Nullable;
 

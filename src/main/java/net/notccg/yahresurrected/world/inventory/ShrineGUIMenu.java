@@ -18,7 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
-import net.notccg.yahresurrected.init.ModMenus;
+import net.notccg.yahresurrected.util.init.ModMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;

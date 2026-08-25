@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.util;
+package net.notccg.yahresurrected.util.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

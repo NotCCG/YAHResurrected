@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.init;
+package net.notccg.yahresurrected.util.init;
 
 import net.notccg.yahresurrected.world.inventory.ShrineGUIMenu;
 import net.notccg.yahresurrected.network.MenuStateUpdateMessage;

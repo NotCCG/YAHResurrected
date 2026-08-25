@@ -1,7 +1,7 @@
 package net.notccg.yahresurrected.client;
 
 import net.notccg.yahresurrected.world.inventory.ShrineGUIMenu;
-import net.notccg.yahresurrected.init.ModScreens;
+import net.notccg.yahresurrected.util.init.ModScreens;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.level.Level;

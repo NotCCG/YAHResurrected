@@ -1,4 +1,4 @@
-package net.notccg.yahresurrected.multiblock;
+package net.notccg.yahresurrected.world.multiblock;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
