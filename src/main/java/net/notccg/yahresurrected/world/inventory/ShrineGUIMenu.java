@@ -84,7 +84,7 @@ public class ShrineGUIMenu extends AbstractContainerMenu implements ModMenus.Men
                     });
             }
         }
-        this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 134, 34) {
+        this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 106, 34) {
             private final int slot = 0;
             private int x = ShrineGUIMenu.this.x;
             private int y = ShrineGUIMenu.this.y;
@@ -106,9 +106,9 @@ public class ShrineGUIMenu extends AbstractContainerMenu implements ModMenus.Men
         }));
         for (int si = 0; si < 3; ++si)
             for (int sj = 0; sj < 9; ++sj)
-                this.addSlot(new Slot(inv, sj + (si + 1) * 9, 0 + 8 + sj * 18, 1 + 84 + si * 18));
+                this.addSlot(new Slot(inv, sj + (si + 1) * 9, 0 + 8 + sj * 18, -2 + 84 + si * 18));
         for (int si = 0; si < 9; ++si)
-            this.addSlot(new Slot(inv, si, 0 + 8 + si * 18, 1 + 142));
+            this.addSlot(new Slot(inv, si, 0 + 8 + si * 18, -2 + 142));
     }
 
     @Override
@@ -262,6 +262,16 @@ public class ShrineGUIMenu extends AbstractContainerMenu implements ModMenus.Men
     @Override
     public Map<String, Object> getMenuState() {
         return menuState;
+    }
+
+    public ShrineGUIMenu(int id, Inventory inv, BlockPos pos) {
+        this(id, inv, createExtraData(pos));
+    }
+
+    private static FriendlyByteBuf createExtraData(BlockPos pos) {
+        FriendlyByteBuf buffer = new FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+        buffer.writeBlockPos(pos);
+        return buffer;
     }
 
 }

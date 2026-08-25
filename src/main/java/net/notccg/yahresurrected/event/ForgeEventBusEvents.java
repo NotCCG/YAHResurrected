@@ -2,8 +2,12 @@ package net.notccg.yahresurrected.event;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -15,9 +19,11 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.NetworkHooks;
 import net.notccg.yahresurrected.YouAreHerobrineResurrected;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.multiblock.ShrineValidator;
+import net.notccg.yahresurrected.world.inventory.ShrineGUIMenu;
 import org.slf4j.Logger;
 
 import java.util.Map;
@@ -51,7 +57,17 @@ public class ForgeEventBusEvents {
             }
         }
         if (ShrineValidator.isValidLit(level, clickedPos) && held.isEmpty()) {
-
+            if (event.getEntity() instanceof ServerPlayer serverPlayer) {
+                NetworkHooks.openScreen(
+                        serverPlayer,
+                        new SimpleMenuProvider(
+                                (containerid, inventory, player) ->
+                                        new ShrineGUIMenu(containerid, inventory, clickedPos),
+                                Component.translatable("gui.yahr.shrine")
+                        ),
+                        buffer -> buffer.writeBlockPos(clickedPos)
+                );
+            }
         }
     }
 
