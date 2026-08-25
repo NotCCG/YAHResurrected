@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.notccg.yahresurrected.util.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "yahr.refmap.json",
+  "client": [
+    "AbstractClientPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

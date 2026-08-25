@@ -1,6 +1,12 @@
 package net.notccg.yahresurrected;
 
+import com.mojang.logging.LogUtils;
+import it.unimi.dsi.fastutil.ints.IntObjectImmutablePair;
+import it.unimi.dsi.fastutil.ints.IntObjectPair;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.TickTask;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
@@ -10,6 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -18,6 +25,10 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.util.thread.SidedThreadGroups;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.notccg.yahresurrected.block.ModBlocks;
 import net.notccg.yahresurrected.entity.ModEntities;
 import net.notccg.yahresurrected.entity.client.renderer.HunterRenderer;
@@ -26,6 +37,7 @@ import net.notccg.yahresurrected.entity.client.renderer.SlayerRenderer;
 import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.fluids.ModFluidTypes;
 import net.notccg.yahresurrected.fluids.ModFluids;
+import net.notccg.yahresurrected.init.ModMenus;
 import net.notccg.yahresurrected.item.ModCreativeModeTabs;
 import net.notccg.yahresurrected.item.ModItems;
 import net.notccg.yahresurrected.loot.ModLootModifiers;
@@ -33,9 +45,19 @@ import net.notccg.yahresurrected.potion.BetterBrewingRecipe;
 import net.notccg.yahresurrected.potion.ModPotions;
 import net.notccg.yahresurrected.sound.ModSounds;
 import net.notccg.yahresurrected.util.*;
+import org.slf4j.Logger;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Mod(YouAreHerobrineResurrected.MOD_ID)
 public class YouAreHerobrineResurrected {
+
     public static final String MOD_ID = "yahr";
 
     public YouAreHerobrineResurrected() {
@@ -59,12 +81,15 @@ public class YouAreHerobrineResurrected {
         ModLootModifiers.register(modEventBus);
         ModSounds.register(modEventBus);
 
+        ModMenus.REGISTRY.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addCreative);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfigCommon.SPEC, YouAreHerobrineResurrected.MOD_ID + "-common-config.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ModConfigServer.SPEC, YouAreHerobrineResurrected.MOD_ID + "-server-config.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ModConfigClent.SPEC, YouAreHerobrineResurrected.MOD_ID + "-client-config.toml");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -144,6 +169,38 @@ public class YouAreHerobrineResurrected {
             EntityRenderers.register(ModEntities.JEB_.get(), JebRenderer::new);
         }
     }
+
+    private static final String PROTOCOL_VERSION = "1";
+    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+    private static int messageID = 0;
+
+    public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
+        PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
+        messageID++;
+    }
+
+    private static final Queue<IntObjectPair<Runnable>> workToBeScheduled = new ConcurrentLinkedQueue<>();
+    private static final PriorityQueue<TickTask> workQueue = new PriorityQueue<>(Comparator.comparingInt(TickTask::getTick));
+
+    public static void queueServerWork(int delay, Runnable action) {
+        if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
+            workToBeScheduled.add(new IntObjectImmutablePair<>(delay, action));
+    }
+
+    @SubscribeEvent
+    public void tick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            int currentTick = event.getServer().getTickCount();
+            IntObjectPair<Runnable> work;
+            while ((work = workToBeScheduled.poll()) != null) {
+                workQueue.add(new TickTask(currentTick + work.leftInt(), work.right()));
+            }
+            while (!workQueue.isEmpty() && currentTick >= workQueue.peek().getTick()) {
+                workQueue.poll().run();
+            }
+        }
+    }
+
 }
 
 

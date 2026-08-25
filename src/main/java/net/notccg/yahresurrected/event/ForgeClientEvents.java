@@ -19,45 +19,4 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = YouAreHerobrineResurrected.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ForgeClientEvents {
-    private static boolean reentrantGuard = false;
-
-    @SubscribeEvent
-    public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
-        if (!ModConfigCommon.OVERRIDE_SKIN_CONFIG.get()) return;
-        if (reentrantGuard) return;
-
-        AbstractClientPlayer player = (AbstractClientPlayer) event.getEntity();
-        if (player.isSpectator()) return;
-        event.setCanceled(true);
-
-        EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        Map<String, EntityRenderer<? extends Player>> skinMap = dispatcher.getSkinMap();
-
-        EntityRenderer<? extends Player> renderer = skinMap.get("default");
-        if (!(renderer instanceof PlayerRenderer defaultRenderer)) {
-            return;
-        }
-
-        reentrantGuard = true;
-        try {
-            PoseStack poseStack = event.getPoseStack();
-            MultiBufferSource buffer = event.getMultiBufferSource();
-            int packedLight = event.getPackedLight();
-            float partialTick = event.getPartialTick();
-            float yaw = player.getYRot();
-
-            defaultRenderer.render(
-                    player,
-                    yaw,
-                    partialTick,
-                    poseStack,
-                    buffer,
-                    packedLight
-            );
-        } finally {
-            reentrantGuard = false;
-        }
-    }
-
-
 }

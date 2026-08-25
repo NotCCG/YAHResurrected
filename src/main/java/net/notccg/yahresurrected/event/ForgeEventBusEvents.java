@@ -30,26 +30,28 @@ public class ForgeEventBusEvents {
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Level level = event.getLevel();
         if (level.isClientSide()) return;
-
         BlockPos clickedPos = event.getPos();
         ItemStack held = event.getItemStack();
-
         boolean isFlintAndSteel = held.is(Items.FLINT_AND_STEEL);
         boolean isFireCharge = held.is(Items.FIRE_CHARGE);
 
-        if (!isFlintAndSteel && !isFireCharge) return;
-        if (!level.getBlockState(clickedPos).is(Tags.Blocks.NETHERRACK)) return;
+        if (isFlintAndSteel || isFireCharge) {
+            if (!level.getBlockState(clickedPos).is(Tags.Blocks.NETHERRACK)) return;
 
-        BlockPos firePos = clickedPos.above();
+            BlockPos firePos = clickedPos.above();
 
-        if (!level.getBlockState(firePos).canBeReplaced()) return;
-        if (!ShrineValidator.isValidUnlit(level, clickedPos)) return;
+            if (!level.getBlockState(firePos).canBeReplaced()) return;
+            if (!ShrineValidator.isValidUnlit(level, clickedPos)) return;
 
-        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-        if (bolt != null) {
-            bolt.moveTo(clickedPos.getX() + 0.5, clickedPos.getY() + 1, clickedPos.getZ() + 0.5);
-            bolt.setVisualOnly(true);
-            level.addFreshEntity(bolt);
+            LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+            if (bolt != null) {
+                bolt.moveTo(clickedPos.getX() + 0.5, clickedPos.getY() + 1, clickedPos.getZ() + 0.5);
+                bolt.setVisualOnly(true);
+                level.addFreshEntity(bolt);
+            }
+        }
+        if (ShrineValidator.isValidLit(level, clickedPos) && held.isEmpty()) {
+
         }
     }
 
