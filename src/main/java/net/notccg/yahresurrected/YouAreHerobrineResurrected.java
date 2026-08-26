@@ -36,6 +36,7 @@ import net.notccg.yahresurrected.entity.client.renderer.SlayerRenderer;
 import net.notccg.yahresurrected.entity.client.renderer.SteveRenderer;
 import net.notccg.yahresurrected.fluids.ModFluidTypes;
 import net.notccg.yahresurrected.fluids.ModFluids;
+import net.notccg.yahresurrected.recipe.ModRecipes;
 import net.notccg.yahresurrected.util.config.ModConfigClent;
 import net.notccg.yahresurrected.util.config.ModConfigCommon;
 import net.notccg.yahresurrected.util.config.ModConfigServer;
@@ -68,13 +69,11 @@ public class YouAreHerobrineResurrected {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
-
         ModEntities.register(modEventBus);
-
         ModFluidTypes.register(modEventBus);
         ModFluids.register(modEventBus);
-
         ModPotions.register(modEventBus);
+        ModRecipes.register(modEventBus);
 
         ModMemoryTypes.MEMORY_MODULE_TYPES.register(modEventBus);
         ModSensorTypes.SENSOR_TYPES.register(modEventBus);

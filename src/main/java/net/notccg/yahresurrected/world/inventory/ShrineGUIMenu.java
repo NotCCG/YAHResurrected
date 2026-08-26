@@ -1,5 +1,6 @@
 package net.notccg.yahresurrected.world.inventory;
 
+import net.minecraft.world.inventory.*;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -9,9 +10,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.Entity;
@@ -26,6 +24,10 @@ import java.util.HashMap;
 import java.util.Collections;
 
 public class ShrineGUIMenu extends AbstractContainerMenu implements ModMenus.MenuAccessor {
+    private static final int DATA_FLUID_LEVEL = 0;
+    private static final int DATA_COUNT = 1;
+
+    private final ContainerData data;
     public final Map<String, Object> menuState = new HashMap<>() {
         @Override
         public Object put(String key, Object value) {
@@ -47,6 +49,8 @@ public class ShrineGUIMenu extends AbstractContainerMenu implements ModMenus.Men
 
     public ShrineGUIMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         super(ModMenus.SHRINE_GUI.get(), id);
+        this.data = new SimpleContainerData(DATA_COUNT);
+        this.addDataSlots(this.data);
         this.entity = inv.player;
         this.world = inv.player.level();
         this.internal = new ItemStackHandler(3);
